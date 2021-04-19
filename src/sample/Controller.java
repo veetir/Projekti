@@ -42,6 +42,7 @@ public class Controller {
     }
 
     public void lisaamokkiButtonOnAction(ActionEvent actionEvent) {
+        // https://www.mysqltutorial.org/mysql-jdbc-insert/ <- idea otettu suoraan täältä
         String nimi = moknimiTextField.getText();
         String osoite = mokosoiteTextField.getText();
         String zip = mokzipTextField.getText();
@@ -49,8 +50,7 @@ public class Controller {
         String hlolkm = mokhloTextField.getText();
         String varustelu = mokvarusteluTextField.getText();
         String alueid = mokalueidTextField.getText();
-        //System.out.println(nimi);
-        String kysely = "INSERT INTO mokki(toimintaalue_id, postinro, mokkinimi, katuosoite, kuvaus, henkilomaara, varustelu) "
+                String kysely = "INSERT INTO mokki(toimintaalue_id, postinro, mokkinimi, katuosoite, kuvaus, henkilomaara, varustelu) "
                 + "VALUES(?, ?, ?, ?, ?, ?, ?);";
 
         try {

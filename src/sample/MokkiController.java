@@ -2,46 +2,25 @@ package sample;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.*;
 
-public class Controller {
+public class MokkiController {
 
     @FXML
     // Mökki
     public TextField moknimiTextField, mokzipTextField, mokhloTextField, mokosoiteTextField, mokalueidTextField;
     public TextArea mokvarusteluTextArea, mokkuvausTextArea;
-    // Asiakas
-    public TextField etunimiTextField, sukunimiTextField, zipTextField, emailTextField, puhnroTextField, osoiteTextField;
 
-    public void varausButtonOnAction(ActionEvent actionEvent) {
-    }
 
-    public void takaisinButtonOnAction(ActionEvent actionEvent) {
-    }
-
-    public void mokvButtonOnAction(ActionEvent actionEvent) {
-    }
-
-    public void astietButtonOnAction(ActionEvent actionEvent) {
-    }
-
-    public void toimalueButtonOnAction(ActionEvent actionEvent) {
-    }
-
-    public void palvhalButtonOnAction(ActionEvent actionEvent) {
-    }
-
-    public void suodatin3SetOnAction(ActionEvent actionEvent) {
-    }
-
-    public void suodatin2SetOnAction(ActionEvent actionEvent) {
-    }
-
-    public void suodatin1SetOnAction(ActionEvent actionEvent) {
-    }
 
     public void lisaamokkiButtonOnAction(ActionEvent actionEvent) {
         // https://www.mysqltutorial.org/mysql-jdbc-insert/ <- idea otettu suoraan täältä
@@ -88,6 +67,14 @@ public class Controller {
         }
     }
 
-    public void moklisaustakaisinButtonOnAction(ActionEvent actionEvent) {
+    // ks. https://www.youtube.com/watch?v=XCgcQTQCfJQ
+    // "Using SceneBuilder and Controller class to change scenes in Javafx"
+    public void moklisaustakaisinButtonOnAction(ActionEvent actionEvent) throws IOException {
+        Parent toiseenNakymaan = FXMLLoader.load(getClass().getResource("varaushallinta.fxml"));
+        Scene toinenScene = new Scene(toiseenNakymaan);
+
+        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow(); // ks. 11:30 videolta
+        window.setScene(toinenScene);
+        window.show();
     }
 }

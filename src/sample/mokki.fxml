@@ -11,10 +11,10 @@
     <center>
         <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
-                <TextField fx:id="mokzipTextField" alignment="CENTER" layoutX="232.0" layoutY="111.0" onAction="#mokzipTextFieldOnAction" promptText="Postinumero" />
-                <TextField fx:id="moknimiTextField" alignment="CENTER" layoutX="230.0" layoutY="73.0" onAction="#moknimiTextFieldOnAction" promptText="Mökin nimi" />
-                <TextField fx:id="mokhloTextField" alignment="CENTER" layoutX="232.0" layoutY="194.0" onAction="#mokhloTextFieldOnAction" promptText="Henkilömäärä" />
-                <TextField fx:id="mokosoiteTextField" alignment="CENTER" layoutX="232.0" layoutY="156.0" onAction="#mokosoiteTextFieldOnAction" promptText="Katuosoite" />
+                <TextField fx:id="mokzipTextField" alignment="CENTER" layoutX="232.0" layoutY="111.0" onAction="#lisaamokkiButtonOnAction" promptText="Postinumero" />
+                <TextField fx:id="moknimiTextField" alignment="CENTER" layoutX="230.0" layoutY="73.0" onAction="#lisaamokkiButtonOnAction" promptText="Mökin nimi" />
+                <TextField fx:id="mokhloTextField" alignment="CENTER" layoutX="232.0" layoutY="194.0" onAction="#lisaamokkiButtonOnAction" promptText="Henkilömäärä" />
+                <TextField fx:id="mokosoiteTextField" alignment="CENTER" layoutX="232.0" layoutY="156.0" onAction="#lisaamokkiButtonOnAction" promptText="Katuosoite" />
                 <Button fx:id="lisaamokkiButton" layoutX="232.0" layoutY="318.0" mnemonicParsing="false" onAction="#lisaamokkiButtonOnAction" text="Lisää" />
                 <Button fx:id="moklisaustakaisinButton" layoutX="329.0" layoutY="318.0" mnemonicParsing="false" onAction="#moklisaustakaisinButtonOnAction" text="Takaisin" />
             <Label layoutX="253.0" layoutY="20.0" text="Lisää mökki">
@@ -22,9 +22,9 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="mokalueTextField" alignment="CENTER" layoutX="232.0" layoutY="234.0" onAction="#mokalueTextFieldOnAction" prefWidth="149.0" promptText="Alue (HUOM. 1...3)" />
-            <TextField fx:id="mokvarusteluTextField" alignment="CENTER" layoutX="424.0" layoutY="73.0" onAction="#mokvarusteluTextFieldOnAction" prefHeight="73.0" prefWidth="149.0" promptText="Mökin varustelu" />
-            <TextField fx:id="mokkuvausTextField" alignment="CENTER" layoutX="424.0" layoutY="170.0" onAction="#mokkuvausTextFieldOnAction" prefHeight="73.0" prefWidth="149.0" promptText="Mökin kuvaus" />
+            <TextField fx:id="mokalueTextField" alignment="CENTER" layoutX="232.0" layoutY="234.0" onAction="#lisaamokkiButtonOnAction" prefWidth="149.0" promptText="Alue (HUOM. 1...3)" />
+            <TextField fx:id="mokvarusteluTextField" alignment="CENTER" layoutX="424.0" layoutY="73.0" onAction="#lisaamokkiButtonOnAction" prefHeight="73.0" prefWidth="149.0" promptText="Mökin varustelu" />
+            <TextField fx:id="mokkuvausTextField" alignment="CENTER" layoutX="424.0" layoutY="170.0" onAction="#lisaamokkiButtonOnAction" prefHeight="73.0" prefWidth="149.0" promptText="Mökin kuvaus" />
             </children>
         </Pane>
     </center>

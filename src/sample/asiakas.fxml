@@ -4,16 +4,16 @@
 <?import javafx.scene.layout.*?>
 
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="633.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml " fx:controller="sample.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="633.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="etunimiTextField" alignment="CENTER" layoutX="232.0" layoutY="24.0" onAction="#etunimiTextFieldOnAction" promptText="Asiakkkaan etunimi" />
-            <TextField fx:id="sukunimiTextField" alignment="CENTER" layoutX="232.0" layoutY="60.0" onAction="#sukunimiTextFieldOnAction" promptText="Asiakkkaan sukunimi" />
-            <TextField fx:id="zipTextField" alignment="CENTER" layoutX="232.0" layoutY="188.0" onAction="#zipTextFieldOnAction" promptText="Postinumero" />
-            <TextField fx:id="emailTextField" alignment="CENTER" layoutX="232.0" layoutY="138.0" onAction="#emailTextFieldOnAction" promptText="Sähköposti" />
-            <TextField fx:id="puhnroTextField" alignment="CENTER" layoutX="232.0" layoutY="227.0" onAction="#puhnroTextFieldOnAction" promptText="Puhelinnumero" />
-            <TextField fx:id="osoiteTextField" alignment="CENTER" layoutX="232.0" layoutY="93.0" onAction="#osoiteTextFieldOnAction" promptText="Asiakkkaan osoite" />
+            <TextField fx:id="etunimiTextField" alignment="CENTER" layoutX="232.0" layoutY="24.0" onAction="#varausButtonOnAction" promptText="Asiakkkaan etunimi" />
+            <TextField fx:id="sukunimiTextField" alignment="CENTER" layoutX="232.0" layoutY="60.0" onAction="#varausButtonOnAction" promptText="Asiakkkaan sukunimi" />
+            <TextField fx:id="zipTextField" alignment="CENTER" layoutX="232.0" layoutY="188.0" onAction="#varausButtonOnAction" promptText="Postinumero" />
+            <TextField fx:id="emailTextField" alignment="CENTER" layoutX="232.0" layoutY="138.0" onAction="#varausButtonOnAction" promptText="Sähköposti" />
+            <TextField fx:id="puhnroTextField" alignment="CENTER" layoutX="232.0" layoutY="227.0" onAction="#varausButtonOnAction" promptText="Puhelinnumero" />
+            <TextField fx:id="osoiteTextField" alignment="CENTER" layoutX="232.0" layoutY="93.0" onAction="#varausButtonOnAction" promptText="Asiakkkaan osoite" />
             <Button fx:id="varausButton" layoutX="232.0" layoutY="318.0" mnemonicParsing="false" onAction="#varausButtonOnAction" text="Tee varaus" />
             <Button fx:id="takaisinButton" layoutX="329.0" layoutY="318.0" mnemonicParsing="false" onAction="#takaisinButtonOnAction" text="Takaisin" />
          </children>

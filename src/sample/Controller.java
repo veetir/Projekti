@@ -26,4 +26,16 @@ public class Controller {
 
     public void takaisinButtonOnAction(ActionEvent actionEvent) {
     }
+
+    public void mokvButtonOnAction(ActionEvent actionEvent) {
+    }
+
+    public void astietButtonOnAction(ActionEvent actionEvent) {
+    }
+
+    public void toimalueButtonOnAction(ActionEvent actionEvent) {
+    }
+
+    public void palvhalButtonOnAction(ActionEvent actionEvent) {
+    }
 }

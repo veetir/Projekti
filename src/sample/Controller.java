@@ -7,7 +7,10 @@ import javafx.scene.control.TextField;
 public class Controller {
 
     @FXML
-    public TextField moknimiTextField;
+    // Mökki
+    public TextField moknimiTextField, mokzipTextField, mokhloTextField,mokosoiteTextField, mokalueTextField, mokvarusteluTextField, mokkuvausTextField;
+    // Asiakas
+    public TextField etunimiTextField, sukunimiTextField, zipTextField, emailTextField, puhnroTextField, osoiteTextField;
 
     public void varausButtonOnAction(ActionEvent actionEvent) {
     }

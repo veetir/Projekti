@@ -7,12 +7,13 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.VarausController">
    <children>
-      <ScrollPane hbarPolicy="NEVER" layoutX="14.0" layoutY="19.0" prefHeight="363.0" prefWidth="78.0">
+      <ScrollPane hbarPolicy="NEVER" layoutX="14.0" layoutY="19.0" prefHeight="369.0" prefWidth="86.0">
          <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="206.0">
                <children>
                   <CheckBox fx:id="suodatin3" layoutY="186.0" mnemonicParsing="false" onAction="#suodatin3SetOnAction" text="CheckBox" />
                   <CheckBox fx:id="suodatin2" layoutY="153.0" mnemonicParsing="false" onAction="#suodatin2SetOnAction" text="CheckBox" />
@@ -21,8 +22,14 @@
                </children>
             </AnchorPane>
          </content></ScrollPane>
-      <ListView fx:id="tulosLista" layoutX="98.0" layoutY="14.0" prefHeight="323.0" prefWidth="488.0" />
-      <Button fx:id="mokinlisaykseenButton" layoutX="98.0" layoutY="357.0" mnemonicParsing="false" onAction="#mokinlisaykseenButtonOnAction" text="Lisää mökki" />
-      <Button fx:id="kotinakymaanButton" layoutX="208.0" layoutY="357.0" mnemonicParsing="false" onAction="#kotinakymaanButtonOnAction" text="Takaisin" />
+      <ListView fx:id="tulosLista" layoutX="108.0" layoutY="19.0" prefHeight="318.0" prefWidth="478.0" />
+      <Button fx:id="mokinlisaykseenButton" layoutX="108.0" layoutY="357.0" mnemonicParsing="false" onAction="#mokinlisaykseenButtonOnAction" text="Lisää mökki">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="kotinakymaanButton" layoutX="513.0" layoutY="357.0" mnemonicParsing="false" onAction="#kotinakymaanButtonOnAction" text="Takaisin">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
    </children>
 </Pane>

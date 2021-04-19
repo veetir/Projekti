@@ -10,7 +10,7 @@ public class SQLKysely {
 
     public static void main(String[] args) {
 
-        String kysely = "SELECT first_name, last_name FROM actor LIMIT 10;";
+        String kysely = "SELECT etunimi, sukunimi FROM asiakas LIMIT 10;";
 
         try {
             Connection conn = SQL_yhteys.getYhteys();
@@ -18,7 +18,7 @@ public class SQLKysely {
             ResultSet tulokset = stmt.executeQuery(kysely);
 
             while (tulokset.next()) {
-                System.out.println(tulokset.getString("first_name") + " " + tulokset.getString("last_name"));
+                System.out.println(tulokset.getString("etunimi") + " " + tulokset.getString("sukunimi"));
             }
             stmt.close();
             tulokset.close();

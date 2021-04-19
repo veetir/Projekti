@@ -10,7 +10,9 @@ public class SQLKysely {
 
     public static void main(String[] args) {
 
-        String kysely = "SELECT etunimi, sukunimi FROM asiakas LIMIT 10;";
+        // Kysely hakee kaikki toiminta-alueet: niitä pitäisi olla tässä vaiheessa kolme (ks. discord) -- ne on laitettu
+        // suoraan tietokantaan mysql:ssä
+        String kysely = "SELECT toimintaalue_id, nimi FROM toimintaalue LIMIT 3;";
 
         try {
             Connection conn = SQL_yhteys.getYhteys();
@@ -18,7 +20,7 @@ public class SQLKysely {
             ResultSet tulokset = stmt.executeQuery(kysely);
 
             while (tulokset.next()) {
-                System.out.println(tulokset.getString("etunimi") + " " + tulokset.getString("sukunimi"));
+                System.out.println(tulokset.getString("toimintaalue_id") + " " + tulokset.getString("nimi"));
             }
             stmt.close();
             tulokset.close();

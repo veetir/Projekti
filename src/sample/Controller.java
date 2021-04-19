@@ -1,8 +1,15 @@
 package sample;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 
 public class Controller {
+
+    @FXML
+    public TextField moknimiTextField;
+
+
     public void etunimiTextFieldOnAction(ActionEvent actionEvent) {
     }
 
@@ -70,6 +77,8 @@ public class Controller {
     }
 
     public void lisaamokkiButtonOnAction(ActionEvent actionEvent) {
+        String nimi = moknimiTextField.getText();
+        System.out.println(nimi);
     }
 
     public void moklisaustakaisinButtonOnAction(ActionEvent actionEvent) {

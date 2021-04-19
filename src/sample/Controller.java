@@ -2,6 +2,7 @@ package sample;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import java.sql.*;
@@ -10,7 +11,8 @@ public class Controller {
 
     @FXML
     // Mökki
-    public TextField moknimiTextField, mokzipTextField, mokhloTextField, mokosoiteTextField, mokalueidTextField, mokvarusteluTextField, mokkuvausTextField;
+    public TextField moknimiTextField, mokzipTextField, mokhloTextField, mokosoiteTextField, mokalueidTextField;
+    public TextArea mokvarusteluTextArea, mokkuvausTextArea;
     // Asiakas
     public TextField etunimiTextField, sukunimiTextField, zipTextField, emailTextField, puhnroTextField, osoiteTextField;
 
@@ -46,9 +48,9 @@ public class Controller {
         String nimi = moknimiTextField.getText();
         String osoite = mokosoiteTextField.getText();
         String zip = mokzipTextField.getText();
-        String kuvaus = mokkuvausTextField.getText();
+        String kuvaus = mokkuvausTextArea.getText();
         String hlolkm = mokhloTextField.getText();
-        String varustelu = mokvarusteluTextField.getText();
+        String varustelu = mokvarusteluTextArea.getText();
         String alueid = mokalueidTextField.getText();
                 String kysely = "INSERT INTO mokki(toimintaalue_id, postinro, mokkinimi, katuosoite, kuvaus, henkilomaara, varustelu) "
                 + "VALUES(?, ?, ?, ?, ?, ?, ?);";

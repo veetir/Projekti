@@ -47,4 +47,31 @@ public class Controller {
 
     public void suodatin1SetOnAction(ActionEvent actionEvent) {
     }
+
+    public void mokzipTextFieldOnAction(ActionEvent actionEvent) {
+    }
+
+    public void moknimiTextFieldOnAction(ActionEvent actionEvent) {
+    }
+
+    public void mokhloTextFieldOnAction(ActionEvent actionEvent) {
+    }
+
+    public void mokosoiteTextFieldOnAction(ActionEvent actionEvent) {
+    }
+
+    public void mokalueTextFieldOnAction(ActionEvent actionEvent) {
+    }
+
+    public void mokvarusteluTextFieldOnAction(ActionEvent actionEvent) {
+    }
+
+    public void mokkuvausTextFieldOnAction(ActionEvent actionEvent) {
+    }
+
+    public void lisaamokkiButtonOnAction(ActionEvent actionEvent) {
+    }
+
+    public void moklisaustakaisinButtonOnAction(ActionEvent actionEvent) {
+    }
 }

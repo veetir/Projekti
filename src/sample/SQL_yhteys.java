@@ -6,14 +6,14 @@ import java.sql.DriverManager;
 
 public class SQL_yhteys {
 
-    String url = "jdbc:mysql://localhost:3306/sakila?ServerTimezone=Helsinki/Finland";
+    String url = "jdbc:mysql://localhost:3306/vn?ServerTimezone=UTC+2";
     String user = "root";
-    String password = "scape123";
+    String password = "allukys123";
 
     public static Connection getYhteys() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/sakila?serverTimezone=Europe/Helsinki";
+        String url = "jdbc:mysql://localhost:3306/vn?serverTimezone=UTC+2";
         String user = "root";
-        String password = "scape123";
+        String password = "allukys123";
         Connection conn = null;
 
         try {

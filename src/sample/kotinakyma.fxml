@@ -21,6 +21,10 @@
             <Font name="Arial" size="15.0" />
          </font>
       </Button>
-      <Label layoutX="236.0" layoutY="51.0" text="Mökkivarausjärjestelmä " />
+      <Label layoutX="168.0" layoutY="34.0" text="Mökkivarausjärjestelmä ">
+         <font>
+            <Font size="25.0" />
+         </font></Label>
+      <Button fx:id="suljeButton" layoutX="534.0" layoutY="361.0" mnemonicParsing="false" onAction="#suljeButtonOnAction" text="Sulje" />
    </children>
 </Pane>

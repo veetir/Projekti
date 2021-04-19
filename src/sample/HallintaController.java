@@ -16,7 +16,7 @@ public class HallintaController {
         Parent varaustenHallintaan = FXMLLoader.load(getClass().getResource("varaushallinta.fxml"));
         Scene varaushallintaScene = new Scene(varaustenHallintaan);
 
-        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow(); // ks. 11:30 videolta
+        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.setScene(varaushallintaScene);
         window.show();
     }

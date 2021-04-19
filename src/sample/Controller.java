@@ -26,4 +26,13 @@ public class Controller {
 
     public void etunimiTextFieldOnAction(ActionEvent actionEvent) {
     }
+
+    public void suodatin3SetOnAction(ActionEvent actionEvent) {
+    }
+
+    public void suodatin2SetOnAction(ActionEvent actionEvent) {
+    }
+
+    public void suodatin1SetOnAction(ActionEvent actionEvent) {
+    }
 }

@@ -40,4 +40,13 @@ public class VarausController {
         window.setScene(toinenScene);
         window.show();
     }
+
+    public void asiakkaanlisaysButtonOnAction(ActionEvent actionEvent) throws IOException {
+        Parent toiseenNakymaan = FXMLLoader.load(getClass().getResource("asiakas.fxml"));
+        Scene toinenScene = new Scene(toiseenNakymaan);
+
+        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        window.setScene(toinenScene);
+        window.show();
+    }
 }

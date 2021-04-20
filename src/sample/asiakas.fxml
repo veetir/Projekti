@@ -1,21 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="633.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AsiakasController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="633.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AsiakasController">
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="etunimiTextField" alignment="CENTER" layoutX="232.0" layoutY="24.0" onAction="#varausButtonOnAction" promptText="Asiakkkaan etunimi" />
-            <TextField fx:id="sukunimiTextField" alignment="CENTER" layoutX="232.0" layoutY="60.0" onAction="#varausButtonOnAction" promptText="Asiakkkaan sukunimi" />
-            <TextField fx:id="zipTextField" alignment="CENTER" layoutX="232.0" layoutY="188.0" onAction="#varausButtonOnAction" promptText="Postinumero" />
-            <TextField fx:id="emailTextField" alignment="CENTER" layoutX="232.0" layoutY="138.0" onAction="#varausButtonOnAction" promptText="Sähköposti" />
-            <TextField fx:id="puhnroTextField" alignment="CENTER" layoutX="232.0" layoutY="227.0" onAction="#varausButtonOnAction" promptText="Puhelinnumero" />
-            <TextField fx:id="osoiteTextField" alignment="CENTER" layoutX="232.0" layoutY="93.0" onAction="#varausButtonOnAction" promptText="Asiakkkaan osoite" />
-            <Button fx:id="varausButton" layoutX="232.0" layoutY="318.0" mnemonicParsing="false" onAction="#varausButtonOnAction" text="Tee varaus" />
-            <Button fx:id="takaisinButton" layoutX="329.0" layoutY="318.0" mnemonicParsing="false" onAction="#takaisinButtonOnAction" text="Takaisin" />
+            <TextField fx:id="etunimiTextField" alignment="CENTER" layoutX="232.0" layoutY="91.0" onAction="#varausButtonOnAction" promptText="Asiakkkaan etunimi" />
+            <TextField fx:id="sukunimiTextField" alignment="CENTER" layoutX="232.0" layoutY="126.0" onAction="#varausButtonOnAction" promptText="Asiakkkaan sukunimi" />
+            <TextField fx:id="osoiteTextField" alignment="CENTER" layoutX="232.0" layoutY="163.0" onAction="#varausButtonOnAction" promptText="Asiakkkaan osoite" />
+            <TextField fx:id="emailTextField" alignment="CENTER" layoutX="232.0" layoutY="200.0" onAction="#varausButtonOnAction" promptText="Sähköposti" />
+            <TextField fx:id="zipTextField" alignment="CENTER" layoutX="231.0" layoutY="242.0" onAction="#varausButtonOnAction" promptText="Postinumero" />
+            <TextField fx:id="puhnroTextField" alignment="CENTER" layoutX="232.0" layoutY="280.0" onAction="#varausButtonOnAction" promptText="Puhelinnumero" />
+            <Button fx:id="varausButton" layoutX="260.0" layoutY="340.0" mnemonicParsing="false" onAction="#varausButtonOnAction" text="Tee varaus">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
+            <Button fx:id="takaisinButton" cancelButton="true" layoutX="546.0" layoutY="355.0" mnemonicParsing="false" onAction="#takaisinButtonOnAction" text="Takaisin">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
+            <Label layoutX="255.0" layoutY="14.0" text="Asiakas">
+               <font>
+                  <Font name="System Bold" size="29.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </center>

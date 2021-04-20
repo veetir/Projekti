@@ -1,21 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.HallintaController">
    <children>
-      <Button fx:id="mokvButton" layoutX="229.0" layoutY="115.0" mnemonicParsing="false" onAction="#mokvButtonOnAction" text="Mökkivarausten hallinta" />
-      <Button fx:id="astietButton" layoutX="231.0" layoutY="175.0" mnemonicParsing="false" onAction="#astietButtonOnAction" text="Asiakastietojen hallinta" />
-      <Button fx:id="toimalueButton" layoutX="223.0" layoutY="241.0" mnemonicParsing="false" onAction="#toimalueButtonOnAction" text="Toiminta-alueiden hallinta" />
-      <Button fx:id="palvhalButton" layoutX="241.0" layoutY="304.0" mnemonicParsing="false" onAction="#palvhalButtonOnAction" text="Palveluiden hallinta" />
-      <Label fx:id="hallintaLabel" layoutX="266.0" layoutY="29.0" text="Hallinta">
+      <Button fx:id="mokvButton" layoutX="209.0" layoutY="125.0" mnemonicParsing="false" onAction="#mokvButtonOnAction" text="Mökkivarausten hallinta">
          <font>
-            <Font size="20.0" />
+            <Font name="Arial" size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button fx:id="astietButton" layoutX="214.0" layoutY="178.0" mnemonicParsing="false" onAction="#astietButtonOnAction" text="Asiakastietojen hallinta">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button fx:id="toimalueButton" layoutX="204.0" layoutY="237.0" mnemonicParsing="false" onAction="#toimalueButtonOnAction" text="Toiminta-alueiden hallinta">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button fx:id="palvhalButton" layoutX="223.0" layoutY="302.0" mnemonicParsing="false" onAction="#palvhalButtonOnAction" text="Palveluiden hallinta">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Label fx:id="hallintaLabel" layoutX="245.0" layoutY="32.0" text="Hallinta">
+         <font>
+            <Font name="System Bold" size="29.0" />
          </font>
       </Label>
+      <Button fx:id="hallinnastakotiinButton" layoutX="542.0" layoutY="361.0" mnemonicParsing="false" onAction="#hallinnastakotiinButtonOnAction" text="Palaa">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
    </children>
 </Pane>

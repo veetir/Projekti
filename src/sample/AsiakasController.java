@@ -17,7 +17,7 @@ public class AsiakasController {
     // Asiakas
     public TextField etunimiTextField, sukunimiTextField, zipTextField, emailTextField, puhnroTextField, osoiteTextField;
 
-    public void varausButtonOnAction(ActionEvent actionEvent) {
+    public void varausButtonOnAction(ActionEvent actionEvent) throws SQLException {
         // https://www.mysqltutorial.org/mysql-jdbc-insert/
         String etunimi = etunimiTextField.getText();
         String sukunimi = sukunimiTextField.getText();
@@ -56,6 +56,7 @@ public class AsiakasController {
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         }
+        SQL_yhteys.getAsiakkaat();
     }
 
 

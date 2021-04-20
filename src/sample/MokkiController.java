@@ -11,7 +11,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -41,7 +40,7 @@ public class MokkiController implements Initializable {
         mokkialueChoiceBox.getItems().addAll(list);
     }
 
-    public void lisaamokkiButtonOnAction(ActionEvent actionEvent) {
+    public void lisaamokkiButtonOnAction(ActionEvent actionEvent) throws SQLException {
         // https://www.mysqltutorial.org/mysql-jdbc-insert/ <- idea otettu suoraan täältä
         String nimi = moknimiTextField.getText();
         String osoite = mokosoiteTextField.getText();
@@ -82,6 +81,7 @@ public class MokkiController implements Initializable {
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         }
+        SQL_yhteys.getMokit();
     }
 
     // ks. https://www.youtube.com/watch?v=XCgcQTQCfJQ

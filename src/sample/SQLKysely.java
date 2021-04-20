@@ -12,7 +12,7 @@ public class SQLKysely {
 
         // Kysely hakee kaikki toiminta-alueet: niitä pitäisi olla tässä vaiheessa kolme (ks. discord) -- ne on laitettu
         // suoraan tietokantaan mysql:ssä
-        String kysely = "SELECT toimintaalue_id, nimi FROM toimintaalue LIMIT 3;";
+       /* String kysely = "SELECT toimintaalue_id, nimi FROM toimintaalue LIMIT 3;";
 
         try {
             Connection conn = SQL_yhteys.getYhteys();
@@ -30,7 +30,16 @@ public class SQLKysely {
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
+        }*/
+        try {
+             SQL_yhteys.getMokit();
+
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
         }
+
 
 
     }

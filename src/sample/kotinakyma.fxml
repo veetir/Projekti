@@ -8,24 +8,24 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.kotiController">
    <children>
-      <Button fx:id="uusivarausButton" layoutX="249.0" layoutY="142.0" mnemonicParsing="false" text="Uusi varaus">
+      <Button fx:id="uusivarausButton" layoutX="238.0" layoutY="142.0" mnemonicParsing="false" style="-fx-background-color: linear-gradient(#f2f2f2, #d6d6d6),        linear-gradient(#fcfcfc 0%, #d9d9d9 20%, #d6d6d6 100%),        linear-gradient(#dddddd 0%, #f6f6f6 50%); -fx-background-radius: 8,7,6;" text="Uusi varaus">
          <font>
-            <Font name="Arial" size="15.0" />
+            <Font name="Arial" size="18.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button fx:id="hallintaButton" layoutX="263.0" layoutY="200.0" mnemonicParsing="false" onAction="#hallintaButtonOnAction" text="Hallinta">
+      <Button fx:id="hallintaButton" layoutX="256.0" layoutY="200.0" mnemonicParsing="false" onAction="#hallintaButtonOnAction" style="-fx-background-color: linear-gradient(#f2f2f2, #d6d6d6),        linear-gradient(#fcfcfc 0%, #d9d9d9 20%, #d6d6d6 100%),        linear-gradient(#dddddd 0%, #f6f6f6 50%); -fx-background-radius: 8, 7, 6;" text="Hallinta">
          <font>
-            <Font name="Arial" size="15.0" />
+            <Font name="Arial" size="18.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="raportitButton" layoutX="262.0" layoutY="263.0" mnemonicParsing="false" text="Raportit">
+      <Button fx:id="raportitButton" layoutX="254.0" layoutY="263.0" mnemonicParsing="false" style="-fx-background-color: linear-gradient(#f2f2f2, #d6d6d6),        linear-gradient(#fcfcfc 0%, #d9d9d9 20%, #d6d6d6 100%),        linear-gradient(#dddddd 0%, #f6f6f6 50%); -fx-background-radius: 8,7,6;" text="Raportit">
          <font>
-            <Font name="Arial" size="15.0" />
+            <Font name="Arial" size="18.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -35,9 +35,12 @@
          <font>
             <Font name="System Bold" size="29.0" />
          </font></Label>
-      <Button fx:id="suljeButton" cancelButton="true" layoutX="534.0" layoutY="361.0" mnemonicParsing="false" onAction="#suljeButtonOnAction" text="Sulje">
+      <Button fx:id="suljeButton" cancelButton="true" layoutX="534.0" layoutY="355.0" mnemonicParsing="false" onAction="#suljeButtonOnAction" text="Sulje">
          <cursor>
             <Cursor fx:constant="CLOSED_HAND" />
-         </cursor></Button>
+         </cursor>
+         <font>
+            <Font size="15.0" />
+         </font></Button>
    </children>
 </Pane>

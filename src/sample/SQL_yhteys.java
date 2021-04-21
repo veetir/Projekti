@@ -70,8 +70,6 @@ public class SQL_yhteys {
                 String mokkiVarustelu = rs.getString("kuvaus");
                 String mokkiAlue = rs.getString("toimintaalue_id");
 
-
-
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

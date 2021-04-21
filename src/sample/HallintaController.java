@@ -6,10 +6,18 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.fxml.*;
+import javafx.scene.layout.VBox;
+import java.util.ArrayList;
+import javafx.scene.control.Label;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class HallintaController {
+
+    @FXML
+    private VBox tietoVBox;
 
 
     public void mokvButtonOnAction(ActionEvent actionEvent) throws IOException {
@@ -40,6 +48,22 @@ public class HallintaController {
     }
 
     public void mokkiButtonOnAction(ActionEvent actionEvent) {
+        tietoVBox.getChildren().clear();
+        try  {
+            ArrayList<Mokki> mokit = SQL_yhteys.getMokit();
+
+            for(Mokki mokki : mokit) {
+                String tiedot = mokki.toString();
+                Label teksti = new Label(tiedot);
+                tietoVBox.getChildren().add(teksti);
+                
+
+            }
+        }catch(SQLException e) {
+            e.getMessage();
+        }
+
+
     }
 
     public void asiakasButtonOnAction(ActionEvent actionEvent) {

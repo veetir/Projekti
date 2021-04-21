@@ -38,4 +38,16 @@ public class HallintaController {
         window.setScene(toinenScene);
         window.show();
     }
+
+    public void mokkiButtonOnAction(ActionEvent actionEvent) {
+    }
+
+    public void asiakasButtonOnAction(ActionEvent actionEvent) {
+    }
+
+    public void varausButtonOnAction(ActionEvent actionEvent) {
+    }
+
+    public void palveluButtonOnAction(ActionEvent actionEvent) {
+    }
 }

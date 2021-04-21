@@ -1,6 +1,8 @@
 package sample;
 
 
+import java.sql.Timestamp;
+
 public class Varaus {
 
   private long varausId;
@@ -11,6 +13,15 @@ public class Varaus {
   private java.sql.Timestamp varattuAlkupvm;
   private java.sql.Timestamp varattuLoppupvm;
 
+  public Varaus(long varausId, long asiakasId, long mokkiMokkiId, Timestamp varattuPvm, Timestamp vahvistusPvm, Timestamp varattuAlkupvm, Timestamp varattuLoppupvm) {
+    this.varausId = varausId;
+    this.asiakasId = asiakasId;
+    this.mokkiMokkiId = mokkiMokkiId;
+    this.varattuPvm = varattuPvm;
+    this.vahvistusPvm = vahvistusPvm;
+    this.varattuAlkupvm = varattuAlkupvm;
+    this.varattuLoppupvm = varattuLoppupvm;
+  }
 
   public long getVarausId() {
     return varausId;

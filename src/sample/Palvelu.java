@@ -11,6 +11,15 @@ public class Palvelu {
   private double hinta;
   private double alv;
 
+  public Palvelu(long palveluId, long toimintaalueId, String nimi, long tyyppi, String kuvaus, double hinta, double alv) {
+    this.palveluId = palveluId;
+    this.toimintaalueId = toimintaalueId;
+    this.nimi = nimi;
+    this.tyyppi = tyyppi;
+    this.kuvaus = kuvaus;
+    this.hinta = hinta;
+    this.alv = alv;
+  }
 
   public long getPalveluId() {
     return palveluId;

@@ -3,6 +3,16 @@ package sample;
 
 public class Asiakas {
 
+  public Asiakas(long asiakasId, String postinro, String etunimi, String sukunimi, String lahiosoite, String email, String puhelinnro) {
+    this.asiakasId = asiakasId;
+    this.postinro = postinro;
+    this.etunimi = etunimi;
+    this.sukunimi = sukunimi;
+    this.lahiosoite = lahiosoite;
+    this.email = email;
+    this.puhelinnro = puhelinnro;
+  }
+
   private long asiakasId;
   private String postinro;
   private String etunimi;
@@ -10,6 +20,9 @@ public class Asiakas {
   private String lahiosoite;
   private String email;
   private String puhelinnro;
+
+
+
 
 
   public long getAsiakasId() {

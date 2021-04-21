@@ -1,6 +1,7 @@
 package sample;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 
 public class SQL_yhteys {
@@ -52,16 +53,24 @@ public class SQL_yhteys {
     public static void getMokit() throws SQLException{
         String sql = "SELECT * " +
                 "FROM mokki";
-
+        ArrayList mokkiLista = new ArrayList();
         try (Connection conn = SQL_yhteys.getYhteys();
              Statement stmt  = conn.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)) {
 
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getString("mokkinimi") + "\t" +
-                        rs.getString("katuosoite")  + "\t" +
-                        rs.getString("kuvaus"));
+                // int mokki_id, int toimintaalue_id,
+                // String postinro, String mokkinimi,
+                // String katuosoite,String kuvaus, int henkilomaara,String varustelu
+                String mokkiNimi = rs.getString("mokkinimi");
+                String mokkiOsoite = rs.getString("katuosoite");
+                String mokkiKuvaus = rs.getString("kuvaus");
+                String mokkiId = rs.getString("mokki_id");
+                String mokkiVarustelu = rs.getString("kuvaus");
+                String mokkiAlue = rs.getString("toimintaalue_id");
+
+
 
             }
         } catch (SQLException ex) {

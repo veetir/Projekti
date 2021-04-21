@@ -91,7 +91,7 @@ public class SQL_yhteys {
 
     public static ArrayList<Palvelu> getPalvelut() throws SQLException{
         String sql = "SELECT * " +
-                "FROM asiakas";
+                "FROM palvelu";
         ArrayList<Palvelu> palvelut = new ArrayList<Palvelu>();
 
         try (Connection conn = SQL_yhteys.getYhteys();

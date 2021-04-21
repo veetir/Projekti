@@ -25,8 +25,6 @@ public class SQL_yhteys {
 
         }
         return conn;
-
-
     }
 
     public static ArrayList<Asiakas> getAsiakkaat() throws SQLException{
@@ -58,6 +56,68 @@ public class SQL_yhteys {
             System.out.println(ex.getMessage());
         }
         return asiakkaat;
+    }
+
+    public static ArrayList<Varaus> getVaraukset() throws SQLException{
+        String sql = "SELECT * " +
+                "FROM varaus";
+        ArrayList<Varaus> varaukset = new ArrayList<Varaus>();
+
+        try (Connection conn = SQL_yhteys.getYhteys();
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)) {
+
+            Varaus varaus = null;
+
+            // loop through the result set
+            while (rs.next()) {
+                int varausId = rs.getInt("varaus_id");
+                int asiakasId = rs.getInt("asiakas_id");
+                int mokkiId = rs.getInt("mokki_mokki_id");
+                Timestamp varattuPvm = rs.getTimestamp("varattu_pvm");
+                Timestamp vahvistusPvm = rs.getTimestamp("vahvistus_pvm");
+                Timestamp varattuAlkuPvm = rs.getTimestamp("varattu_alkupvm");
+                Timestamp varattuLoppuPvm = rs.getTimestamp("varattu_loppupvm");
+
+                varaus = new Varaus(varausId, asiakasId, mokkiId, varattuPvm, vahvistusPvm, varattuAlkuPvm, varattuLoppuPvm);
+                varaukset.add(varaus);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return varaukset;
+    }
+
+    public static ArrayList<Palvelu> getPalvelut() throws SQLException{
+        String sql = "SELECT * " +
+                "FROM asiakas";
+        ArrayList<Palvelu> palvelut = new ArrayList<Palvelu>();
+
+        try (Connection conn = SQL_yhteys.getYhteys();
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)) {
+
+            Palvelu palvelu = null;
+
+            // loop through the result set
+            while (rs.next()) {
+                int palveluId = rs.getInt("palvelu_id");
+                int talueId = rs.getInt("toimintaalue_id");
+                String palveluNimi = rs.getString("nimi");
+                int palveluTyyppi = rs.getInt("tyyppi");
+                String palveluKuvaus = rs.getString("kuvaus");
+                Double palveluHinta = rs.getDouble("hinta");
+                Double palveluAlv = rs.getDouble("alv");
+
+                palvelu = new Palvelu(palveluId, talueId, palveluNimi, palveluTyyppi, palveluKuvaus, palveluHinta, palveluAlv);
+                palvelut.add(palvelu);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return palvelut;
     }
 
 

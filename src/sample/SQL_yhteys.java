@@ -50,13 +50,16 @@ public class SQL_yhteys {
     }
 
     // metodi, joka tulostaa tietokannan jokaisen mökin nimen, katuosoitteen ja kuvauksen
-    public static void getMokit() throws SQLException{
+    public static ArrayList<Mokki> getMokit() throws SQLException{
         String sql = "SELECT * " +
                 "FROM mokki";
-        ArrayList mokkiLista = new ArrayList();
+                ArrayList<Mokki> mokit = new ArrayList<Mokki>();
+        
         try (Connection conn = SQL_yhteys.getYhteys();
              Statement stmt  = conn.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)) {
+
+            Mokki mokki = null;
 
             // loop through the result set
             while (rs.next()) {
@@ -64,18 +67,24 @@ public class SQL_yhteys {
                 // String postinro, String mokkinimi,
                 // String katuosoite,String kuvaus, int henkilomaara,String varustelu
                 String mokkiNimi = rs.getString("mokkinimi");
-                String mokkiOsoite = rs.getString("katuosoite");
-                String mokkiKuvaus = rs.getString("kuvaus");
-                String mokkiId = rs.getString("mokki_id");
-                String mokkiVarustelu = rs.getString("kuvaus");
-                String mokkiAlue = rs.getString("toimintaalue_id");
+                String Osoite = rs.getString("katuosoite");
+                String Kuvaus = rs.getString("kuvaus");
+                int mokki_id = rs.getInt("mokki_id");
+                String Varustelu = rs.getString("kuvaus");
+                int toimintaAlue = rs.getInt("toimintaalue_id");
+                String postinro = rs.getString("postinro");
+                int henkilomaara = rs.getInt("henkilomaara");
 
+                mokki = new Mokki(mokki_id, toimintaAlue, postinro, mokkiNimi, Osoite, Kuvaus, henkilomaara, Varustelu);
+                mokit.add(mokki);
 
 
             }
+            
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        return mokit;
     }
     public static void setMokit(String kysely, String alueid, String zip, String nimi, String osoite, String kuvaus, String hlolkm, String varustelu) throws SQLException{
         try {

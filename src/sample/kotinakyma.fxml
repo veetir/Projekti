@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.kotiController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.kotiController">
    <children>
-      <Button fx:id="hallintaButton" layoutX="250.0" layoutY="154.0" mnemonicParsing="false" onAction="#hallintaButtonOnAction" style="-fx-background-color: linear-gradient(#f2f2f2, #d6d6d6),        linear-gradient(#fcfcfc 0%, #d9d9d9 20%, #d6d6d6 100%),        linear-gradient(#dddddd 0%, #f6f6f6 50%); -fx-background-radius: 8, 7, 6;" text="Hallinta">
+      <Button fx:id="hallintaButton" layoutX="466.0" layoutY="281.0" mnemonicParsing="false" onAction="#hallintaButtonOnAction" style="-fx-background-color: linear-gradient(#f2f2f2, #d6d6d6),        linear-gradient(#fcfcfc 0%, #d9d9d9 20%, #d6d6d6 100%),        linear-gradient(#dddddd 0%, #f6f6f6 50%); -fx-background-radius: 8, 7, 6;" text="Hallinta">
          <font>
             <Font name="Arial" size="20.0" />
          </font>
@@ -16,7 +16,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="raportitButton" layoutX="248.0" layoutY="228.0" mnemonicParsing="false" style="-fx-background-color: linear-gradient(#f2f2f2, #d6d6d6),        linear-gradient(#fcfcfc 0%, #d9d9d9 20%, #d6d6d6 100%),        linear-gradient(#dddddd 0%, #f6f6f6 50%); -fx-background-radius: 8,7,6;" text="Raportit">
+      <Button fx:id="raportitButton" layoutX="464.0" layoutY="366.0" mnemonicParsing="false" onAction="#raportitButtonOnAction" style="-fx-background-color: linear-gradient(#f2f2f2, #d6d6d6),        linear-gradient(#fcfcfc 0%, #d9d9d9 20%, #d6d6d6 100%),        linear-gradient(#dddddd 0%, #f6f6f6 50%); -fx-background-radius: 8,7,6;" text="Raportit">
          <font>
             <Font name="Arial" size="20.0" />
          </font>
@@ -24,11 +24,11 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <Label layoutX="136.0" layoutY="34.0" text="Mökkivarausjärjestelmä ">
+      <Label layoutX="346.0" layoutY="29.0" text="Mökkivarausjärjestelmä ">
          <font>
             <Font name="System Bold" size="29.0" />
          </font></Label>
-      <Button fx:id="suljeButton" cancelButton="true" layoutX="534.0" layoutY="355.0" mnemonicParsing="false" onAction="#suljeButtonOnAction" text="Sulje">
+      <Button fx:id="suljeButton" cancelButton="true" layoutX="958.0" layoutY="723.0" mnemonicParsing="false" onAction="#suljeButtonOnAction" text="Sulje">
          <cursor>
             <Cursor fx:constant="CLOSED_HAND" />
          </cursor>

@@ -5,15 +5,15 @@ import java.util.ArrayList;
 
 
 public class SQL_yhteys {
-    // Huom! Vaihda user & password, tarkista myös url
+    // Huom! Vaihda user & password, tarkista myös url !
     String url = "jdbc:mysql://localhost:3306/vn?ServerTimezone=Helsinki/Finland";
     String user = "root";
-    String password = "Olavi99?";
+    String password = "scape123";
 
 
     public static Connection getYhteys() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/vn?serverTimezone=Europe/Helsinki";
-        String user = "root", password = "Olavi99?";
+        String user = "root", password = "scape123";
         Connection conn = null;
 
         try {
@@ -28,28 +28,39 @@ public class SQL_yhteys {
 
 
     }
-    // metodi, joka tulostaa tietokannan jokaisen asiakkaan etunimen, sukunimen ja lähiosoitteen
-    public static void getAsiakkaat() throws SQLException{
+
+    public static ArrayList<Asiakas> getAsiakkaat() throws SQLException{
         String sql = "SELECT * " +
                 "FROM asiakas";
+        ArrayList<Asiakas> asiakkaat = new ArrayList<Asiakas>();
 
         try (Connection conn = SQL_yhteys.getYhteys();
              Statement stmt  = conn.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)) {
 
+            Asiakas asiakas = null;
+
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getString("etunimi") + "\t" +
-                        rs.getString("sukunimi")  + "\t" +
-                        rs.getString("lahiosoite"));
+                String asiakasEtuNimi = rs.getString("etunimi");
+                String asiakasSukuNimi = rs.getString("sukunimi");
+                String asiakasOsoite = rs.getString("lahiosoite");
+                int asiakas_id = rs.getInt("asiakas_id");
+                String asiakasEmail = rs.getString("email");
+                String asiakasPuhNro = rs.getString("puhelinnro");
+                String asiakasPostinro = rs.getString("postinro");
 
+                asiakas = new Asiakas(asiakas_id, asiakasPostinro, asiakasEtuNimi, asiakasSukuNimi, asiakasOsoite, asiakasEmail, asiakasPuhNro);
+                asiakkaat.add(asiakas);
             }
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        return asiakkaat;
     }
 
-    // metodi, joka tulostaa tietokannan jokaisen mökin nimen, katuosoitteen ja kuvauksen
+
     public static ArrayList<Mokki> getMokit() throws SQLException{
         String sql = "SELECT * " +
                 "FROM mokki";
@@ -63,9 +74,6 @@ public class SQL_yhteys {
 
             // loop through the result set
             while (rs.next()) {
-                // int mokki_id, int toimintaalue_id,
-                // String postinro, String mokkinimi,
-                // String katuosoite,String kuvaus, int henkilomaara,String varustelu
                 String mokkiNimi = rs.getString("mokkinimi");
                 String Osoite = rs.getString("katuosoite");
                 String Kuvaus = rs.getString("kuvaus");

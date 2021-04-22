@@ -20,23 +20,7 @@ public class HallintaController {
     private VBox tietoVBox;
 
 
-    public void mokvButtonOnAction(ActionEvent actionEvent) throws IOException {
-        Parent varaustenHallintaan = FXMLLoader.load(getClass().getResource("varaushallinta.fxml"));
-        Scene varaushallintaScene = new Scene(varaustenHallintaan);
-
-        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        window.setScene(varaushallintaScene);
-        window.show();
-    }
-
-    public void astietButtonOnAction(ActionEvent actionEvent) {
-    }
-
-    public void toimalueButtonOnAction(ActionEvent actionEvent) {
-    }
-
-    public void palvhalButtonOnAction(ActionEvent actionEvent) {
-    }
+    
 
     public void hallinnastakotiinButtonOnAction(ActionEvent actionEvent) throws IOException {
         Parent toiseenNakymaan = FXMLLoader.load(getClass().getResource("kotinakyma.fxml"));

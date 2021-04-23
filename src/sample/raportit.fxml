@@ -14,8 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.HallintaController">
+<BorderPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.RaportitController">
     <top>
         <HBox spacing="10.0" BorderPane.alignment="CENTER">
             <padding>
@@ -28,9 +27,9 @@
                     </font>
                 </Label>
                 <Pane prefHeight="3.0" prefWidth="209.0" />
-                <Button fx:id="mokkiButton" cancelButton="true" mnemonicParsing="false" onAction="#mokkiButtonOnAction" prefHeight="31.0" prefWidth="136.0" text="VARAUS" />
-                <Button fx:id="asiakasButton" mnemonicParsing="false" onAction="#asiakasButtonOnAction" prefHeight="31.0" prefWidth="118.0" text="HALLINTA" />
-                <Button fx:id="varausButton" mnemonicParsing="false" onAction="#varausButtonOnAction" prefHeight="31.0" prefWidth="118.0" text="RAPORTIT" />
+                <Button fx:id="varausButton" cancelButton="true" mnemonicParsing="false" onAction="#varausButtonOnAction" prefHeight="31.0" prefWidth="136.0" text="VARAUS" />
+                <Button fx:id="hallintaButton" mnemonicParsing="false" onAction="#hallintaButtonOnAction" prefHeight="31.0" prefWidth="118.0" text="HALLINTA" />
+                <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="118.0" text="RAPORTIT" />
             </children>
         </HBox>
     </top>

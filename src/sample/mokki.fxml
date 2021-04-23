@@ -18,6 +18,7 @@
                 <TextField fx:id="mokzipTextField" alignment="CENTER" layoutX="227.0" layoutY="127.0" onAction="#lisaamokkiButtonOnAction" promptText="Postinumero" />
                 <TextField fx:id="mokosoiteTextField" alignment="CENTER" layoutX="227.0" layoutY="165.0" onAction="#lisaamokkiButtonOnAction" promptText="Katuosoite" />
                 <TextField fx:id="mokhloTextField" alignment="CENTER" layoutX="227.0" layoutY="200.0" onAction="#lisaamokkiButtonOnAction" promptText="Henkilömäärä" />
+            <TextField fx:id="mokkiHintaTextField" alignment="CENTER" layoutX="227.0" layoutY="271.0" onAction="#lisaamokkiButtonOnAction" promptText="Hinta" />
             <TextArea fx:id="mokvarusteluTextArea" layoutX="399.0" layoutY="89.0" prefHeight="64.0" prefWidth="187.0" promptText="Mökin varustelu" />
             <TextArea fx:id="mokkuvausTextArea" layoutX="400.0" layoutY="165.0" prefHeight="97.0" prefWidth="185.0" promptText="Mökin kuvaus" />
                 <Button fx:id="lisaamokkiButton" layoutX="273.0" layoutY="312.0" mnemonicParsing="false" onAction="#lisaamokkiButtonOnAction" text="Lisää">
@@ -39,7 +40,7 @@
                   <Font name="System Bold" size="29.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="mokkialueChoiceBox" layoutX="226.0" layoutY="237.0" prefWidth="150.0" />
+            <ChoiceBox fx:id="mokkialueChoiceBox" layoutX="225.0" layoutY="237.0" prefWidth="150.0" />
             <Label layoutX="190.0" layoutY="241.0" text="Alue" />
             </children>
         </Pane>

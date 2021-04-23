@@ -24,7 +24,7 @@ public class MokkiController implements Initializable {
     ObservableList<String> list = FXCollections.observableArrayList(); // Alueet
     @FXML
     // Mökki
-    public TextField moknimiTextField, mokzipTextField, mokhloTextField, mokosoiteTextField;
+    public TextField moknimiTextField, mokzipTextField, mokhloTextField, mokosoiteTextField, mokkiHintaTextField;
     public TextArea mokvarusteluTextArea, mokkuvausTextArea;
     public ChoiceBox<String> mokkialueChoiceBox;
 
@@ -49,10 +49,11 @@ public class MokkiController implements Initializable {
         String hlolkm = mokhloTextField.getText();
         String varustelu = mokvarusteluTextArea.getText();
         String alueid = mokkialueChoiceBox.getValue();
-        String kysely = "INSERT INTO mokki(toimintaalue_id, postinro, mokkinimi, katuosoite, kuvaus, henkilomaara, varustelu) "
-                + "VALUES(?, ?, ?, ?, ?, ?, ?);";
+        String hinta = mokkiHintaTextField.getText();
+        String kysely = "INSERT INTO mokki(toimintaalue_id, postinro, mokkinimi, katuosoite, kuvaus, henkilomaara, varustelu, hinta) "
+                + "VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
 
-        SQL_yhteys.setMokit(kysely, alueid, zip, nimi, osoite, kuvaus, hlolkm, varustelu);
+        SQL_yhteys.setMokit(kysely, alueid, zip, nimi, osoite, kuvaus, hlolkm, varustelu, hinta);
         SQL_yhteys.getMokit();
     }
 

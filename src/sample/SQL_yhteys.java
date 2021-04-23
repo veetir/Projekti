@@ -8,12 +8,12 @@ public class SQL_yhteys {
     // Huom! Vaihda user & password, tarkista myös url !
     String url = "jdbc:mysql://localhost:3306/vn?ServerTimezone=Helsinki/Finland";
     String user = "root";
-    String password = "Olavi99?";
+    String password = "scape123";
 
 
     public static Connection getYhteys() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/vn?serverTimezone=Europe/Helsinki";
-        String user = "root", password = "Olavi99?";
+        String user = "root", password = "scape123";
         Connection conn = null;
 
         try {
@@ -153,7 +153,7 @@ public class SQL_yhteys {
         return mokit;
     }
 
-    public static void setMokit(String kysely, String alueid, String zip, String nimi, String osoite, String kuvaus, String hlolkm, String varustelu) throws SQLException{
+    public static void setMokit(String kysely, String alueid, String zip, String nimi, String osoite, String kuvaus, String hlolkm, String varustelu, String hinta) throws SQLException{
         try {
             Connection conn = SQL_yhteys.getYhteys();
             PreparedStatement pstmt = conn.prepareStatement(kysely,
@@ -165,6 +165,7 @@ public class SQL_yhteys {
             pstmt.setString(5, kuvaus);
             pstmt.setString(6, hlolkm);
             pstmt.setString(7, varustelu);
+            pstmt.setString(8, hinta);
 
             int rowAffected = pstmt.executeUpdate();
             if (rowAffected == 1) {

@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class Tyokalu {
 
-    static void vaihdaIkkuna(String fxml, ActionEvent ikkuna) throws IOException {
+    public static void vaihdaIkkuna(String fxml, ActionEvent ikkuna) throws IOException {
         Parent toiseenNakymaan = FXMLLoader.load(Tyokalu.class.getResource(fxml));
         Scene toinenScene = new Scene(toiseenNakymaan);
 

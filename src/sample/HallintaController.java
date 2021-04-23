@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+//import static sample.Tyokalu.vaihdaIkkuna;
+
 public class HallintaController {
 
     @FXML
@@ -109,20 +111,10 @@ public class HallintaController {
     }
 
     public void varausButtonOnAction(ActionEvent actionEvent) throws IOException {
-        Parent toiseenNakymaan = FXMLLoader.load(getClass().getResource("varaus.fxml"));
-        Scene toinenScene = new Scene(toiseenNakymaan);
-
-        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        window.setScene(toinenScene);
-        window.show();
+        Tyokalu.vaihdaIkkuna("varaus.fxml", actionEvent);
     }
 
     public void raportitButtonOnAction(ActionEvent actionEvent) throws IOException {
-        Parent toiseenNakymaan = FXMLLoader.load(getClass().getResource("raportit.fxml"));
-        Scene toinenScene = new Scene(toiseenNakymaan);
-
-        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        window.setScene(toinenScene);
-        window.show();
+        Tyokalu.vaihdaIkkuna("raportit.fxml", actionEvent);
     }
 }

@@ -6,7 +6,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -14,8 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.HallintaController">
+<BorderPane fx:id="varausNaytto" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.HallintaController">
    <top>
       <HBox spacing="10.0" BorderPane.alignment="CENTER">
          <padding>
@@ -28,9 +26,9 @@
                </font>
             </Label>
             <Pane prefHeight="3.0" prefWidth="209.0" />
-            <Button fx:id="mokkiButton" cancelButton="true" mnemonicParsing="false" onAction="#mokkiButtonOnAction" prefHeight="31.0" prefWidth="136.0" text="VARAUS" />
-            <Button fx:id="asiakasButton" mnemonicParsing="false" onAction="#asiakasButtonOnAction" prefHeight="31.0" prefWidth="118.0" text="HALLINTA" />
-            <Button fx:id="varausButton" mnemonicParsing="false" onAction="#varausButtonOnAction" prefHeight="31.0" prefWidth="118.0" text="RAPORTIT" />
+            <Button fx:id="mokkiButton" cancelButton="true" mnemonicParsing="false" onAction="#mokkiButtonOnAction" prefHeight="43.0" prefWidth="136.0" text="VARAUS" />
+            <Button fx:id="hallintaButton" mnemonicParsing="false" onAction="#hallintaButtonOnAction" prefHeight="43.0" prefWidth="118.0" text="HALLINTA" />
+            <Button fx:id="varausButton" mnemonicParsing="false" onAction="#varausButtonOnAction" prefHeight="43.0" prefWidth="118.0" text="RAPORTIT" />
          </children>
       </HBox>
    </top>
@@ -70,11 +68,4 @@
          </padding>
       </VBox>
    </left>
-   <center>
-      <ScrollPane BorderPane.alignment="CENTER">
-         <content>
-            <VBox fx:id="tietoVBox" prefHeight="568.0" prefWidth="850.0" spacing="15.0" />
-         </content>
-      </ScrollPane>
-   </center>
 </BorderPane>

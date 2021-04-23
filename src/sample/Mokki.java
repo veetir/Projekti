@@ -9,8 +9,9 @@ public class Mokki {
     private String kuvaus;
     private int henkilomaara;
     private String varustelu;
+    private long hinta;
 
-    public Mokki(int mokki_id, int toimintaalue_id, String postinro, String mokkinimi, String katuosoite,String kuvaus, int henkilomaara,String varustelu) {
+    public Mokki(int mokki_id, int toimintaalue_id, String postinro, String mokkinimi, String katuosoite,String kuvaus, int henkilomaara,String varustelu, long hinta) {
         this.mokki_id = mokki_id;
         this.toimintaalue_id = toimintaalue_id;
         this.postinro = postinro;
@@ -19,16 +20,25 @@ public class Mokki {
         this.kuvaus = kuvaus;
         this.henkilomaara = henkilomaara;
         this.varustelu = varustelu;
+        this.hinta = hinta;
 
     }
     
+    public long getHinta() {
+        return hinta;
+    }
+
+    public void setHinta(long hinta) {
+        this.hinta = hinta;
+    }
+
     public int get_mokki_id() {
         return this.mokki_id;
     }
     public int get_toimintaalue_id() {
         return this.toimintaalue_id;
     }
-    public String get_mostinro() {
+    public String get_postinro() {
         return this.postinro;
     }
     public String get_mokkinimi() {
@@ -73,6 +83,6 @@ public class Mokki {
 
     public String toString() {
         return "mokki_id: "+this.mokki_id+"\ntoimintaalue_id_ "+this.toimintaalue_id+"\npostinro: "+this.postinro+"\nmokkinimi: "+this.mokkinimi+"\nkatuosoite: "+this.katuosoite+
-        "\nkuvaus: "+this.kuvaus+"\nhenkilomaara: "+this.henkilomaara+"\nvarustelu: "+this.varustelu;
+        "\nkuvaus: "+this.kuvaus+"\nhenkilomaara: "+this.henkilomaara+"\nvarustelu: "+this.varustelu+"\nhinta: "+this.hinta;
     }
 }

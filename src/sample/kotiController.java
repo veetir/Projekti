@@ -16,7 +16,7 @@ public class kotiController {
     private Button suljeButton;
 
     public void hallintaButtonOnAction(ActionEvent actionEvent) throws IOException {
-        Parent toiseenNakymaan = FXMLLoader.load(getClass().getResource("hallinta.fxml"));
+        Parent toiseenNakymaan = FXMLLoader.load(getClass().getResource("varaus.fxml"));
         Scene toinenScene = new Scene(toiseenNakymaan);
 
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();

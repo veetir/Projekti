@@ -9,19 +9,25 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+
 public class RaportitController {
-    public void raportistaKotiinButtonOnAction(ActionEvent actionEvent) throws IOException {
-        Parent toiseenNakymaan = FXMLLoader.load(getClass().getResource("kotinakyma.fxml"));
+
+    public void varausButtonOnAction(ActionEvent actionEvent) throws IOException {
+        Parent toiseenNakymaan = FXMLLoader.load(getClass().getResource("varaus.fxml"));
         Scene toinenScene = new Scene(toiseenNakymaan);
 
-        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         window.setScene(toinenScene);
         window.show();
+
     }
 
-    public void raporttiAikaButton(ActionEvent actionEvent) {
-    }
+    public void hallintaButtonOnAction(ActionEvent actionEvent) throws IOException {
+        Parent toiseenNakymaan = FXMLLoader.load(getClass().getResource("hallinta.fxml"));
+        Scene toinenScene = new Scene(toiseenNakymaan);
 
-    public void raporttiToimiAlueButtonOnAction(ActionEvent actionEvent) {
+        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        window.setScene(toinenScene);
+        window.show();
     }
 }

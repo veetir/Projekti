@@ -120,11 +120,10 @@ public class SQL_yhteys {
         return palvelut;
     }
 
-
     public static ArrayList<Mokki> getMokit() throws SQLException{
         String sql = "SELECT * " +
                 "FROM mokki";
-                ArrayList<Mokki> mokit = new ArrayList<Mokki>();
+        ArrayList<Mokki> mokit = new ArrayList<Mokki>();
         
         try (Connection conn = SQL_yhteys.getYhteys();
              Statement stmt  = conn.createStatement();
@@ -153,6 +152,7 @@ public class SQL_yhteys {
         }
         return mokit;
     }
+
     public static void setMokit(String kysely, String alueid, String zip, String nimi, String osoite, String kuvaus, String hlolkm, String varustelu) throws SQLException{
         try {
             Connection conn = SQL_yhteys.getYhteys();

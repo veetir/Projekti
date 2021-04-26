@@ -2,25 +2,19 @@ package sample;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.stage.Stage;
+import javafx.fxml.Initializable;
+import javafx.scene.control.DatePicker;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-//import static sample.Tyokalu.vaihdaIkkuna;
 
-public class HallintaController {
+public class HallintaController implements Initializable {
 
-    @FXML
+    /*@FXML
     private BorderPane varausNaytto;
 
     @FXML
@@ -107,7 +101,15 @@ public class HallintaController {
         } catch (SQLException e) {
             e.getMessage();
         }
+    }*/
 
+    @FXML
+    public DatePicker loppuPvmDatePicker, alkuPvmDatePicker;
+    public Pane aikaPane;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+       // alkuPvmDatePicker.set
     }
 
     public void varausButtonOnAction(ActionEvent actionEvent) throws IOException {
@@ -116,5 +118,12 @@ public class HallintaController {
 
     public void raportitButtonOnAction(ActionEvent actionEvent) throws IOException {
         Tyokalu.vaihdaIkkuna("raportit.fxml", actionEvent);
+    }
+
+    public void hallintaButtonOnAction(ActionEvent actionEvent) {
+    }
+
+
+    public void loppuAikaEnable(MouseEvent mouseEvent) {
     }
 }

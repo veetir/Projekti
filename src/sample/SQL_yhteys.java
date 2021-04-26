@@ -13,12 +13,12 @@ public class SQL_yhteys {
     // Huom! Vaihda user & password, tarkista myös url !
     String url = "jdbc:mysql://localhost:3306/vn?ServerTimezone=Helsinki/Finland";
     String user = "root";
-    String password = "Olavi99?";
+    String password = "scape123";
 
 
     public static Connection getYhteys() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/vn?serverTimezone=Europe/Helsinki";
-        String user = "root", password = "Olavi99?";
+        String user = "root", password = "scape123";
         Connection conn = null;
 
         try {

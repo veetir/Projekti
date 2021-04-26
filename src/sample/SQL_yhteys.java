@@ -1,19 +1,24 @@
 package sample;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
+import com.mysql.cj.protocol.Resultset;
 
 
 public class SQL_yhteys {
     // Huom! Vaihda user & password, tarkista myös url !
     String url = "jdbc:mysql://localhost:3306/vn?ServerTimezone=Helsinki/Finland";
     String user = "root";
-    String password = "scape123";
+    String password = "Olavi99?";
 
 
     public static Connection getYhteys() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/vn?serverTimezone=Europe/Helsinki";
-        String user = "root", password = "scape123";
+        String user = "root", password = "Olavi99?";
         Connection conn = null;
 
         try {
@@ -56,6 +61,38 @@ public class SQL_yhteys {
             System.out.println(ex.getMessage());
         }
         return asiakkaat;
+    }
+
+    // hakee asiakas_id:n tietokannasta ja palauttaa sen. palauttaa -1 jos ei löydy
+    public static int getAsiakasId(String etunimi, String sukunimi, String lahiosoite, String email, String puhelinnro, String postinro) throws SQLException {
+        int asiakas_id = -1;
+        String sql = "SELECT asiakas_id FROM asiakas "+
+        "WHERE etunimi = ?"+
+        "AND sukunimi = ?"+
+        "AND lahiosoite = ?"+
+        "AND email = ?"+
+        "AND puhelinnro = ?"+
+        "AND postinro = ? ;";
+
+        try (Connection conn = SQL_yhteys.getYhteys();
+             PreparedStatement stmt  = conn.prepareStatement(sql);) {
+                stmt.setString(1, etunimi);
+                stmt.setString(2, sukunimi);
+                stmt.setString(3, lahiosoite);
+                stmt.setString(4, email);
+                stmt.setString(5, puhelinnro);
+                stmt.setString(6, postinro);
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                asiakas_id = rs.getInt("asiakas_id");
+                }
+                rs.close();
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return asiakas_id;
+
     }
 
     public static ArrayList<Varaus> getVaraukset() throws SQLException{
@@ -186,6 +223,7 @@ public class SQL_yhteys {
         }
     }
     public static void setAsiakkaat(String kysely, String zip, String etunimi, String sukunimi, String osoite, String email, String puhnro) throws SQLException{
+        
         try {
             Connection conn = SQL_yhteys.getYhteys();
             PreparedStatement pstmt = conn.prepareStatement(kysely,
@@ -214,6 +252,91 @@ public class SQL_yhteys {
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         }
+    }
+
+    //Lisää asiakkaan tietokantaan ja palauttaa luodun asiakkaan asiakas_id:n
+    public static int insertAsiakas(String zip, String etunimi, String sukunimi, String osoite, String email, String puhnro) throws SQLException{
+        ResultSet rs = null;
+        int asiakas_id = 0;
+        String sql = "INSERT INTO asiakas(postinro,etunimi, sukunimi, lahiosoite, email, puhelinnro) "+
+        "VALUES(?, ?, ?, ?, ?, ?);";
+        try {
+            Connection conn = SQL_yhteys.getYhteys();
+            PreparedStatement pstmt = conn.prepareStatement(sql,
+                    Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, zip);
+            pstmt.setString(2, etunimi);
+            pstmt.setString(3, sukunimi);
+            pstmt.setString(4, osoite);
+            pstmt.setString(5, email);
+            pstmt.setString(6, puhnro);
+
+            int rowAffected = pstmt.executeUpdate();
+            if(rowAffected == 1)
+            {
+                // get candidate id
+                rs = pstmt.getGeneratedKeys();
+                if(rs.next())
+                    asiakas_id = rs.getInt(1);
+
+            }
+
+
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        }finally {
+            try {
+                if(rs != null)  rs.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return asiakas_id;
+    }
+
+    public static int insertVaraus(int asiakas_id, int mokki_id, LocalDate saapumisPvm, LocalDate lahtoPvm) throws SQLException{
+        ResultSet rs = null;
+        int varaus_id = 0;
+        LocalDate tanaan = LocalDate.now();
+
+        String sql = "INSERT INTO varaus(asiakas_id, mokki_mokki_id, varattu_pvm, varattu_alkupvm, varattu_loppupvm) "+
+        "VALUES(?, ?, ?, ?, ?);";
+        try {
+            Connection conn = SQL_yhteys.getYhteys();
+            PreparedStatement pstmt = conn.prepareStatement(sql,
+                    Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, asiakas_id);
+            pstmt.setInt(2, mokki_id);
+            pstmt.setDate(3, java.sql.Date.valueOf(tanaan));
+            pstmt.setDate(4, java.sql.Date.valueOf(saapumisPvm));
+            pstmt.setDate(5, java.sql.Date.valueOf(lahtoPvm));
+
+            int rowAffected = pstmt.executeUpdate();
+            if(rowAffected == 1)
+            {
+                // get candidate id
+                rs = pstmt.getGeneratedKeys();
+                if(rs.next())
+                    varaus_id = rs.getInt(1);
+
+            }
+            System.out.println("Uusi varaus numerolla: "+varaus_id);
+
+
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        }finally {
+            try {
+                if(rs != null)  rs.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return varaus_id;
     }
 
 }

@@ -39,8 +39,8 @@
       <VBox prefHeight="762.0" prefWidth="130.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <ComboBox prefWidth="150.0" promptText="toiminta-alue" />
-            <DatePicker promptText="saapumispäivä" />
-            <DatePicker promptText="lähtöpäivä" />
+            <DatePicker fx:id="saapumisPaivaDp" promptText="saapumispäivä" />
+            <DatePicker fx:id="lahtopaivaDp" promptText="lähtöpäivä" />
             <Pane prefHeight="18.0" prefWidth="120.0" />
             <TextField promptText="min. hinta" />
             <TextField promptText="max. hinta" />

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
@@ -32,6 +33,11 @@ public class VarausController {
 
     @FXML
     private BorderPane varausNaytto;
+    @FXML
+    private DatePicker saapumisPaivaDp;
+
+    @FXML
+    private DatePicker lahtopaivaDp;
 
 
 
@@ -41,14 +47,11 @@ public class VarausController {
         sp.setContent(mokkiLista);
         varausNaytto.setCenter(sp);
 
-        //tietoVBox.getChildren().clear();
         try {
             ArrayList<Mokki> mokit = SQL_yhteys.getMokit();
 
             for (Mokki mokki : mokit) {
-                //String tiedot = mokki.toString();
-                //Label teksti = new Label(tiedot);
-                //tietoVBox.getChildren().add(teksti);
+
                 HBox mokkiPaneeli = new HBox(10);
                 Label teksti = new Label(mokki.toString());
                 Pane vali = new Pane();
@@ -57,8 +60,6 @@ public class VarausController {
                 varaaBtn.setAlignment(Pos.BOTTOM_RIGHT);
                 mokkiPaneeli.getChildren().addAll(teksti, vali, varaaBtn);
                 mokkiLista.getChildren().add(mokkiPaneeli);
-                //tietoVBox.getChildren().add(mokkiPaneeli);
-                //tietoVBox.setPrefHeight(tietoVBox.getHeight()+mokkiPaneeli.getHeight());
                 varaaBtn.setOnAction(e -> {
                     VBox asiakasTiedot = new VBox(5);
                     TextField etunimiTF = new TextField();
@@ -91,6 +92,30 @@ public class VarausController {
                     peruutaBtn.setOnAction(peruuta -> {
                         mokkiPaneeli.getChildren().remove(asiakasTiedot);
                         mokkiPaneeli.getChildren().add(varaaBtn);
+                    });
+                    teeVarausBtn.setOnAction(varaa -> {
+                        String etunimi = etunimiTF.getText();
+                        String sukunimi = sukunimiTF.getText();
+                        String lahiosoite = osoiteTF.getText();
+                        String email = sahkopostiTF.getText();
+                        String puhelinnro = puhelinTF.getText();
+                        String postinro = postinroTF.getText();
+
+                        try {
+                            int asiakas_id = SQL_yhteys.getAsiakasId(etunimi, sukunimi, lahiosoite, email, puhelinnro, postinro);
+                            if (asiakas_id == -1) {
+                                asiakas_id = SQL_yhteys.insertAsiakas(postinro, etunimi, sukunimi, lahiosoite, email, puhelinnro);
+                                System.out.println("Luotiin uusi asiakas numerolla: "+asiakas_id);
+                            }
+                            else {
+                                System.out.println("asiakas on jo olemassa numerolla: "+asiakas_id);
+                            }
+                            int varaus_id = SQL_yhteys.insertVaraus(asiakas_id, mokki.get_mokki_id(), saapumisPaivaDp.getValue(), lahtopaivaDp.getValue());
+                            System.out.println("uusi varaus numerolla: "+varaus_id);
+                        } catch (SQLException ex) {
+                            //TODO: handle exception
+                            ex.printStackTrace();
+                        }
                     });
                 });
 

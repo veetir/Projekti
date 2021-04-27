@@ -31,24 +31,17 @@ import java.sql.SQLException;
 
 public class RaportitController {
 
+    @FXML
+    private BorderPane varausNaytto;
 
+    public void raportitButtonOnAction(ActionEvent event) {
 
+    }
     public void varausButtonOnAction(ActionEvent actionEvent) throws IOException {
-        Parent toiseenNakymaan = FXMLLoader.load(getClass().getResource("varaus.fxml"));
-        Scene toinenScene = new Scene(toiseenNakymaan);
-
-        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        window.setScene(toinenScene);
-        window.show();
-
+        Tyokalu.vaihdaIkkuna("varaus.fxml", actionEvent);
     }
 
     public void hallintaButtonOnAction(ActionEvent actionEvent) throws IOException {
-        Parent toiseenNakymaan = FXMLLoader.load(getClass().getResource("hallinta.fxml"));
-        Scene toinenScene = new Scene(toiseenNakymaan);
-
-        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        window.setScene(toinenScene);
-        window.show();
+        Tyokalu.vaihdaIkkuna("hallinta.fxml", actionEvent);
     }
 }

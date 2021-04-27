@@ -117,4 +117,34 @@ public class HallintaController {
     public void raportitButtonOnAction(ActionEvent actionEvent) throws IOException {
         Tyokalu.vaihdaIkkuna("raportit.fxml", actionEvent);
     }
+
+    public void varausAlkuPvmOnAction(ActionEvent actionEvent) {
+    }
+
+    public void varausLoppuPvmOnAction(ActionEvent actionEvent) {
+    }
+
+    public void lisaaMokkiButtonOnAction(ActionEvent actionEvent) {
+    }
+
+    public void muokkaaMokkiaButtonOnAction(ActionEvent actionEvent) {
+    }
+
+    public void poistaMokkiButtonOnAction(ActionEvent actionEvent) {
+    }
+
+    public void lisaaAsiakasButtonOnAction(ActionEvent actionEvent) {
+    }
+
+    public void muokkaaAsiakastaButtonOnAction(ActionEvent actionEvent) {
+    }
+
+    public void poistaAsiakasButtonOnAction(ActionEvent actionEvent) {
+    }
+
+    public void muokkaaHallintaaButtonOnAction(ActionEvent actionEvent) {
+    }
+
+    public void poistaVarausButtonOnAction(ActionEvent actionEvent) {
+    }
 }

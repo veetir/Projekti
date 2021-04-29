@@ -2,19 +2,25 @@ package sample;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.DatePicker;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
+//import static sample.Tyokalu.vaihdaIkkuna;
 
-public class HallintaController implements Initializable {
+public class HallintaController {
 
-    /*@FXML
+    @FXML
     private BorderPane varausNaytto;
 
     @FXML
@@ -101,15 +107,7 @@ public class HallintaController implements Initializable {
         } catch (SQLException e) {
             e.getMessage();
         }
-    }*/
 
-    @FXML
-    public DatePicker loppuPvmDatePicker, alkuPvmDatePicker;
-    public Pane aikaPane;
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-       // alkuPvmDatePicker.set
     }
 
     public void varausButtonOnAction(ActionEvent actionEvent) throws IOException {
@@ -120,10 +118,33 @@ public class HallintaController implements Initializable {
         Tyokalu.vaihdaIkkuna("raportit.fxml", actionEvent);
     }
 
-    public void hallintaButtonOnAction(ActionEvent actionEvent) {
+    public void varausAlkuPvmOnAction(ActionEvent actionEvent) {
     }
 
+    public void varausLoppuPvmOnAction(ActionEvent actionEvent) {
+    }
 
-    public void loppuAikaEnable(MouseEvent mouseEvent) {
+    public void lisaaMokkiButtonOnAction(ActionEvent actionEvent) {
+    }
+
+    public void muokkaaMokkiaButtonOnAction(ActionEvent actionEvent) {
+    }
+
+    public void poistaMokkiButtonOnAction(ActionEvent actionEvent) {
+    }
+
+    public void lisaaAsiakasButtonOnAction(ActionEvent actionEvent) {
+    }
+
+    public void muokkaaAsiakastaButtonOnAction(ActionEvent actionEvent) {
+    }
+
+    public void poistaAsiakasButtonOnAction(ActionEvent actionEvent) {
+    }
+
+    public void muokkaaHallintaaButtonOnAction(ActionEvent actionEvent) {
+    }
+
+    public void poistaVarausButtonOnAction(ActionEvent actionEvent) {
     }
 }

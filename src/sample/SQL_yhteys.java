@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import com.mysql.cj.protocol.Resultset;
+
 
 
 public class SQL_yhteys {
@@ -15,7 +15,7 @@ public class SQL_yhteys {
     String user = "root";
     String password = "scape123";
 
-
+    // Palauttaa SQL yhteys olion
     public static Connection getYhteys() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/vn?serverTimezone=Europe/Helsinki";
         String user = "root", password = "scape123";
@@ -63,7 +63,7 @@ public class SQL_yhteys {
         return asiakkaat;
     }
 
-    // hakee asiakas_id:n tietokannasta ja palauttaa sen. palauttaa -1 jos ei löydy
+    // hakee asiakas_id:n tietokannasta argumenttien perusteella ja palauttaa sen. Palauttaa -1 jos asiakasta ei löydy.
     public static int getAsiakasId(String etunimi, String sukunimi, String lahiosoite, String email, String puhelinnro, String postinro) throws SQLException {
         int asiakas_id = -1;
         String sql = "SELECT asiakas_id FROM asiakas "+
@@ -159,7 +159,7 @@ public class SQL_yhteys {
 
     public static ArrayList<Mokki> getMokit() throws SQLException{
         String sql = "SELECT * " +
-                "FROM mokki";
+                "FROM mokkihaku";
         ArrayList<Mokki> mokit = new ArrayList<Mokki>();
         
         try (Connection conn = SQL_yhteys.getYhteys();
@@ -175,12 +175,52 @@ public class SQL_yhteys {
                 String Kuvaus = rs.getString("kuvaus");
                 int mokki_id = rs.getInt("mokki_id");
                 String Varustelu = rs.getString("kuvaus");
-                int toimintaAlue = rs.getInt("toimintaalue_id");
+                int toimintaAlue_id = rs.getInt("toimintaalue_id");
+                String toimintaAlue_nimi = rs.getString("alue");
                 String postinro = rs.getString("postinro");
                 int henkilomaara = rs.getInt("henkilomaara");
                 long hinta = rs.getLong("hinta");
 
-                mokki = new Mokki(mokki_id, toimintaAlue, postinro, mokkiNimi, Osoite, Kuvaus, henkilomaara, Varustelu, hinta);
+                mokki = new Mokki(mokki_id, toimintaAlue_id, toimintaAlue_nimi, postinro, mokkiNimi, Osoite, Kuvaus, henkilomaara, Varustelu, hinta);
+                mokit.add(mokki);
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return mokit;
+    }
+
+    // Hakee tietokannasta mökit jotka ovat vapaana välillä alkupvm - loppupvm, ja palauttaa listana.
+    public static ArrayList<Mokki> getMokit(LocalDate alkupvm, LocalDate loppupvm) throws SQLException{
+        String sql = " select * from mokkihaku "+
+        "where mokki_id not in(select mokki_mokki_id from varaus "+ 
+        "where (varattu_alkupvm between ? and ? - INTERVAL 1 day) "+
+        "or (varattu_loppupvm between ? and ? - INTERVAL 1 day));";
+        ArrayList<Mokki> mokit = new ArrayList<Mokki>();
+        
+        try (Connection conn = SQL_yhteys.getYhteys();
+             PreparedStatement stmt  = conn.prepareStatement(sql);) {
+            stmt.setDate(1, java.sql.Date.valueOf(alkupvm));
+            stmt.setDate(2, java.sql.Date.valueOf(loppupvm));
+            stmt.setDate(3, java.sql.Date.valueOf(alkupvm));
+            stmt.setDate(4, java.sql.Date.valueOf(loppupvm));
+            ResultSet rs = stmt.executeQuery();
+
+            // loop through the result set
+            while (rs.next()) {
+                String mokkiNimi = rs.getString("mokkinimi");
+                String Osoite = rs.getString("katuosoite");
+                String Kuvaus = rs.getString("kuvaus");
+                int mokki_id = rs.getInt("mokki_id");
+                String Varustelu = rs.getString("kuvaus");
+                int toimintaAlue_id = rs.getInt("toimintaalue_id");
+                String toimintaAlue_nimi = rs.getString("alue");
+                String postinro = rs.getString("postinro");
+                int henkilomaara = rs.getInt("henkilomaara");
+                long hinta = rs.getLong("hinta");
+
+                Mokki mokki = new Mokki(mokki_id, toimintaAlue_id, toimintaAlue_nimi, postinro, mokkiNimi, Osoite, Kuvaus, henkilomaara, Varustelu, hinta);
                 mokit.add(mokki);
             }
             
@@ -296,6 +336,7 @@ public class SQL_yhteys {
         return asiakas_id;
     }
 
+    //Lisää varauksen tietokantaan ja palauttaa luodun varauksen ID:n
     public static int insertVaraus(int asiakas_id, int mokki_id, LocalDate saapumisPvm, LocalDate lahtoPvm) throws SQLException{
         ResultSet rs = null;
         int varaus_id = 0;
@@ -337,6 +378,28 @@ public class SQL_yhteys {
             }
         }
         return varaus_id;
+    }
+
+    // Hakee tietokannasta toiminta-alueiden nimet ja palauttaa listana. 
+    public static ArrayList<String> getToimintaAlueet() throws SQLException {
+        String sql = "SELECT * FROM toimintaalue";
+        ArrayList<String> alueet = new ArrayList<String>();
+
+        try (Connection conn = SQL_yhteys.getYhteys();
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)) {
+
+            // loop through the result set
+            while (rs.next()) {
+                String alue = rs.getString("nimi");
+                alueet.add(alue);
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return alueet;
+
     }
 
 }

@@ -3,6 +3,7 @@ package sample;
 public class Mokki {
     private int mokki_id;
     private int toimintaalue_id;
+    private String toimintaalue_nimi;
     private String postinro;
     private String mokkinimi;
     private String katuosoite;
@@ -11,9 +12,10 @@ public class Mokki {
     private String varustelu;
     private long hinta;
 
-    public Mokki(int mokki_id, int toimintaalue_id, String postinro, String mokkinimi, String katuosoite,String kuvaus, int henkilomaara,String varustelu, long hinta) {
+    public Mokki(int mokki_id, int toimintaalue_id,String toimintaalue_nimi, String postinro, String mokkinimi, String katuosoite,String kuvaus, int henkilomaara,String varustelu, long hinta) {
         this.mokki_id = mokki_id;
         this.toimintaalue_id = toimintaalue_id;
+        this.toimintaalue_nimi = toimintaalue_nimi;
         this.postinro = postinro;
         this.mokkinimi = mokkinimi;
         this.katuosoite = katuosoite;
@@ -24,6 +26,14 @@ public class Mokki {
 
     }
     
+    public String getToimintaalue_nimi() {
+        return toimintaalue_nimi;
+    }
+
+    public void setToimintaalue_nimi(String toimintaalue_nimi) {
+        this.toimintaalue_nimi = toimintaalue_nimi;
+    }
+
     public long getHinta() {
         return hinta;
     }
@@ -82,7 +92,7 @@ public class Mokki {
     }
 
     public String toString() {
-        return "mokki_id: "+this.mokki_id+"\ntoimintaalue_id_ "+this.toimintaalue_id+"\npostinro: "+this.postinro+"\nmokkinimi: "+this.mokkinimi+"\nkatuosoite: "+this.katuosoite+
+        return "mokki_id: "+this.mokki_id+"\ntoimintaalue_id_ "+this.toimintaalue_id+"\ntoiminta-alue: "+this.toimintaalue_nimi+"\npostinro: "+this.postinro+"\nmokkinimi: "+this.mokkinimi+"\nkatuosoite: "+this.katuosoite+
         "\nkuvaus: "+this.kuvaus+"\nhenkilomaara: "+this.henkilomaara+"\nvarustelu: "+this.varustelu+"\nhinta: "+this.hinta;
     }
 }

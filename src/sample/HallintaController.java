@@ -23,8 +23,8 @@ public class HallintaController {
     @FXML
     private BorderPane varausNaytto;
 
-    @FXML
-    void hallintaButtonOnAction(ActionEvent event) {
+    public void hallintaButtonOnAction(ActionEvent actionEvent) throws IOException {
+        Tyokalu.vaihdaIkkuna("hallinta.fxml", actionEvent);
     }
 
     public void varausButtonOnAction(ActionEvent actionEvent) throws IOException {

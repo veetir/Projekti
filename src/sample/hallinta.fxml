@@ -35,19 +35,19 @@
                         <Font size="18.0" />
                      </font></Label>
                </children></Pane>
-            <Pane>
+            <Pane prefHeight="43.0" prefWidth="427.0">
                <children>
-                      <Button fx:id="hallintaButton" layoutX="128.0" mnemonicParsing="false" onAction="#hallintaButtonOnAction" prefHeight="43.0" prefWidth="118.0" text="HALLINTA">
+                      <Button fx:id="hallintaButton" layoutX="146.0" mnemonicParsing="false" onAction="#hallintaButtonOnAction" prefHeight="43.0" prefWidth="136.0" text="HALLINTA">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                      <Button fx:id="varausButton" mnemonicParsing="false" onAction="#varausButtonOnAction" prefHeight="43.0" prefWidth="118.0" text="VARAUS">
+                      <Button fx:id="varausButton" mnemonicParsing="false" onAction="#varausButtonOnAction" prefHeight="43.0" prefWidth="136.0" text="VARAUS">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                      <Button fx:id="raportitButton" layoutX="256.0" mnemonicParsing="false" onAction="#raportitButtonOnAction" prefHeight="43.0" prefWidth="118.0" text="RAPORTIT">
+                      <Button fx:id="raportitButton" layoutX="291.0" mnemonicParsing="false" onAction="#raportitButtonOnAction" prefHeight="43.0" prefWidth="136.0" text="RAPORTIT">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>

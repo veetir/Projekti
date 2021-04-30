@@ -29,9 +29,13 @@
                <children>
                   <Label layoutX="58.0" layoutY="13.0" text="varaus" />
                </children></Pane>
-            <Button fx:id="varausButton" cancelButton="true" mnemonicParsing="false" prefHeight="43.0" prefWidth="136.0" text="VARAUS" />
-            <Button fx:id="hallintaButton" mnemonicParsing="false" onAction="#hallintaButtonOnAction" prefHeight="43.0" prefWidth="118.0" text="HALLINTA" />
-            <Button fx:id="raportitButton" mnemonicParsing="false" onAction="#raportitButtonOnAction" prefHeight="43.0" prefWidth="118.0" text="RAPORTIT" />
+            <Pane prefHeight="43.0" prefWidth="427.0">
+               <children>
+                  <Button fx:id="varausButton" cancelButton="true" mnemonicParsing="false" prefHeight="43.0" prefWidth="136.0" text="VARAUS" />
+                  <Button fx:id="hallintaButton" layoutX="146.0" mnemonicParsing="false" onAction="#hallintaButtonOnAction" prefHeight="43.0" prefWidth="136.0" text="HALLINTA" />
+                  <Button fx:id="raportitButton" layoutX="291.0" mnemonicParsing="false" onAction="#raportitButtonOnAction" prefHeight="43.0" prefWidth="136.0" text="RAPORTIT" />
+               </children>
+            </Pane>
          </children>
       </HBox>
    </top>

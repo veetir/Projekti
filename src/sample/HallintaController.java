@@ -16,10 +16,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-//import static sample.Tyokalu.vaihdaIkkuna;
-
 public class HallintaController {
-
+    
     @FXML
     private BorderPane varausNaytto;
 

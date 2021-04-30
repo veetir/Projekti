@@ -13,12 +13,12 @@ public class SQL_yhteys {
     // Huom! Vaihda user & password, tarkista myös url !
     String url = "jdbc:mysql://localhost:3306/vn?ServerTimezone=Helsinki/Finland";
     String user = "root";
-    String password = "scape123";
+    String password = "-----";
 
     // Palauttaa SQL yhteys olion
     public static Connection getYhteys() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/vn?serverTimezone=Europe/Helsinki";
-        String user = "root", password = "scape123";
+        String user = "root", password = "-----";
         Connection conn = null;
 
         try {
@@ -67,26 +67,26 @@ public class SQL_yhteys {
     public static int getAsiakasId(String etunimi, String sukunimi, String lahiosoite, String email, String puhelinnro, String postinro) throws SQLException {
         int asiakas_id = -1;
         String sql = "SELECT asiakas_id FROM asiakas "+
-        "WHERE etunimi = ?"+
-        "AND sukunimi = ?"+
-        "AND lahiosoite = ?"+
-        "AND email = ?"+
-        "AND puhelinnro = ?"+
-        "AND postinro = ? ;";
+                "WHERE etunimi = ?"+
+                "AND sukunimi = ?"+
+                "AND lahiosoite = ?"+
+                "AND email = ?"+
+                "AND puhelinnro = ?"+
+                "AND postinro = ? ;";
 
         try (Connection conn = SQL_yhteys.getYhteys();
              PreparedStatement stmt  = conn.prepareStatement(sql);) {
-                stmt.setString(1, etunimi);
-                stmt.setString(2, sukunimi);
-                stmt.setString(3, lahiosoite);
-                stmt.setString(4, email);
-                stmt.setString(5, puhelinnro);
-                stmt.setString(6, postinro);
-                ResultSet rs = stmt.executeQuery();
-                while (rs.next()) {
+            stmt.setString(1, etunimi);
+            stmt.setString(2, sukunimi);
+            stmt.setString(3, lahiosoite);
+            stmt.setString(4, email);
+            stmt.setString(5, puhelinnro);
+            stmt.setString(6, postinro);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
                 asiakas_id = rs.getInt("asiakas_id");
-                }
-                rs.close();
+            }
+            rs.close();
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -161,7 +161,7 @@ public class SQL_yhteys {
         String sql = "SELECT * " +
                 "FROM mokkihaku";
         ArrayList<Mokki> mokit = new ArrayList<Mokki>();
-        
+
         try (Connection conn = SQL_yhteys.getYhteys();
              Statement stmt  = conn.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)) {
@@ -184,7 +184,7 @@ public class SQL_yhteys {
                 mokki = new Mokki(mokki_id, toimintaAlue_id, toimintaAlue_nimi, postinro, mokkiNimi, Osoite, Kuvaus, henkilomaara, Varustelu, hinta);
                 mokit.add(mokki);
             }
-            
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -194,11 +194,11 @@ public class SQL_yhteys {
     // Hakee tietokannasta mökit jotka ovat vapaana välillä alkupvm - loppupvm, ja palauttaa listana.
     public static ArrayList<Mokki> getMokit(LocalDate alkupvm, LocalDate loppupvm) throws SQLException{
         String sql = " select * from mokkihaku "+
-        "where mokki_id not in(select mokki_mokki_id from varaus "+ 
-        "where (varattu_alkupvm between ? and ? - INTERVAL 1 day) "+
-        "or (varattu_loppupvm between ? and ? - INTERVAL 1 day));";
+                "where mokki_id not in(select mokki_mokki_id from varaus "+
+                "where (varattu_alkupvm between ? and ? - INTERVAL 1 day) "+
+                "or (varattu_loppupvm between ? and ? - INTERVAL 1 day));";
         ArrayList<Mokki> mokit = new ArrayList<Mokki>();
-        
+
         try (Connection conn = SQL_yhteys.getYhteys();
              PreparedStatement stmt  = conn.prepareStatement(sql);) {
             stmt.setDate(1, java.sql.Date.valueOf(alkupvm));
@@ -223,7 +223,7 @@ public class SQL_yhteys {
                 Mokki mokki = new Mokki(mokki_id, toimintaAlue_id, toimintaAlue_nimi, postinro, mokkiNimi, Osoite, Kuvaus, henkilomaara, Varustelu, hinta);
                 mokit.add(mokki);
             }
-            
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -263,7 +263,7 @@ public class SQL_yhteys {
         }
     }
     public static void setAsiakkaat(String kysely, String zip, String etunimi, String sukunimi, String osoite, String email, String puhnro) throws SQLException{
-        
+
         try {
             Connection conn = SQL_yhteys.getYhteys();
             PreparedStatement pstmt = conn.prepareStatement(kysely,
@@ -299,7 +299,7 @@ public class SQL_yhteys {
         ResultSet rs = null;
         int asiakas_id = 0;
         String sql = "INSERT INTO asiakas(postinro,etunimi, sukunimi, lahiosoite, email, puhelinnro) "+
-        "VALUES(?, ?, ?, ?, ?, ?);";
+                "VALUES(?, ?, ?, ?, ?, ?);";
         try {
             Connection conn = SQL_yhteys.getYhteys();
             PreparedStatement pstmt = conn.prepareStatement(sql,
@@ -343,7 +343,7 @@ public class SQL_yhteys {
         LocalDate tanaan = LocalDate.now();
 
         String sql = "INSERT INTO varaus(asiakas_id, mokki_mokki_id, varattu_pvm, varattu_alkupvm, varattu_loppupvm) "+
-        "VALUES(?, ?, ?, ?, ?);";
+                "VALUES(?, ?, ?, ?, ?);";
         try {
             Connection conn = SQL_yhteys.getYhteys();
             PreparedStatement pstmt = conn.prepareStatement(sql,
@@ -394,7 +394,7 @@ public class SQL_yhteys {
                 String alue = rs.getString("nimi");
                 alueet.add(alue);
             }
-            
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }

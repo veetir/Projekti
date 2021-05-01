@@ -13,12 +13,12 @@ public class SQL_yhteys {
     // Huom! Vaihda user & password, tarkista myös url !
     String url = "jdbc:mysql://localhost:3306/vn?ServerTimezone=Helsinki/Finland";
     String user = "root";
-    String password = "-----";
+    String password = "Olavi99?";
 
     // Palauttaa SQL yhteys olion
     public static Connection getYhteys() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/vn?serverTimezone=Europe/Helsinki";
-        String user = "root", password = "-----";
+        String user = "root", password = "Olavi99?";
         Connection conn = null;
 
         try {
@@ -174,7 +174,7 @@ public class SQL_yhteys {
                 String Osoite = rs.getString("katuosoite");
                 String Kuvaus = rs.getString("kuvaus");
                 int mokki_id = rs.getInt("mokki_id");
-                String Varustelu = rs.getString("kuvaus");
+                String Varustelu = rs.getString("varustelu");
                 int toimintaAlue_id = rs.getInt("toimintaalue_id");
                 String toimintaAlue_nimi = rs.getString("alue");
                 String postinro = rs.getString("postinro");

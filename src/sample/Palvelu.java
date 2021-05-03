@@ -6,19 +6,15 @@ public class Palvelu {
   private long palveluId;
   private long toimintaalueId;
   private String nimi;
-  private long tyyppi;
   private String kuvaus;
   private double hinta;
-  private double alv;
 
-  public Palvelu(long palveluId, long toimintaalueId, String nimi, long tyyppi, String kuvaus, double hinta, double alv) {
+  public Palvelu(long palveluId, long toimintaalueId, String nimi, String kuvaus, double hinta) {
     this.palveluId = palveluId;
     this.toimintaalueId = toimintaalueId;
     this.nimi = nimi;
-    this.tyyppi = tyyppi;
     this.kuvaus = kuvaus;
     this.hinta = hinta;
-    this.alv = alv;
   }
 
   public long getPalveluId() {
@@ -47,16 +43,6 @@ public class Palvelu {
     this.nimi = nimi;
   }
 
-
-  public long getTyyppi() {
-    return tyyppi;
-  }
-
-  public void setTyyppi(long tyyppi) {
-    this.tyyppi = tyyppi;
-  }
-
-
   public String getKuvaus() {
     return kuvaus;
   }
@@ -72,15 +58,6 @@ public class Palvelu {
 
   public void setHinta(double hinta) {
     this.hinta = hinta;
-  }
-
-
-  public double getAlv() {
-    return alv;
-  }
-
-  public void setAlv(double alv) {
-    this.alv = alv;
   }
 
 }

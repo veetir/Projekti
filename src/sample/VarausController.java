@@ -109,7 +109,7 @@ public class VarausController implements Initializable {
          mokkiLista.setPadding(new Insets(10, 10, 10, 10));
          sp.setContent(mokkiLista);
          varausNaytto.setCenter(sp);
-         // Tarkistetaan Suodattimine arvot ja asetetaan muuttujiin
+         // Tarkistetaan Suodattimien arvot ja asetetaan muuttujiin
          int minHinta, maxHinta, henkiloMaara;
          String alue = toimintaAlueCb.getSelectionModel().getSelectedItem().toString();
  
@@ -137,8 +137,9 @@ public class VarausController implements Initializable {
              henkiloMaara = Integer.parseInt(henkiloMaaraTf.getText());
          }
          System.out.println("alue: " + alue + "\nminHinta:  " + minHinta + "\nmaxHinta: " + maxHinta + "\nhenkilomaara: " + henkiloMaara);
-         // Luodaan lista mokit, johon haetaan mökkejä tietokannasta. 
+         // Luodaan listat mokit ja palvelut, joihin haetaan tiedot tietokannasta. 
          ArrayList<Mokki> mokit;
+         ArrayList<Palvelu> palvelut;
          try {
              // Haetaan mökit tietokannasta ja suodatetaan suodattimien mukaan mitkä näytetään. 
              if (saapumisPaivaDp.getValue() != null && lahtopaivaDp.getValue() != null) {
@@ -148,6 +149,7 @@ public class VarausController implements Initializable {
                  mokit = SQL_yhteys.getMokit(); 
              }
              mokit = suodata(mokit, alue, minHinta, maxHinta, henkiloMaara);
+             palvelut = SQL_yhteys.getPalvelut();
              //Luodaan jokaiselle mökille oma HBox paneeli, jossa ne näytetään. 
              for (Mokki mokki : mokit) {
                  
@@ -170,6 +172,7 @@ public class VarausController implements Initializable {
  
                  // Varaa napin toiminnallsuus, joka lisää mökin viereen asiakastietokentät.
                  varaaBtn.setOnAction(e -> {
+                     ArrayList<Palvelu> mokinPalvelut = suodataPalvelut(palvelut, mokki.get_toimintaalue_id());
                      Label mokinKuvaus = new Label("Kuvaus: " + mokki.get_kuvaus());
                      mokinKuvaus.setFont(Font.font(null, FontWeight.SEMI_BOLD, 14));
                      mokinTiedotVb.getChildren().add(mokinKuvaus);
@@ -196,10 +199,18 @@ public class VarausController implements Initializable {
                      HBox napit = new HBox(10);
                      Button teeVarausBtn = new Button("TEE VARAUS");
                      Button peruutaBtn = new Button("PERUUTA");
+
+                     VBox palveluVb = new VBox(5);
+                     Button lisaaPalveluBtn = new Button("+");
+                     Label lisaaPalveluLbl = new Label("Lisää palvelu: ", lisaaPalveluBtn);
+                     lisaaPalveluLbl.setContentDisplay(ContentDisplay.RIGHT);
+                     palveluVb.getChildren().add(lisaaPalveluLbl);
+
+
                      napit.getChildren().addAll(teeVarausBtn, peruutaBtn);
                      asiakasTiedot.getChildren().addAll(etunimiLBL, sukunimiLBL, osoiteLBL, postinroLBL, puhelinLBL, sahkopostiLBL, napit);
                      mokkiPaneeli.getChildren().remove(varaaBtn);
-                     mokkiPaneeli.getChildren().add(asiakasTiedot);
+                     mokkiPaneeli.getChildren().addAll(asiakasTiedot, palveluVb);
  
                      // Peruuta napin toiminnallisuus, joka poistaa asiakastietojen syöttökentät. 
                      peruutaBtn.setOnAction(peruuta -> {
@@ -294,6 +305,18 @@ public class VarausController implements Initializable {
                 suodatettuLista.add(m);
             }
             return suodatettuLista;
+        }
+
+        //Suodattaa ja palauttaa palvelulistan toiminta-alueen mukaan. 
+        static ArrayList<Palvelu> suodataPalvelut(ArrayList<Palvelu> palvelut, int alue_id) {
+            ArrayList<Palvelu> lista = new ArrayList<Palvelu>();
+            for (Palvelu p : palvelut) {
+                if (p.getToimintaalueId() == alue_id) {
+                    lista.add(p);
+                }
+            }
+            return lista;
+
         }
     
         // Tehty maxhinta, minhinta ja henkilomaara textfieldien arvon tarkistamiseksi. ottaa argumenttina String olion ja palauttaa true jos pelkkiä numeroita, muuten false. 

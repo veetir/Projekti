@@ -124,7 +124,7 @@
                               </VBox>
                            </left>
                            <center>
-                              <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                              <ListView fx:id="varausListView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
                            </center>
                            <bottom>
                               <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="100.0" BorderPane.alignment="CENTER">

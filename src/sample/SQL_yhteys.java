@@ -18,7 +18,7 @@ public class SQL_yhteys {
     // Palauttaa SQL yhteys olion
     public static Connection getYhteys() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/vn?serverTimezone=Europe/Helsinki";
-        String user = "root", password = "allukys123";
+        String user = "root", password = "Olavi99?";
         Connection conn = null;
 
         try {
@@ -97,7 +97,7 @@ public class SQL_yhteys {
 
     public static ArrayList<Varaus> getVaraukset() throws SQLException{
         String sql = "SELECT * " +
-                "FROM varaus";
+                "FROM varaushaku";
         ArrayList<Varaus> varaukset = new ArrayList<Varaus>();
 
         try (Connection conn = SQL_yhteys.getYhteys();
@@ -110,13 +110,18 @@ public class SQL_yhteys {
             while (rs.next()) {
                 int varausId = rs.getInt("varaus_id");
                 int asiakasId = rs.getInt("asiakas_id");
-                int mokkiId = rs.getInt("mokki_mokki_id");
+                String etunimi = rs.getString("etunimi");
+                String sukunimi = rs.getString("sukunimi");
+                int mokkiId = rs.getInt("mokki_id");
+                String mokkinimi = rs.getString("mokki_nimi");
+                String katuosoite = rs.getString("katuosoite");
+                String toimintaalue = rs.getString("toimintaalue");
                 Timestamp varattuPvm = rs.getTimestamp("varattu_pvm");
                 Timestamp vahvistusPvm = rs.getTimestamp("vahvistus_pvm");
-                Timestamp varattuAlkuPvm = rs.getTimestamp("varattu_alkupvm");
-                Timestamp varattuLoppuPvm = rs.getTimestamp("varattu_loppupvm");
+                Timestamp varattuAlkupvm = rs.getTimestamp("varattu_alkupvm");
+                Timestamp varattuLoppupvm = rs.getTimestamp("varattu_loppupvm");
 
-                varaus = new Varaus(varausId, asiakasId, mokkiId, varattuPvm, vahvistusPvm, varattuAlkuPvm, varattuLoppuPvm);
+                varaus = new Varaus(varausId, asiakasId, etunimi, sukunimi, mokkiId, mokkinimi, katuosoite, toimintaalue, varattuPvm, varattuAlkupvm, varattuLoppupvm);
                 varaukset.add(varaus);
             }
 
@@ -153,6 +158,44 @@ public class SQL_yhteys {
             System.out.println(ex.getMessage());
         }
         return palvelut;
+    }
+
+    public static void insertVarauksenPalvelut(ArrayList<VarauksenPalvelu> vpLista, int varausId) {
+        ResultSet rs = null;
+
+        String sql = "INSERT INTO varauksen_palvelut(varaus_id, palvelu_id, lkm) "+
+                "VALUES("+varausId+", ?, ?);";
+        try 
+            (Connection conn = SQL_yhteys.getYhteys();
+            PreparedStatement pstmt = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);){
+            for (VarauksenPalvelu vp : vpLista) {
+                pstmt.setInt(1, (int) vp.getPalvelu().getPalveluId());
+                pstmt.setInt(2, vp.getLkm());
+                
+
+                int rowAffected = pstmt.executeUpdate();
+                if(rowAffected == 1)
+                {
+                    // get candidate id
+                    rs =  pstmt.getGeneratedKeys();
+                    if(rs.next())
+                        System.out.println("en tiiä");
+
+                }
+                System.out.println("varaukseen lisättiin palvelu: "+ vp);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        }finally {
+            try {
+                if(rs != null)  rs.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     public static ArrayList<Mokki> getMokit() throws SQLException{
@@ -336,7 +379,7 @@ public class SQL_yhteys {
 
     //Lisää varauksen tietokantaan ja palauttaa luodun varauksen ID:n
     public static int insertVaraus(int asiakas_id, int mokki_id, LocalDate saapumisPvm, LocalDate lahtoPvm) throws SQLException{
-        ResultSet rs = null;
+       ResultSet rs = null;
         int varaus_id = 0;
         LocalDate tanaan = LocalDate.now();
 
@@ -356,7 +399,7 @@ public class SQL_yhteys {
             if(rowAffected == 1)
             {
                 // get candidate id
-                rs = pstmt.getGeneratedKeys();
+                rs =  pstmt.getGeneratedKeys();
                 if(rs.next())
                     varaus_id = rs.getInt(1);
 

@@ -172,6 +172,7 @@ public class VarausController implements Initializable {
  
                  // Varaa napin toiminnallsuus, joka lisää mökin viereen asiakastietokentät.
                  varaaBtn.setOnAction(e -> {
+                     ArrayList<VarauksenPalvelu> varauksenPalvelut = new ArrayList<>();
                      ArrayList<Palvelu> mokinPalvelut = suodataPalvelut(palvelut, mokki.get_toimintaalue_id());
                      Label mokinKuvaus = new Label("Kuvaus: " + mokki.get_kuvaus());
                      mokinKuvaus.setFont(Font.font(null, FontWeight.SEMI_BOLD, 14));
@@ -216,8 +217,51 @@ public class VarausController implements Initializable {
                      peruutaBtn.setOnAction(peruuta -> {
                          mokkiPaneeli.getChildren().remove(asiakasTiedot);
                          mokinTiedotVb.getChildren().remove(mokinKuvaus);
+                         mokkiPaneeli.getChildren().remove(palveluVb);
                          mokkiPaneeli.getChildren().add(varaaBtn);
                      });
+
+                     lisaaPalveluBtn.setOnAction(palvelu ->  {
+                        HBox palveluHb = new HBox(5);
+                        ComboBox<String> palveluCb = new ComboBox<>();
+                        TextField palveluTf = new TextField();
+                        palveluTf.setPromptText("lkm");
+                        palveluTf.setPrefColumnCount(3);
+                        Button lisaaBtn = new Button("lisää");
+                        palveluHb.getChildren().addAll(palveluCb,palveluTf, lisaaBtn);
+                        ObservableList<String> palveluLista = FXCollections.observableArrayList();
+                        System.out.println("palvelulistan pituus: "+ mokinPalvelut.size());
+                        for (Palvelu p : mokinPalvelut) {
+                           String s = p.getNimi()+"\n"+p.getKuvaus()+"\n"+p.getHinta()+"€/kpl";
+                           System.out.println(s);
+                           palveluLista.add(s);
+                         }
+                        palveluCb.setItems(palveluLista);
+                        palveluCb.getSelectionModel().selectFirst();
+                        palveluVb.getChildren().add(palveluHb);
+
+                        lisaaBtn.setOnAction(lisaaPalvelu ->  {
+                            Palvelu p = mokinPalvelut.get(palveluCb.getSelectionModel().getSelectedIndex());
+                            VarauksenPalvelu vp = new VarauksenPalvelu(p, Integer.parseInt(palveluTf.getText()));
+                            varauksenPalvelut.add(vp);
+                            for(VarauksenPalvelu x : varauksenPalvelut) {
+                                System.out.println(x);
+                            }
+
+                            palveluHb.getChildren().clear();
+                            Button poistaPalveluButton = new Button("poista");
+                            Label palveluLbl = new Label(p.getNimi()+", "+palveluTf.getText()+" kpl", poistaPalveluButton);
+                            palveluHb.getChildren().add(palveluLbl);
+
+                            poistaPalveluButton.setOnAction(poistaPalvelu -> {
+                                varauksenPalvelut.remove(vp);
+                                palveluVb.getChildren().remove(palveluHb);
+                                for(VarauksenPalvelu x : varauksenPalvelut) {
+                                    System.out.println(x);
+                                }
+                            });
+                        });
+                    });
                      //teeVaraus napin toiminnallisuus, joka tekee asiakastietojen perusteella uuden asiakkaan, jos ei ole jo olemassa.
                      // Sen jälkeen tekee varauksen kyseisestä mökistä datePickereiden osoittamalle ajalle
                      teeVarausBtn.setOnAction(varaa -> {
@@ -237,6 +281,10 @@ public class VarausController implements Initializable {
                             asiakastietoAlert.setHeaderText("Tarkista, että olet syöttänyt kaikki asiakastiedot");
                             asiakastietoAlert.showAndWait();
                         } else {
+                            String vahvistusPalvelut = "";
+                            for (VarauksenPalvelu vp : varauksenPalvelut) {
+                                vahvistusPalvelut += vp.getPalvelu().getNimi()+",  "+vp.getLkm()+"kpl\n";
+                            }
                             Alert tilausVahvistusAlert = new Alert(AlertType.CONFIRMATION);
                             tilausVahvistusAlert.setHeaderText("Tarkista varauksen tiedot");
                             tilausVahvistusAlert.setContentText("ASIAKAS:\n  \netunimi: " + etunimi +
@@ -249,7 +297,9 @@ public class VarausController implements Initializable {
                             "\n"+mokkiOtsikkoLbl.getText()+
                             "\nhinta: "+mokki.getHinta()+
                             "\nsaapuminen: "+saapumisPaivaDp.getValue()+
-                            "\nlähtö:      "+lahtopaivaDp.getValue());
+                            "\nlähtö:      "+lahtopaivaDp.getValue()+
+                            "\n\nPALVELUT:\n\n"+
+                            vahvistusPalvelut);
                             Optional<ButtonType> result = tilausVahvistusAlert.showAndWait();
                             System.out.println(result.get());
                             if(result.isPresent() && result.get() == ButtonType.OK) {
@@ -264,6 +314,9 @@ public class VarausController implements Initializable {
                                     }
                                     int varaus_id = SQL_yhteys.insertVaraus(asiakas_id, mokki.get_mokki_id(), saapumisPaivaDp.getValue(), lahtopaivaDp.getValue());
                                     System.out.println("uusi varaus numerolla: "+varaus_id);
+                                    if(varauksenPalvelut.size() > 0){
+                                        SQL_yhteys.insertVarauksenPalvelut(varauksenPalvelut, varaus_id);
+                                    }
                                     Alert onnistuiAlert = new Alert(AlertType.INFORMATION);
                                     onnistuiAlert.setHeaderText("Varaus tehty!\nVaraus ID: "+varaus_id);
                                     onnistuiAlert.showAndWait();

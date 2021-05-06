@@ -67,13 +67,15 @@ public class HallintaController {
     @FXML
     private VBox toimAlueVbox;
 
+    public static void restart(){
+    };
 
     public void toimAlueTabSelected(Event event) throws SQLException {
         toimAlueVbox.getChildren().clear();
         ArrayList<ToimintaAlue> alueet; // Tähän taulukkolistaan ladataan olemassa olevat toim.alueet
-        alueet = SQL_yhteys.getToimintaAlueetX(); // Metodi palauttaa taulukkolistan, jonka alkiota ovat ToimintaAlue:ita
+        alueet = SQL_yhteys.getToimintaAlueetX(); // Metodi palauttaa taulukkolistan, jonka alkiot ovat ToimintaAlue:ita
 
-        // Seuraavalla silmukalla käydään läpi kaikki toim.alueet.
+        // Seuraavalla silmukalla käydään läpi kaikki toiminta-alueet.
         for (int i = 0; i < alueet.size(); i++) {
             try {
                 FXMLLoader loader = new FXMLLoader();
@@ -84,12 +86,15 @@ public class HallintaController {
                 AlueController controller = loader.getController();
                 controller.initData(alueet.get(i));
 
-                // Värin muutos kun hiiri menee kunkin tuloksen päälle
+                // Värin muutos kun hiiri menee tuloksen päälle
                 root.setOnMouseEntered(event1 -> {
-                    root.setStyle("-fx-background-color: #f0f6ff");
+                    root.setStyle("-fx-background-color: #d9f2ff");
                 });
                 root.setOnMouseExited(event1 -> {
                     root.setStyle("-fx-background-color: #f4f4f4");
+                });
+                root.setOnMousePressed(event1 -> {
+                    root.setStyle("-fx-background-color: #ffccb3");
                 });
 
                 toimAlueVbox.getChildren().add(root);
@@ -100,6 +105,30 @@ public class HallintaController {
         }
     }
 
-    public void toimAlueTabClosed(Event event) {
+    public void lisaaUusiToimAlueButton(ActionEvent actionEvent) {
+        System.out.println("mikä meni vikaan?");
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("uusiAlue.fxml"));
+            System.out.println("in");
+            Parent root = loader.load();
+            System.out.println("tänne");
+
+            root.setOnMouseEntered(event1 -> {
+                root.setStyle("-fx-background-color: #d9f2ff");
+            });
+            root.setOnMouseExited(event1 -> {
+                root.setStyle("-fx-background-color: #f4f4f4");
+            });
+            root.setOnMousePressed(event1 -> {
+                root.setStyle("-fx-background-color: #ffccb3");
+            });
+
+            toimAlueVbox.getChildren().add(root);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 }

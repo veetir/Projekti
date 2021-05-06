@@ -140,7 +140,7 @@
                   </AnchorPane>
               </content>
             </Tab>
-            <Tab fx:id="toimAlueTab" onCloseRequest="#toimAlueTabClosed" onClosed="#toimAlueTabClosed" onSelectionChanged="#toimAlueTabSelected" text="Toim.alue">
+            <Tab fx:id="toimAlueTab" onSelectionChanged="#toimAlueTabSelected" text="Toim.alue">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -162,6 +162,9 @@
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font></Label>
+                        <Button layoutX="759.0" layoutY="16.0" mnemonicParsing="false" opacity="0.3" text="Muokkaa" />
+                        <Button layoutX="833.0" layoutY="16.0" mnemonicParsing="false" opacity="0.3" text="Poista" />
+                        <Button fx:id="lisaaUusiToimAlueButton" defaultButton="true" layoutX="907.0" layoutY="16.0" mnemonicParsing="false" onAction="#lisaaUusiToimAlueButton" text="Lisää" />
                      </children>
                   </AnchorPane>
               </content>

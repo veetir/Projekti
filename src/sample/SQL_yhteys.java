@@ -377,6 +377,43 @@ public class SQL_yhteys {
         return asiakas_id;
     }
 
+    //Lisää uuden toiminta-alueen tietokantaan ja palauttaa luodun ...? TODO: kait palauttaa toiminta-alueen id:n
+    public static int insertToiminta(String nimi) throws SQLException{
+        ResultSet rs = null;
+        int toimintaalue_id = 0;
+        String sql = "INSERT INTO toimintaalue(nimi) "+
+                "VALUES(?);";
+        try {
+            Connection conn = SQL_yhteys.getYhteys();
+            PreparedStatement pstmt = conn.prepareStatement(sql,
+                    Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, nimi);
+
+            int rowAffected = pstmt.executeUpdate();
+            if(rowAffected == 1)
+            {
+                // get candidate id
+                rs = pstmt.getGeneratedKeys();
+                if(rs.next())
+                    toimintaalue_id = rs.getInt(1);
+
+            }
+
+
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        }finally {
+            try {
+                if(rs != null)  rs.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return toimintaalue_id;
+    }
+
     //Lisää varauksen tietokantaan ja palauttaa luodun varauksen ID:n
     public static int insertVaraus(int asiakas_id, int mokki_id, LocalDate saapumisPvm, LocalDate lahtoPvm) throws SQLException{
         ResultSet rs = null;

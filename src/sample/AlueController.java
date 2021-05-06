@@ -22,8 +22,10 @@ public class AlueController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 
+    // TODO: lisää lisää-nappi
 
     public void alueMuokkaaButtonOnAction(ActionEvent actionEvent) {
+        // TODO: muokkaus-nappi pitää saada toimimaan järkevällä tavalla
     }
 
 

@@ -7,6 +7,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -66,14 +67,14 @@
                      <children>
                         <BorderPane prefHeight="683.0" prefWidth="1024.0">
                            <left>
-                              <VBox prefHeight="683.0" prefWidth="185.0" BorderPane.alignment="CENTER">
+                              <VBox prefHeight="634.0" prefWidth="240.0" BorderPane.alignment="CENTER">
                                  <children>
                                     <ChoiceBox fx:id="alueValinta" prefWidth="200.0" />
                                  </children>
                               </VBox>
                            </left>
                            <center>
-                              <ListView fx:id="mokkiLista" prefHeight="582.0" prefWidth="839.0" BorderPane.alignment="CENTER" />
+                              <ListView fx:id="mokkiLista" prefHeight="634.0" prefWidth="789.0" BorderPane.alignment="CENTER" />
                            </center>
                            <bottom>
                               <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="100.0" BorderPane.alignment="CENTER">
@@ -124,7 +125,7 @@
                               </VBox>
                            </left>
                            <center>
-                              <ListView fx:id="varausListView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                              <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
                            </center>
                            <bottom>
                               <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="100.0" BorderPane.alignment="CENTER">
@@ -135,6 +136,41 @@
                               </HBox>
                            </bottom>
                         </BorderPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="toimAlueTab" onClosed="#toimAlueTabClosed" onSelectionChanged="#toimAlueTabSelected" text="Toim.alue">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="362.0" layoutY="14.0" text="Toiminta-alueet">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <ScrollPane layoutX="49.0" layoutY="58.0" prefHeight="600.0" prefWidth="800.0">
+                           <content>
+                              <VBox fx:id="toimAlueVbox" prefHeight="586.0" prefWidth="800.0">
+                                 <children>
+                                    <HBox prefHeight="30.0" prefWidth="800.0">
+                                       <children>
+                                          <Label prefHeight="35.0" prefWidth="74.0" />
+                                          <Label prefHeight="35.0" prefWidth="276.0" text="ID" textAlignment="CENTER">
+                                             <font>
+                                                <Font name="System Bold" size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="104.0" layoutY="10.0" prefHeight="68.0" prefWidth="308.0" text="Nimi" textAlignment="CENTER">
+                                             <font>
+                                                <Font name="System Bold" size="24.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                 </children></VBox>
+                           </content>
+                        </ScrollPane>
                      </children>
                   </AnchorPane>
               </content>

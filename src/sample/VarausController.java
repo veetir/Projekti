@@ -62,12 +62,10 @@ public class VarausController implements Initializable {
 
     public void haeMokkejaBtnOnAction(ActionEvent actionEvent) {
         haeMokkeja();
-    
     }
 
     public void nappainOnAction(KeyEvent event) {
         haeMokkeja();
-        
     }
 
     // Vaihtaa näkymän raportit näkymään. 

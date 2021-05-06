@@ -28,6 +28,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -85,6 +86,23 @@ public class VarausController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Auto-generated method stub
+        saapumisPaivaDp.setValue(LocalDate.now());
+        saapumisPaivaDp.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate today = LocalDate.now();
+    
+                setDisable(empty || date.compareTo(today) < 0 );
+            }
+        });
+        lahtopaivaDp.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate today = LocalDate.now();
+    
+                setDisable(empty || date.compareTo(today) < 0 || date.compareTo(saapumisPaivaDp.getValue()) < 0 );
+            }
+        });
         ObservableList<String> toimintaAlueet = FXCollections.observableArrayList();
         try {
             ArrayList<String> alueet = SQL_yhteys.getToimintaAlueet();
@@ -105,6 +123,7 @@ public class VarausController implements Initializable {
     public void haeMokkeja() {
          // Luodaan ScrollPane, johon laitetaan VBox mokkilista. Mokkilistassa näytetään mökit
          ScrollPane sp = new ScrollPane();
+         sp.setFitToWidth(true);
          VBox mokkiLista = new VBox(10);
          mokkiLista.setPadding(new Insets(10, 10, 10, 10));
          sp.setContent(mokkiLista);

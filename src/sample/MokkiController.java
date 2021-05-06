@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -40,8 +41,9 @@ public class MokkiController implements Initializable {
         mokkialueChoiceBox.getItems().addAll(list);
     }
 
-    public void lisaamokkiButtonOnAction(ActionEvent actionEvent) throws SQLException {
+    public void lisaamokkiButtonOnAction(ActionEvent actionEvent) throws SQLException, IOException {
         // https://www.mysqltutorial.org/mysql-jdbc-insert/ <- idea otettu suoraan täältä
+        // Mökin lisäys kantaan onnistuu, mutta tällä hetkellä pitää olla jo olemassa postinumero, muutetaan myöhemmin
         String nimi = moknimiTextField.getText();
         String osoite = mokosoiteTextField.getText();
         String zip = mokzipTextField.getText();
@@ -52,19 +54,15 @@ public class MokkiController implements Initializable {
         String hinta = mokkiHintaTextField.getText();
         String kysely = "INSERT INTO mokki(toimintaalue_id, postinro, mokkinimi, katuosoite, kuvaus, henkilomaara, varustelu, hinta) "
                 + "VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
-
         SQL_yhteys.setMokit(kysely, alueid, zip, nimi, osoite, kuvaus, hlolkm, varustelu, hinta);
         SQL_yhteys.getMokit();
     }
 
     // ks. https://www.youtube.com/watch?v=XCgcQTQCfJQ
     // "Using SceneBuilder and Controller class to change scenes in Javafx"
+    // versiopäivityksessä käytetään metodia vaihdaIkkuna
     public void moklisaustakaisinButtonOnAction(ActionEvent actionEvent) throws IOException {
-        Parent toiseenNakymaan = FXMLLoader.load(getClass().getResource("varaushallinta.fxml"));
-        Scene toinenScene = new Scene(toiseenNakymaan);
+        Tyokalu.vaihdaIkkuna("hallinta.fxml", actionEvent);
 
-        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow(); // ks. 11:30 videolta
-        window.setScene(toinenScene);
-        window.show();
     }
 }

@@ -12,6 +12,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -23,6 +25,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class HallintaController implements Initializable {
@@ -78,7 +81,7 @@ public class HallintaController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        // TODO Auto-generated method stub
+
         try {
             naytaVaraukset();
         }catch(SQLException e) {
@@ -104,6 +107,7 @@ public class HallintaController implements Initializable {
             
 
     }
+
     private HBox getVarausBox(Varaus v) {
         VBox varauksenTiedotVb = new VBox(7);
         HBox varausBox = new HBox(10);
@@ -139,19 +143,37 @@ public class HallintaController implements Initializable {
             }
 
             palveluHBox.getChildren().addAll(palveluOtsikko, palveluVbox);
-
-
             mokkiHBox.getChildren().addAll(mokkiOtsikko, mokinTiedot);
-            Button suljeButton = new Button("sulje");
+            Button peruutaVarausButton = new Button("peruuta");
+            peruutaVarausButton.setOnAction(peruutaVaraus -> {
+                Alert peruutusAlert = new Alert(AlertType.NONE);
+                peruutusAlert.setHeaderText("Haluatko varmasti peruuttaa varauksen ?");
+                ButtonType kylla = new ButtonType("Kyllä", ButtonData.OK_DONE);
+                ButtonType ei = new ButtonType("Ei", ButtonData.CANCEL_CLOSE);
+                peruutusAlert.getDialogPane().getButtonTypes().addAll(kylla, ei);
+                Optional<ButtonType> result = peruutusAlert.showAndWait();
+                if(result.isPresent() && result.get() == kylla)  {
+                    SQL_yhteys.peruutaVaraus((int)v.getVarausId());
+                    Alert peruutusOnnistuiAlert = new Alert(AlertType.INFORMATION);
+                    peruutusOnnistuiAlert.setHeaderText("Varaus peruutettu onnistuneesti.");
+                    peruutusOnnistuiAlert.showAndWait();
+                } else if (result.isPresent() && result.get() == ei) {
+                    System.out.println("Ei nappia painettiin");
+                }
+            });
 
+            Button suljeButton = new Button("sulje");
             suljeButton.setOnAction(suljeVaraus -> {
-                varausBox.getChildren().remove(suljeButton);
+                varausBox.getChildren().removeAll(suljeButton, peruutaVarausButton);
                 varauksenTiedotVb.getChildren().remove(mokkiHBox);
                 varauksenTiedotVb.getChildren().remove(palveluHBox);
                 varausBox.getChildren().add(avaaButton);
             });
+            if(v.getVarattuAlkupvm().toLocalDate().compareTo(LocalDate.now()) < 6) {
+                peruutaVarausButton.setDisable(true);
+            }
 
-            varausBox.getChildren().add(suljeButton);
+            varausBox.getChildren().addAll(peruutaVarausButton, suljeButton);
             varauksenTiedotVb.getChildren().addAll(mokkiHBox, palveluHBox);
         });
 
@@ -160,9 +182,6 @@ public class HallintaController implements Initializable {
         varausBox.getChildren().addAll(varauksenTiedotVb,pane, avaaButton);
         varausBox.setHgrow(pane, Priority.ALWAYS);
         varausBox.setAlignment(Pos.BOTTOM_LEFT);
-
-        
-        
         varausBox.setStyle("-fx-border-color: aquamarine");
         return varausBox;
     }

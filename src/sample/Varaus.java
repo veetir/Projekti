@@ -3,6 +3,7 @@ package sample;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 public class Varaus {
   private long asiakasId;
@@ -12,10 +13,10 @@ public class Varaus {
   private String mokkinimi;
   private String katuosoite;
   private String toimintaalue;
-  private java.sql.Date varattuPvm;
-  private java.sql.Date vahvistusPvm;
-  private java.sql.Date varattuAlkupvm;
-  private java.sql.Date varattuLoppupvm;
+  private Date varattuPvm;
+  private Date vahvistusPvm;
+  private Date varattuAlkupvm;
+  private Date varattuLoppupvm;
 
   private long varausId;
   public Varaus(long varausId, long asiakasId, String etunimi, String sukunimi, long mokkiMokkiId, String mokkinimi,

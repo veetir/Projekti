@@ -454,6 +454,42 @@ public class SQL_yhteys {
         return varaus_id;
     }
 
+    public static void peruutaVaraus(int varaus_id) {
+        String sql = "DELETE from varaus "+
+            "WHERE varaus_id = ?";
+        ResultSet rs = null;
+
+        try (
+            Connection conn = SQL_yhteys.getYhteys();
+            PreparedStatement pstmt = conn.prepareStatement(sql,
+                    Statement.RETURN_GENERATED_KEYS);){
+            pstmt.setInt(1, varaus_id);
+            int rowAffected = pstmt.executeUpdate();
+            if(rowAffected == 1)
+            {
+                // get candidate id
+                rs =  pstmt.getGeneratedKeys();
+                if(rs.next())
+                    varaus_id = rs.getInt(1);
+
+            }
+            System.out.println("Varaus peruutettu onnistuneesti");
+
+
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        }finally {
+            try {
+                if(rs != null)  rs.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        
+    }
+
     // Hakee tietokannasta toiminta-alueiden nimet ja palauttaa listana. 
     public static ArrayList<String> getToimintaAlueet() throws SQLException {
         String sql = "SELECT * FROM toimintaalue";

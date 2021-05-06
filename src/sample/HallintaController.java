@@ -5,6 +5,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
@@ -65,9 +66,7 @@ public class HallintaController {
 
     @FXML
     private VBox toimAlueVbox;
-    public Label alueIdLabel, alueNimiLabel;
 
-    FXMLLoader loader = new FXMLLoader();
 
     public void toimAlueTabSelected(Event event) throws SQLException {
         ArrayList<String> alueet; // Tähän taulukkolistaan ladataan olemassa olevat toim.alueet
@@ -83,12 +82,16 @@ public class HallintaController {
         // ja lopulta node lisätään VBoxiin toimAlueetVbox
         for (int i = 0; i < alueet.size(); i++) {
             try {
-                //alueIdLabel.setText(alueet.get(i));
-                alue[i] = loader.load(getClass().getResource("alue.fxml"));
-                //alue[i].
-                // TODO: jokaisen alue.fxml -"moduulin" pitäisi näyttää oikeat tiedot
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("alue.fxml"));
 
-                toimAlueVbox.getChildren().add(alue[i]);
+                Parent root = loader.load();
+                AlueController controller = loader.getController();
+
+                ToimintaAlue x = new ToimintaAlue(alueet.get(i), i);
+                controller.initData(x);
+
+                toimAlueVbox.getChildren().add(root);
             } catch (IOException e) {
                 e.printStackTrace();
             }

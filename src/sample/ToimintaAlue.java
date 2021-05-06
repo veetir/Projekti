@@ -9,6 +9,7 @@ public class ToimintaAlue {
         this.toimintaalue_id = tmid;
     }
 
+
     public int get_toimintaalue_id() {
         return this.toimintaalue_id;
     }

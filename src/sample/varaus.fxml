@@ -44,7 +44,7 @@
          <children>
             <ComboBox fx:id="toimintaAlueCb" onAction="#haeMokkejaBtnOnAction" prefWidth="150.0" promptText="toiminta-alue" />
             <DatePicker fx:id="saapumisPaivaDp" onAction="#haeMokkejaBtnOnAction" promptText="saapumispäivä" />
-            <DatePicker fx:id="lahtopaivaDp" onAction="#haeMokkejaBtnOnAction" promptText="lähtöpäivä" />
+            <DatePicker fx:id="lahtopaivaDp" editable="false" onAction="#haeMokkejaBtnOnAction" opacity="0.29" promptText="lähtöpäivä" />
             <Pane prefHeight="18.0" prefWidth="120.0" />
             <TextField fx:id="minHintaTf" onAction="#haeMokkejaBtnOnAction" onKeyTyped="#nappainOnAction" promptText="min. hinta" />
             <TextField fx:id="maxHintaTf" onAction="#haeMokkejaBtnOnAction" onKeyTyped="#nappainOnAction" promptText="max. hinta" />

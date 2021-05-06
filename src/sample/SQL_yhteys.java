@@ -425,6 +425,7 @@ public class SQL_yhteys {
     public static ArrayList<String> getToimintaAlueet() throws SQLException {
         String sql = "SELECT * FROM toimintaalue";
         ArrayList<String> alueet = new ArrayList<String>();
+        ArrayList alueetid = new ArrayList<>();
 
         try (Connection conn = SQL_yhteys.getYhteys();
              Statement stmt  = conn.createStatement();
@@ -432,8 +433,33 @@ public class SQL_yhteys {
 
             // loop through the result set
             while (rs.next()) {
+                int id = rs.getInt("toimintaalue_id");
+                alueetid.add(id);
                 String alue = rs.getString("nimi");
                 alueet.add(alue);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return alueet;
+
+    }
+    // Hakee tietokannasta toiminta-alueiden nimet ja palauttaa listana, jonka alkiot ovat ToimintaAlue -tyyppisiä
+    public static ArrayList<ToimintaAlue> getToimintaAlueetX() throws SQLException {
+        String sql = "SELECT * FROM toimintaalue";
+        ArrayList<ToimintaAlue> alueet = new ArrayList<>();
+
+        try (Connection conn = SQL_yhteys.getYhteys();
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)) {
+
+            // loop through the result set
+            while (rs.next()) {
+                int id = rs.getInt("toimintaalue_id");
+                String alue = rs.getString("nimi");
+                ToimintaAlue tAlue = new ToimintaAlue(alue, id);
+                alueet.add(tAlue);
             }
 
         } catch (SQLException ex) {

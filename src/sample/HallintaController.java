@@ -62,50 +62,44 @@ public class HallintaController {
     // Toiminta-alueet -tabin toiminnallisuus
     // Tutoriaalit:
     // https://www.youtube.com/watch?v=8lR9scOLE7U (n. 10:40)
-    // https://www.youtube.com/watch?v=Wc1a2KshJ4w&list=LL&index=1
+    // https://www.youtube.com/watch?v=Wc1a2KshJ4w&list=LL&index=1 (n. 11:00 (AlueController) ja 14:30 (alla oleva metodi))
 
     @FXML
     private VBox toimAlueVbox;
 
 
     public void toimAlueTabSelected(Event event) throws SQLException {
-        ArrayList<String> alueet; // Tähän taulukkolistaan ladataan olemassa olevat toim.alueet
-        alueet = SQL_yhteys.getToimintaAlueet();
-        for (int i = 0; i < alueet.size(); i++) {
-            System.out.println(alueet.get(i));
-        }
-        // Tehdään node-lista, jonka alkioita voidaan lisätä VBoxiin
-        Node[] alue = new Node[alueet.size()];
+        toimAlueVbox.getChildren().clear();
+        ArrayList<ToimintaAlue> alueet; // Tähän taulukkolistaan ladataan olemassa olevat toim.alueet
+        alueet = SQL_yhteys.getToimintaAlueetX(); // Metodi palauttaa taulukkolistan, jonka alkiota ovat ToimintaAlue:ita
 
         // Seuraavalla silmukalla käydään läpi kaikki toim.alueet.
-        // Jokainen node on alue.fxml tiedosto, johon ladataan tiedot toiminta-alueesta
-        // ja lopulta node lisätään VBoxiin toimAlueetVbox
         for (int i = 0; i < alueet.size(); i++) {
             try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("alue.fxml"));
+                Parent root = loader.load(); // root on nyt node-tyyppiä, eli se voidaan lisätä VBoxiin
 
-                Parent root = loader.load();
+                // Pitää vielä ladata AlueControllerin initData-metodin avulla oikeat tiedot (taulukkolistasta alueet)
                 AlueController controller = loader.getController();
+                controller.initData(alueet.get(i));
 
-                ToimintaAlue x = new ToimintaAlue(alueet.get(i), i);
-                controller.initData(x);
+                // Värin muutos kun hiiri menee kunkin tuloksen päälle
+                root.setOnMouseEntered(event1 -> {
+                    root.setStyle("-fx-background-color: #f0f6ff");
+                });
+                root.setOnMouseExited(event1 -> {
+                    root.setStyle("-fx-background-color: #f4f4f4");
+                });
 
                 toimAlueVbox.getChildren().add(root);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
-
-
     }
+
     public void toimAlueTabClosed(Event event) {
-        toimAlueVbox = null;
-        toimAlueVbox.getChildren().removeAll();
-    }
-
-
-    public void alueMuokkaaButtonOnAction(ActionEvent actionEvent) {
     }
 }

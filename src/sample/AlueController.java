@@ -10,16 +10,12 @@ import java.util.ResourceBundle;
 
 public class AlueController implements Initializable {
 
-    private ToimintaAlue toimAlue;
-
     @FXML
     public Label alueIdLabel, alueNimiLabel;
 
     public void initData(ToimintaAlue alue){
-        toimAlue = alue;
-        //alueIdLabel = ;
+        alueIdLabel.setText(String.valueOf(alue.get_toimintaalue_id()));
         alueNimiLabel.setText(alue.get_nimi());
-        System.out.println(alue.get_nimi());
     }
 
     @Override

@@ -140,37 +140,28 @@
                   </AnchorPane>
               </content>
             </Tab>
-            <Tab fx:id="toimAlueTab" onClosed="#toimAlueTabClosed" onSelectionChanged="#toimAlueTabSelected" text="Toim.alue">
+            <Tab fx:id="toimAlueTab" onCloseRequest="#toimAlueTabClosed" onClosed="#toimAlueTabClosed" onSelectionChanged="#toimAlueTabSelected" text="Toim.alue">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="362.0" layoutY="14.0" text="Toiminta-alueet">
+                        <Label layoutX="362.0" layoutY="1.0" text="Toiminta-alueet">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <ScrollPane layoutX="49.0" layoutY="58.0" prefHeight="600.0" prefWidth="800.0">
+                        <ScrollPane layoutX="49.0" layoutY="58.0" prefHeight="600.0" prefWidth="910.0">
                            <content>
-                              <VBox fx:id="toimAlueVbox" prefHeight="586.0" prefWidth="800.0">
-                                 <children>
-                                    <HBox prefHeight="30.0" prefWidth="800.0">
-                                       <children>
-                                          <Label prefHeight="35.0" prefWidth="74.0" />
-                                          <Label prefHeight="35.0" prefWidth="276.0" text="ID" textAlignment="CENTER">
-                                             <font>
-                                                <Font name="System Bold" size="24.0" />
-                                             </font>
-                                          </Label>
-                                          <Label layoutX="104.0" layoutY="10.0" prefHeight="68.0" prefWidth="308.0" text="Nimi" textAlignment="CENTER">
-                                             <font>
-                                                <Font name="System Bold" size="24.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </HBox>
-                                 </children></VBox>
+                              <VBox fx:id="toimAlueVbox" prefHeight="600.0" prefWidth="910.0" />
                            </content>
                         </ScrollPane>
+                        <Label layoutX="119.0" layoutY="40.0" text="ID">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font></Label>
+                        <Label layoutX="425.0" layoutY="40.0" text="Nimi">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font></Label>
                      </children>
                   </AnchorPane>
               </content>

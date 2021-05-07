@@ -1,7 +1,9 @@
 package sample;
 
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 public class Varaus {
   private long asiakasId;
@@ -11,23 +13,23 @@ public class Varaus {
   private String mokkinimi;
   private String katuosoite;
   private String toimintaalue;
-  private java.sql.Timestamp varattuPvm;
-  private java.sql.Timestamp vahvistusPvm;
-  private java.sql.Timestamp varattuAlkupvm;
-  private java.sql.Timestamp varattuLoppupvm;
+  private Date varattuPvm;
+  private Date vahvistusPvm;
+  private Date varattuAlkupvm;
+  private Date varattuLoppupvm;
 
   private long varausId;
   public Varaus(long varausId, long asiakasId, String etunimi, String sukunimi, long mokkiMokkiId, String mokkinimi,
-      String katuosoite, String toimintaalue, Timestamp varattuPvm, Timestamp varattuAlkupvm,
-      Timestamp varattuLoppupvm) {
+      String katuosoite, String toimintaalue, Date varattuPvm, Date varattuAlkupvm,
+      Date varattuLoppupvm) {
     this.varausId = varausId;
     this.asiakasId = asiakasId;
-    this.setEtunimi(etunimi);
-    this.setSukunimi(sukunimi);
+    this.etunimi = etunimi;
+    this.sukunimi =sukunimi;
     this.mokkiMokkiId = mokkiMokkiId;
-    this.setMokkinimi(mokkinimi);
-    this.setKatuosoite(katuosoite);
-    this.setToimintaalue(toimintaalue);
+    this.mokkinimi = mokkinimi;
+    this.katuosoite= katuosoite;
+    this.toimintaalue=toimintaalue;
     this.varattuPvm = varattuPvm;
     this.varattuAlkupvm = varattuAlkupvm;
     this.varattuLoppupvm = varattuLoppupvm;
@@ -100,38 +102,38 @@ public class Varaus {
   }
 
 
-  public java.sql.Timestamp getVarattuPvm() {
+  public java.sql.Date getVarattuPvm() {
     return varattuPvm;
   }
 
-  public void setVarattuPvm(java.sql.Timestamp varattuPvm) {
+  public void setVarattuPvm(java.sql.Date varattuPvm) {
     this.varattuPvm = varattuPvm;
   }
 
 
-  public java.sql.Timestamp getVahvistusPvm() {
+  public java.sql.Date getVahvistusPvm() {
     return vahvistusPvm;
   }
 
-  public void setVahvistusPvm(java.sql.Timestamp vahvistusPvm) {
+  public void setVahvistusPvm(java.sql.Date vahvistusPvm) {
     this.vahvistusPvm = vahvistusPvm;
   }
 
 
-  public java.sql.Timestamp getVarattuAlkupvm() {
+  public java.sql.Date getVarattuAlkupvm() {
     return varattuAlkupvm;
   }
 
-  public void setVarattuAlkupvm(java.sql.Timestamp varattuAlkupvm) {
+  public void setVarattuAlkupvm(java.sql.Date varattuAlkupvm) {
     this.varattuAlkupvm = varattuAlkupvm;
   }
 
 
-  public java.sql.Timestamp getVarattuLoppupvm() {
+  public Date getVarattuLoppupvm() {
     return varattuLoppupvm;
   }
 
-  public void setVarattuLoppupvm(java.sql.Timestamp varattuLoppupvm) {
+  public void setVarattuLoppupvm(java.sql.Date varattuLoppupvm) {
     this.varattuLoppupvm = varattuLoppupvm;
   }
 

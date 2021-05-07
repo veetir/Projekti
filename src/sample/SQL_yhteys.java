@@ -95,7 +95,8 @@ public class SQL_yhteys {
 
     public static ArrayList<Varaus> getVaraukset() throws SQLException {
         String sql = "SELECT * " +
-                "FROM varaushaku";
+                "FROM varaushaku "+
+                "ORDER BY varaus_id DESC";
         ArrayList<Varaus> varaukset = new ArrayList<Varaus>();
 
         try (Connection conn = SQL_yhteys.getYhteys();
@@ -111,13 +112,12 @@ public class SQL_yhteys {
                 String etunimi = rs.getString("etunimi");
                 String sukunimi = rs.getString("sukunimi");
                 int mokkiId = rs.getInt("mokki_id");
-                String mokkinimi = rs.getString("mokki_nimi");
+                String mokkinimi = rs.getString("mokkinimi");
                 String katuosoite = rs.getString("katuosoite");
                 String toimintaalue = rs.getString("toimintaalue");
-                Timestamp varattuPvm = rs.getTimestamp("varattu_pvm");
-                Timestamp vahvistusPvm = rs.getTimestamp("vahvistus_pvm");
-                Timestamp varattuAlkupvm = rs.getTimestamp("varattu_alkupvm");
-                Timestamp varattuLoppupvm = rs.getTimestamp("varattu_loppupvm");
+                Date varattuPvm = rs.getDate("varattu_pvm");
+                Date varattuAlkupvm = rs.getDate("varattu_alkupvm");
+                Date varattuLoppupvm = rs.getDate("varattu_loppupvm");
 
                 varaus = new Varaus(varausId, asiakasId, etunimi, sukunimi, mokkiId, mokkinimi, katuosoite, toimintaalue, varattuPvm, varattuAlkupvm, varattuLoppupvm);
                 varaukset.add(varaus);
@@ -156,6 +156,39 @@ public class SQL_yhteys {
             System.out.println(ex.getMessage());
         }
         return palvelut;
+    }
+
+    public static ArrayList<VarauksenPalvelu_Hallinta> getVarauksenPalvelut(int varaus_id){
+        String sql = "Select vp.varaus_id as varaus_id, p.palvelu_id as palvelu_id, p.nimi as palvelu, vp.lkm as lkm, p.hinta as hinta "+
+        "from palvelu p join varauksen_palvelut vp "+
+        "on p.palvelu_id = vp.palvelu_id "+
+        "where varaus_id = ?;";
+            ArrayList<VarauksenPalvelu_Hallinta> palvelut = new ArrayList<VarauksenPalvelu_Hallinta>();
+            ResultSet rs = null;
+
+            try (Connection conn = SQL_yhteys.getYhteys();
+                PreparedStatement stmt  = conn.prepareStatement(sql);) {
+                    stmt.setInt(1, varaus_id);
+                    rs = stmt.executeQuery();
+
+                VarauksenPalvelu_Hallinta palvelu = null;
+
+                // loop through the result set
+                while (rs.next()) {
+                    int palvelu_id = rs.getInt("palvelu_id");
+                    int varausId = rs.getInt("varaus_id");
+                    String palveluNimi = rs.getString("palvelu");
+                    int lkm = rs.getInt("lkm");
+                    float hinta = rs.getFloat("hinta");
+
+                    palvelu = new VarauksenPalvelu_Hallinta(varausId, palvelu_id, palveluNimi, lkm, hinta);
+                    palvelut.add(palvelu);
+                }
+
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+            return palvelut;
     }
 
     public static void insertVarauksenPalvelut(ArrayList<VarauksenPalvelu> vpLista, int varausId) {
@@ -251,7 +284,7 @@ public class SQL_yhteys {
                 String Osoite = rs.getString("katuosoite");
                 String Kuvaus = rs.getString("kuvaus");
                 int mokki_id = rs.getInt("mokki_id");
-                String Varustelu = rs.getString("kuvaus");
+                String Varustelu = rs.getString("varustelu");
                 int toimintaAlue_id = rs.getInt("toimintaalue_id");
                 String toimintaAlue_nimi = rs.getString("alue");
                 String postinro = rs.getString("postinro");
@@ -473,7 +506,44 @@ public class SQL_yhteys {
         return varaus_id;
     }
 
+    public static void peruutaVaraus(int varaus_id) {
+        String sql = "DELETE from varaus "+
+            "WHERE varaus_id = ?";
+        ResultSet rs = null;
+
+        try (
+            Connection conn = SQL_yhteys.getYhteys();
+            PreparedStatement pstmt = conn.prepareStatement(sql,
+                    Statement.RETURN_GENERATED_KEYS);){
+            pstmt.setInt(1, varaus_id);
+            int rowAffected = pstmt.executeUpdate();
+            if(rowAffected == 1)
+            {
+                // get candidate id
+                rs =  pstmt.getGeneratedKeys();
+                if(rs.next())
+                    varaus_id = rs.getInt(1);
+
+            }
+            System.out.println("Varaus peruutettu onnistuneesti");
+
+
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        }finally {
+            try {
+                if(rs != null)  rs.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+    }
+
     // Hakee tietokannasta toiminta-alueiden nimet ja palauttaa listana.
+
     public static ArrayList<String> getToimintaAlueet() throws SQLException {
         String sql = "SELECT * FROM toimintaalue";
         ArrayList<String> alueet = new ArrayList<String>();

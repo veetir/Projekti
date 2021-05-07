@@ -7,7 +7,6 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -128,13 +127,11 @@
                               <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
                            </center>
                            <bottom>
-                              <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="100.0" BorderPane.alignment="CENTER">
-                                 <children>
-                                    <Button fx:id="muokkaaHallintaaButton" mnemonicParsing="false" onAction="#muokkaaHallintaaButtonOnAction" text="Muokkaa" />
-                                    <Button fx:id="poistaVarausButton" mnemonicParsing="false" onAction="#poistaVarausButtonOnAction" text="Poista" />
-                                 </children>
-                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="100.0" BorderPane.alignment="CENTER" />
                            </bottom>
+                           <center>
+                              <ScrollPane fx:id="varausSp" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                           </center>
                         </BorderPane>
                      </children>
                   </AnchorPane>

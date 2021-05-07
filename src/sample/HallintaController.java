@@ -98,19 +98,9 @@ public class HallintaController {
                 AtomicInteger z = new AtomicInteger();
 
                 // Värin muutos kun hiiri menee tuloksen päälle
-                root.setOnMouseEntered(event1 -> {
-                    if (z.get() % 2 == 0) {
-                        root.setStyle("-fx-background-color: #d9f2ff");
-                    }
-                });
-                root.setOnMouseExited(event1 -> {
-                    if (z.get() % 2 == 0) {
-                        root.setStyle("-fx-background-color: #f4f4f4");
-                    }
-                });
+
                 root.setOnMousePressed(event1 -> {
                     z.getAndIncrement();
-                    System.out.println(z + " ja muokattava " + muokattava);
                     if (z.get() % 2 == 1 & muokattava == null) {
                         lisaaUusiToimAlueButton.setText("Muokkaa");
                         root.setStyle("-fx-background-color: #ffccb3");
@@ -123,7 +113,6 @@ public class HallintaController {
                     } else {
                         return;
                     }
-                    System.out.println(k + " ja valittuja " + valittu);
                 });
                 toimAlueVbox.getChildren().add(root);
 
@@ -149,13 +138,6 @@ public class HallintaController {
                 if (muokattava != null) {
                     controller.initData(muokattava);
                 }
-
-                root.setOnMouseEntered(event1 -> {
-                    root.setStyle("-fx-background-color: #d9f2ff");
-                });
-                root.setOnMouseExited(event1 -> {
-                    root.setStyle("-fx-background-color: #f4f4f4");
-                });
                 root.setOnMousePressed(event1 -> {
                     root.setStyle("-fx-background-color: #ffccb3");
                 });

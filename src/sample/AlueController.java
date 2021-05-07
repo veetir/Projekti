@@ -21,18 +21,4 @@ public class AlueController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
-
-    // TODO: lisää lisää-nappi
-
-    public void alueMuokkaaButtonOnAction(ActionEvent actionEvent) {
-        // TODO: muokkaus-nappi pitää saada toimimaan järkevällä tavalla
-    }
-
-    public String getAlueIdLabel() {
-        return alueIdLabel.getText();
-    }
-
-    public String getAlueNimiLabel() {
-        return alueNimiLabel.getText();
-    }
 }

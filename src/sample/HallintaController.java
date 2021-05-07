@@ -66,10 +66,10 @@ public class HallintaController {
 
     @FXML
     private VBox toimAlueVbox;
-    public Button muokkaaToimButton, poistaToimButton;
+    public Button muokkaaToimButton, poistaToimButton, lisaaUusiToimAlueButton;
 
     private String muokattava;
-    int valittu = 0;
+    boolean valittu, lisays;
 
     public void toimAlueTabSelected(Event event) throws SQLException {
         toimAlueVbox.getChildren().clear();
@@ -104,27 +104,19 @@ public class HallintaController {
                     z.getAndIncrement();
                     System.out.println(z + " ja muokattava " + muokattava);
                     if (z.get() % 2 == 1 & muokattava == null) {
+                        lisaaUusiToimAlueButton.setText("Muokkaa");
                         root.setStyle("-fx-background-color: #ffccb3");
-                        valittu++;
+                        valittu = true;
                         muokattava = k;
-                        muokkaaToimButton.setOpacity(1);
-                        muokkaaToimButton.setDisable(false);
-                        poistaToimButton.setOpacity(1);
-                        poistaToimButton.setDisable(false);
-                    } else if (valittu == 1 & k.equals(muokattava)) {
-                        muokkaaToimButton.setOpacity(0.3);
-                        muokkaaToimButton.setDisable(true);
-                        poistaToimButton.setOpacity(0.3);
-                        poistaToimButton.setDisable(true);
-                        valittu--;
+                    } else if (valittu == true & k.equals(muokattava)) {
+                        lisaaUusiToimAlueButton.setText("Lisää");
+                        valittu = false;
                         muokattava = null;
-                    } else{
+                    } else {
                         return;
                     }
-
                     System.out.println(k + " ja valittuja " + valittu);
                 });
-
                 toimAlueVbox.getChildren().add(root);
 
             } catch (IOException e) {
@@ -133,34 +125,37 @@ public class HallintaController {
         }
     }
 
+
+
     public void lisaaUusiToimAlueButton(ActionEvent actionEvent) {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("uusiAlue.fxml"));
-            Parent root = loader.load();
+        if (!lisays){
+            try {
+                lisays = true;
+                lisaaUusiToimAlueButton.setText("Lisää alue");
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("uusiAlue.fxml"));
+                Parent root = loader.load();
+                AlueController controller = loader.getController();
+                if (muokattava != null){
+                    controller.initData(muokattava);
+                }
 
-            root.setOnMouseEntered(event1 -> {
-                root.setStyle("-fx-background-color: #d9f2ff");
-            });
-            root.setOnMouseExited(event1 -> {
-                root.setStyle("-fx-background-color: #f4f4f4");
-            });
-            root.setOnMousePressed(event1 -> {
-                root.setStyle("-fx-background-color: #ffccb3");
-            });
+                root.setOnMouseEntered(event1 -> {
+                    root.setStyle("-fx-background-color: #d9f2ff");
+                });
+                root.setOnMouseExited(event1 -> {
+                    root.setStyle("-fx-background-color: #f4f4f4");
+                });
+                root.setOnMousePressed(event1 -> {
+                    root.setStyle("-fx-background-color: #ffccb3");
+                });
 
-            // Tässä käytetään add-metodia, jolla root-node saadaan laitettua tiettyyn indeksiin: tässä 0 eli alkuun
-            toimAlueVbox.getChildren().add(0, root);
+                // Tässä käytetään add-metodia, jolla root-node saadaan laitettua tiettyyn indeksiin: tässä 0 eli alkuun
+                toimAlueVbox.getChildren().add(0, root);
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-    }
-
-
-    public void muokkaaToimButtonOnAction(ActionEvent actionEvent) {
-    }
-
-    public void poistaToimButtonOnAction(ActionEvent actionEvent) {
     }
 }

@@ -162,9 +162,18 @@
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font></Label>
-                        <Button fx:id="muokkaaToimButton" disable="true" layoutX="759.0" layoutY="16.0" mnemonicParsing="false" onAction="#muokkaaToimButtonOnAction" opacity="0.3" text="Muokkaa" />
-                        <Button fx:id="poistaToimButton" disable="true" layoutX="833.0" layoutY="16.0" mnemonicParsing="false" onAction="#poistaToimButtonOnAction" opacity="0.3" text="Poista" />
-                        <Button fx:id="lisaaUusiToimAlueButton" defaultButton="true" layoutX="907.0" layoutY="16.0" mnemonicParsing="false" onAction="#lisaaUusiToimAlueButton" text="Lisää" />
+                        <Button fx:id="lisaaUusiToimAlueButton" defaultButton="true" layoutX="761.0" layoutY="16.0" mnemonicParsing="false" onAction="#lisaaUusiToimAlueButton" prefHeight="37.0" prefWidth="188.0" text="Lisää">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
+                        <Button layoutX="687.0" layoutY="23.0" mnemonicParsing="false" opacity="0.1" text="Lopeta">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
                      </children>
                   </AnchorPane>
               </content>

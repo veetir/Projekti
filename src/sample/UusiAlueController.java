@@ -15,6 +15,11 @@ public class UusiAlueController {
     public Label alueIdLabel, errorLabel;
     public TextField uusiToimAlueTextField;
 
+    // getteri sille, mitä textfieldiin on kirjoitettu
+    public TextField getUusiToimAlueTextField() {
+        return uusiToimAlueTextField;
+    }
+
     public void lisaaUusiAlueButtonOnAction(ActionEvent actionEvent) throws SQLException {
         errorLabel.setText("");
         String uusiAlue = uusiToimAlueTextField.getText();

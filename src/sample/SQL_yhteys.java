@@ -7,8 +7,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 
-
-
 public class SQL_yhteys {
     // Huom! Vaihda user & password, tarkista myös url !
     String url = "jdbc:mysql://localhost:3306/vn";
@@ -32,14 +30,14 @@ public class SQL_yhteys {
         return conn;
     }
 
-    public static ArrayList<Asiakas> getAsiakkaat() throws SQLException{
+    public static ArrayList<Asiakas> getAsiakkaat() throws SQLException {
         String sql = "SELECT * " +
                 "FROM asiakas";
         ArrayList<Asiakas> asiakkaat = new ArrayList<Asiakas>();
 
         try (Connection conn = SQL_yhteys.getYhteys();
-             Statement stmt  = conn.createStatement();
-             ResultSet rs    = stmt.executeQuery(sql)) {
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
 
             Asiakas asiakas = null;
 
@@ -66,16 +64,16 @@ public class SQL_yhteys {
     // hakee asiakas_id:n tietokannasta argumenttien perusteella ja palauttaa sen. Palauttaa -1 jos asiakasta ei löydy.
     public static int getAsiakasId(String etunimi, String sukunimi, String lahiosoite, String email, String puhelinnro, String postinro) throws SQLException {
         int asiakas_id = -1;
-        String sql = "SELECT asiakas_id FROM asiakas "+
-                "WHERE etunimi = ?"+
-                "AND sukunimi = ?"+
-                "AND lahiosoite = ?"+
-                "AND email = ?"+
-                "AND puhelinnro = ?"+
+        String sql = "SELECT asiakas_id FROM asiakas " +
+                "WHERE etunimi = ?" +
+                "AND sukunimi = ?" +
+                "AND lahiosoite = ?" +
+                "AND email = ?" +
+                "AND puhelinnro = ?" +
                 "AND postinro = ? ;";
 
         try (Connection conn = SQL_yhteys.getYhteys();
-             PreparedStatement stmt  = conn.prepareStatement(sql);) {
+             PreparedStatement stmt = conn.prepareStatement(sql);) {
             stmt.setString(1, etunimi);
             stmt.setString(2, sukunimi);
             stmt.setString(3, lahiosoite);
@@ -95,14 +93,14 @@ public class SQL_yhteys {
 
     }
 
-    public static ArrayList<Varaus> getVaraukset() throws SQLException{
+    public static ArrayList<Varaus> getVaraukset() throws SQLException {
         String sql = "SELECT * " +
                 "FROM varaushaku";
         ArrayList<Varaus> varaukset = new ArrayList<Varaus>();
 
         try (Connection conn = SQL_yhteys.getYhteys();
-             Statement stmt  = conn.createStatement();
-             ResultSet rs    = stmt.executeQuery(sql)) {
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
 
             Varaus varaus = null;
 
@@ -131,14 +129,14 @@ public class SQL_yhteys {
         return varaukset;
     }
 
-    public static ArrayList<Palvelu> getPalvelut() throws SQLException{
+    public static ArrayList<Palvelu> getPalvelut() throws SQLException {
         String sql = "SELECT * " +
                 "FROM palvelu";
         ArrayList<Palvelu> palvelut = new ArrayList<Palvelu>();
 
         try (Connection conn = SQL_yhteys.getYhteys();
-             Statement stmt  = conn.createStatement();
-             ResultSet rs    = stmt.executeQuery(sql)) {
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
 
             Palvelu palvelu = null;
 
@@ -163,49 +161,48 @@ public class SQL_yhteys {
     public static void insertVarauksenPalvelut(ArrayList<VarauksenPalvelu> vpLista, int varausId) {
         ResultSet rs = null;
 
-        String sql = "INSERT INTO varauksen_palvelut(varaus_id, palvelu_id, lkm) "+
-                "VALUES("+varausId+", ?, ?);";
+        String sql = "INSERT INTO varauksen_palvelut(varaus_id, palvelu_id, lkm) " +
+                "VALUES(" + varausId + ", ?, ?);";
         try
                 (Connection conn = SQL_yhteys.getYhteys();
-                 PreparedStatement pstmt = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);){
+                 PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
             for (VarauksenPalvelu vp : vpLista) {
                 pstmt.setInt(1, (int) vp.getPalvelu().getPalveluId());
                 pstmt.setInt(2, vp.getLkm());
 
 
                 int rowAffected = pstmt.executeUpdate();
-                if(rowAffected == 1)
-                {
+                if (rowAffected == 1) {
                     // get candidate id
-                    rs =  pstmt.getGeneratedKeys();
-                    if(rs.next())
+                    rs = pstmt.getGeneratedKeys();
+                    if (rs.next())
                         System.out.println("en tiiä");
 
                 }
-                System.out.println("varaukseen lisättiin palvelu: "+ vp);
+                System.out.println("varaukseen lisättiin palvelu: " + vp);
             }
 
         } catch (SQLException e) {
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
-        }finally {
+        } finally {
             try {
-                if(rs != null)  rs.close();
+                if (rs != null) rs.close();
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
         }
     }
 
-    public static ArrayList<Mokki> getMokit() throws SQLException{
+    public static ArrayList<Mokki> getMokit() throws SQLException {
         String sql = "SELECT * " +
                 "FROM mokkihaku";
         ArrayList<Mokki> mokit = new ArrayList<Mokki>();
 
         try (Connection conn = SQL_yhteys.getYhteys();
-             Statement stmt  = conn.createStatement();
-             ResultSet rs    = stmt.executeQuery(sql)) {
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
 
             Mokki mokki = null;
 
@@ -233,15 +230,15 @@ public class SQL_yhteys {
     }
 
     // Hakee tietokannasta mökit jotka ovat vapaana välillä alkupvm - loppupvm, ja palauttaa listana.
-    public static ArrayList<Mokki> getMokit(LocalDate alkupvm, LocalDate loppupvm) throws SQLException{
-        String sql = " select * from mokkihaku "+
-                "where mokki_id not in(select mokki_mokki_id from varaus "+
-                "where (varattu_alkupvm between ? and ? - INTERVAL 1 day) "+
+    public static ArrayList<Mokki> getMokit(LocalDate alkupvm, LocalDate loppupvm) throws SQLException {
+        String sql = " select * from mokkihaku " +
+                "where mokki_id not in(select mokki_mokki_id from varaus " +
+                "where (varattu_alkupvm between ? and ? - INTERVAL 1 day) " +
                 "or (varattu_loppupvm between ? and ? - INTERVAL 1 day));";
         ArrayList<Mokki> mokit = new ArrayList<Mokki>();
 
         try (Connection conn = SQL_yhteys.getYhteys();
-             PreparedStatement stmt  = conn.prepareStatement(sql);) {
+             PreparedStatement stmt = conn.prepareStatement(sql);) {
             stmt.setDate(1, java.sql.Date.valueOf(alkupvm));
             stmt.setDate(2, java.sql.Date.valueOf(loppupvm));
             stmt.setDate(3, java.sql.Date.valueOf(alkupvm));
@@ -271,7 +268,7 @@ public class SQL_yhteys {
         return mokit;
     }
 
-    public static void setMokit(String kysely, String alueid, String zip, String nimi, String osoite, String kuvaus, String hlolkm, String varustelu, String hinta) throws SQLException{
+    public static void setMokit(String kysely, String alueid, String zip, String nimi, String osoite, String kuvaus, String hlolkm, String varustelu, String hinta) throws SQLException {
         try {
             Connection conn = SQL_yhteys.getYhteys();
             PreparedStatement pstmt = conn.prepareStatement(kysely,
@@ -303,7 +300,8 @@ public class SQL_yhteys {
             System.out.println("VendorError: " + e.getErrorCode());
         }
     }
-    public static void setAsiakkaat(String kysely, String zip, String etunimi, String sukunimi, String osoite, String email, String puhnro) throws SQLException{
+
+    public static void setAsiakkaat(String kysely, String zip, String etunimi, String sukunimi, String osoite, String email, String puhnro) throws SQLException {
 
         try {
             Connection conn = SQL_yhteys.getYhteys();
@@ -336,10 +334,10 @@ public class SQL_yhteys {
     }
 
     //Lisää asiakkaan tietokantaan ja palauttaa luodun asiakkaan asiakas_id:n
-    public static int insertAsiakas(String zip, String etunimi, String sukunimi, String osoite, String email, String puhnro) throws SQLException{
+    public static int insertAsiakas(String zip, String etunimi, String sukunimi, String osoite, String email, String puhnro) throws SQLException {
         ResultSet rs = null;
         int asiakas_id = 0;
-        String sql = "INSERT INTO asiakas(postinro,etunimi, sukunimi, lahiosoite, email, puhelinnro) "+
+        String sql = "INSERT INTO asiakas(postinro,etunimi, sukunimi, lahiosoite, email, puhelinnro) " +
                 "VALUES(?, ?, ?, ?, ?, ?);";
         try {
             Connection conn = SQL_yhteys.getYhteys();
@@ -353,11 +351,10 @@ public class SQL_yhteys {
             pstmt.setString(6, puhnro);
 
             int rowAffected = pstmt.executeUpdate();
-            if(rowAffected == 1)
-            {
+            if (rowAffected == 1) {
                 // get candidate id
                 rs = pstmt.getGeneratedKeys();
-                if(rs.next())
+                if (rs.next())
                     asiakas_id = rs.getInt(1);
 
             }
@@ -367,9 +364,9 @@ public class SQL_yhteys {
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
-        }finally {
+        } finally {
             try {
-                if(rs != null)  rs.close();
+                if (rs != null) rs.close();
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
@@ -378,23 +375,35 @@ public class SQL_yhteys {
     }
 
     //Lisää uuden toiminta-alueen tietokantaan ja palauttaa luodun ...? TODO: kait palauttaa toiminta-alueen id:n
-    public static int insertToiminta(String nimi) throws SQLException{
+    public static int insertToiminta(String nimi, String id, boolean update) throws SQLException {
         ResultSet rs = null;
         int toimintaalue_id = 0;
-        String sql = "INSERT INTO toimintaalue(nimi) "+
-                "VALUES(?);";
+        String sql;
+        if (!update) {
+            sql = "INSERT INTO toimintaalue(nimi) " +
+                    "VALUES(?);";
+        } else {
+            sql = "UPDATE toimintaalue " +
+                    "SET nimi = ?" +
+                    "WHERE toimintaalue_id = ?;";
+        }
+
         try {
             Connection conn = SQL_yhteys.getYhteys();
             PreparedStatement pstmt = conn.prepareStatement(sql,
                     Statement.RETURN_GENERATED_KEYS);
-            pstmt.setString(1, nimi);
+            if (!update) {
+                pstmt.setString(1, nimi);
+            } else{
+                pstmt.setString(1, nimi);
+                pstmt.setString(2, id);
+            }
 
             int rowAffected = pstmt.executeUpdate();
-            if(rowAffected == 1)
-            {
+            if (rowAffected == 1) {
                 // get candidate id
                 rs = pstmt.getGeneratedKeys();
-                if(rs.next())
+                if (rs.next())
                     toimintaalue_id = rs.getInt(1);
 
             }
@@ -404,9 +413,9 @@ public class SQL_yhteys {
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
-        }finally {
+        } finally {
             try {
-                if(rs != null)  rs.close();
+                if (rs != null) rs.close();
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
@@ -415,12 +424,12 @@ public class SQL_yhteys {
     }
 
     //Lisää varauksen tietokantaan ja palauttaa luodun varauksen ID:n
-    public static int insertVaraus(int asiakas_id, int mokki_id, LocalDate saapumisPvm, LocalDate lahtoPvm) throws SQLException{
+    public static int insertVaraus(int asiakas_id, int mokki_id, LocalDate saapumisPvm, LocalDate lahtoPvm) throws SQLException {
         ResultSet rs = null;
         int varaus_id = 0;
         LocalDate tanaan = LocalDate.now();
 
-        String sql = "INSERT INTO varaus(asiakas_id, mokki_mokki_id, varattu_pvm, varattu_alkupvm, varattu_loppupvm) "+
+        String sql = "INSERT INTO varaus(asiakas_id, mokki_mokki_id, varattu_pvm, varattu_alkupvm, varattu_loppupvm) " +
                 "VALUES(?, ?, ?, ?, ?);";
         try {
             Connection conn = SQL_yhteys.getYhteys();
@@ -433,24 +442,23 @@ public class SQL_yhteys {
             pstmt.setDate(5, java.sql.Date.valueOf(lahtoPvm));
 
             int rowAffected = pstmt.executeUpdate();
-            if(rowAffected == 1)
-            {
+            if (rowAffected == 1) {
                 // get candidate id
-                rs =  pstmt.getGeneratedKeys();
-                if(rs.next())
+                rs = pstmt.getGeneratedKeys();
+                if (rs.next())
                     varaus_id = rs.getInt(1);
 
             }
-            System.out.println("Uusi varaus numerolla: "+varaus_id);
+            System.out.println("Uusi varaus numerolla: " + varaus_id);
 
 
         } catch (SQLException e) {
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
-        }finally {
+        } finally {
             try {
-                if(rs != null)  rs.close();
+                if (rs != null) rs.close();
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
@@ -465,8 +473,8 @@ public class SQL_yhteys {
         ArrayList alueetid = new ArrayList<>();
 
         try (Connection conn = SQL_yhteys.getYhteys();
-             Statement stmt  = conn.createStatement();
-             ResultSet rs    = stmt.executeQuery(sql)) {
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
 
             // loop through the result set
             while (rs.next()) {
@@ -482,14 +490,15 @@ public class SQL_yhteys {
         return alueet;
 
     }
+
     // Hakee tietokannasta toiminta-alueiden nimet ja palauttaa listana, jonka alkiot ovat ToimintaAlue -tyyppisiä
     public static ArrayList<ToimintaAlue> getToimintaAlueetX() throws SQLException {
         String sql = "SELECT * FROM toimintaalue";
         ArrayList<ToimintaAlue> alueet = new ArrayList<>();
 
         try (Connection conn = SQL_yhteys.getYhteys();
-             Statement stmt  = conn.createStatement();
-             ResultSet rs    = stmt.executeQuery(sql)) {
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
 
             // loop through the result set
             while (rs.next()) {

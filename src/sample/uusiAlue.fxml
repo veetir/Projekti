@@ -39,8 +39,9 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Button fx:id="lisaaUusiAlueButton" defaultButton="true" layoutX="253.0" layoutY="13.0" mnemonicParsing="false" onAction="#lisaaUusiAlueButtonOnAction" text="Päivitä" />
-            <Button fx:id="lisaaUusiAlueButton1" defaultButton="true" layoutX="307.0" layoutY="13.0" mnemonicParsing="false" onAction="#lisaaUusiAlueButtonOnAction" text="Lisää" />
+            <Button fx:id="poistaButton" disable="true" layoutX="181.0" layoutY="13.0" mnemonicParsing="false" onAction="#poistaButtonOnAction" opacity="0.1" text="Poista" />
+            <Button fx:id="plisaaUusiAlueButton" disable="true" layoutX="229.0" layoutY="13.0" mnemonicParsing="false" onAction="#lisaaUusiAlueButtonOnAction" opacity="0.1" text="Päivitä" />
+            <Button fx:id="lisaaUusiAlueButton" defaultButton="true" layoutX="307.0" layoutY="8.0" mnemonicParsing="false" onAction="#lisaaUusiAlueButtonOnAction" prefHeight="30.0" prefWidth="60.0" text="Lisää" />
          </children>
       </Pane>
     </children>

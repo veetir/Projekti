@@ -66,9 +66,9 @@ public class HallintaController {
 
     @FXML
     private VBox toimAlueVbox;
-    public Button muokkaaToimButton, poistaToimButton, lisaaUusiToimAlueButton;
+    public Button lopetaToimButton, lisaaUusiToimAlueButton;
 
-    private String muokattava;
+    private ToimintaAlue muokattava;
     boolean valittu, lisays;
 
     public void toimAlueTabSelected(Event event) throws SQLException {
@@ -86,7 +86,7 @@ public class HallintaController {
                 // Pitää vielä ladata AlueControllerin initData-metodin avulla oikeat tiedot (taulukkolistasta alueet)
                 AlueController controller = loader.getController();
                 controller.initData(alueet.get(i));
-                final String k = alueet.get(i).get_nimi();
+                final ToimintaAlue k = alueet.get(i);
                 AtomicInteger z = new AtomicInteger();
 
                 // Värin muutos kun hiiri menee tuloksen päälle
@@ -126,17 +126,20 @@ public class HallintaController {
     }
 
 
-
     public void lisaaUusiToimAlueButton(ActionEvent actionEvent) {
-        if (!lisays){
+        if (!lisays) {
             try {
+                lisaaUusiToimAlueButton.setDisable(true);
+                lopetaToimButton.setDisable(false);
+                lopetaToimButton.setOpacity(1);
                 lisays = true;
                 lisaaUusiToimAlueButton.setText("Lisää alue");
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("uusiAlue.fxml"));
                 Parent root = loader.load();
-                AlueController controller = loader.getController();
-                if (muokattava != null){
+                UusiAlueController controller = loader.getController();
+
+                if (muokattava != null) {
                     controller.initData(muokattava);
                 }
 
@@ -157,5 +160,13 @@ public class HallintaController {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void lopetaToimButtonOnAction(ActionEvent actionEvent) {
+        toimAlueVbox.getChildren().remove(0);
+        lisays = false;
+        lopetaToimButton.setDisable(true);
+        lopetaToimButton.setOpacity(0.1);
+        lisaaUusiToimAlueButton.setDisable(false);
     }
 }

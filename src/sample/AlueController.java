@@ -28,5 +28,11 @@ public class AlueController implements Initializable {
         // TODO: muokkaus-nappi pitää saada toimimaan järkevällä tavalla
     }
 
+    public String getAlueIdLabel() {
+        return alueIdLabel.getText();
+    }
 
+    public String getAlueNimiLabel() {
+        return alueNimiLabel.getText();
+    }
 }

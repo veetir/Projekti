@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AlueController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AlueController">
    <children>
       <Label prefHeight="67.0" prefWidth="72.0">
          <font>
@@ -14,15 +14,17 @@
       <Label fx:id="alueIdLabel" prefHeight="57.0" prefWidth="238.0">
          <font>
             <Font size="18.0" />
-         </font></Label>
+         </font>
+      </Label>
       <Label layoutX="46.0" layoutY="10.0" prefHeight="52.0" prefWidth="60.0">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="alueNimiLabel" layoutX="74.0" layoutY="10.0" prefHeight="50.0" prefWidth="469.0">
+      <Label fx:id="alueNimiLabel" layoutX="74.0" layoutY="10.0" prefHeight="50.0" prefWidth="327.0">
          <font>
             <Font size="18.0" />
-         </font></Label>
+         </font>
+      </Label>
    </children>
 </HBox>

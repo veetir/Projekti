@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.UusiAlueController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.UusiAlueController">
     <children>
-        <Label prefHeight="67.0" prefWidth="72.0" text="ID">
+        <Label prefHeight="67.0" prefWidth="72.0">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
@@ -18,7 +18,7 @@
             <font>
                 <Font size="18.0" />
             </font></Label>
-        <Label layoutX="46.0" layoutY="10.0" prefHeight="52.0" prefWidth="60.0" text="Nimi">
+        <Label layoutX="46.0" layoutY="10.0" prefHeight="52.0" prefWidth="60.0">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
@@ -34,7 +34,7 @@
       </Pane>
       <Pane prefHeight="50.0" prefWidth="277.0">
          <children>
-            <Button fx:id="lisaaUusiAlueButton" layoutX="211.0" layoutY="13.0" mnemonicParsing="false" onAction="#lisaaUusiAlueButtonOnAction" text="Lisää" />
+            <Button fx:id="lisaaUusiAlueButton" defaultButton="true" layoutX="211.0" layoutY="13.0" mnemonicParsing="false" onAction="#lisaaUusiAlueButtonOnAction" text="Lisää" />
             <Label fx:id="errorLabel" layoutX="14.0" layoutY="17.0" prefHeight="17.0" prefWidth="191.0" textFill="RED">
                <font>
                   <Font name="System Bold" size="12.0" />

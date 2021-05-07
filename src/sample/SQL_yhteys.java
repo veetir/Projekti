@@ -375,28 +375,35 @@ public class SQL_yhteys {
     }
 
     //Lisää uuden toiminta-alueen tietokantaan ja palauttaa luodun ...? TODO: kait palauttaa toiminta-alueen id:n
-    public static int insertToiminta(String nimi, String id, boolean update) throws SQLException {
+    public static int insertToiminta(String nimi, String id, boolean update, boolean poisto) throws SQLException {
         ResultSet rs = null;
         int toimintaalue_id = 0;
         String sql;
-        if (!update) {
+        if (!update & !poisto) {
             sql = "INSERT INTO toimintaalue(nimi) " +
                     "VALUES(?);";
-        } else {
+        } else if (update & !poisto) {
             sql = "UPDATE toimintaalue " +
                     "SET nimi = ?" +
                     "WHERE toimintaalue_id = ?;";
+        } else {
+            System.out.println("XXXX");
+            sql = "DELETE FROM toimintaalue" +
+                    " WHERE toimintaalue_id = ?;";
         }
 
         try {
             Connection conn = SQL_yhteys.getYhteys();
             PreparedStatement pstmt = conn.prepareStatement(sql,
                     Statement.RETURN_GENERATED_KEYS);
-            if (!update) {
+            if (!update & !poisto) {
                 pstmt.setString(1, nimi);
-            } else{
+            } else if (update & !poisto) {
                 pstmt.setString(1, nimi);
                 pstmt.setString(2, id);
+            } else {
+                System.out.println("x");
+                pstmt.setString(1, id);
             }
 
             int rowAffected = pstmt.executeUpdate();

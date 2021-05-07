@@ -8,7 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -62,16 +61,25 @@ public class HallintaController {
     // Toiminta-alueet -tabin toiminnallisuus
     // Tutoriaalit:
     // https://www.youtube.com/watch?v=8lR9scOLE7U (n. 10:40)
-    // https://www.youtube.com/watch?v=Wc1a2KshJ4w&list=LL&index=1 (n. 11:00 (AlueController) ja 14:30 (alla oleva metodi))
+    // https://www.youtube.com/watch?v=Wc1a2KshJ4w&list=LL&index=1 (n. 11:00 (AlueController) ja 14:30)
 
     @FXML
     private VBox toimAlueVbox;
     public Button lopetaToimButton, lisaaUusiToimAlueButton;
 
+    Event e;
+
+    public void actionPerformed(Event e) throws SQLException {
+        toimAlueTabSelected(e);
+    }
+
     private ToimintaAlue muokattava;
     boolean valittu, lisays;
 
     public void toimAlueTabSelected(Event event) throws SQLException {
+        valittu = false;
+        lisays = false;
+        muokattava = null;
         toimAlueVbox.getChildren().clear();
         ArrayList<ToimintaAlue> alueet; // Tähän taulukkolistaan ladataan olemassa olevat toim.alueet
         alueet = SQL_yhteys.getToimintaAlueetX(); // Metodi palauttaa taulukkolistan, jonka alkiot ovat ToimintaAlue:ita
@@ -125,7 +133,6 @@ public class HallintaController {
         }
     }
 
-
     public void lisaaUusiToimAlueButton(ActionEvent actionEvent) {
         if (!lisays) {
             try {
@@ -162,11 +169,15 @@ public class HallintaController {
         }
     }
 
-    public void lopetaToimButtonOnAction(ActionEvent actionEvent) {
+    public void lopetaToimButtonOnAction(ActionEvent actionEvent) throws SQLException {
         toimAlueVbox.getChildren().remove(0);
         lisays = false;
         lopetaToimButton.setDisable(true);
         lopetaToimButton.setOpacity(0.1);
         lisaaUusiToimAlueButton.setDisable(false);
+        actionPerformed(e);
+        valittu = false;
+        lisays = false;
+        muokattava = null;
     }
 }

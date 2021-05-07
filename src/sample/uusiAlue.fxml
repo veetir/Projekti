@@ -18,6 +18,15 @@
             <font>
                 <Font size="18.0" />
             </font></Label>
+      <Pane>
+         <children>
+            <Button fx:id="poistaVarmaButton" mnemonicParsing="false" onAction="#poistaVarmaButtonOnAction" prefHeight="50.0" prefWidth="69.0" style="-fx-background-color: #ff8f8f;" text="Poista" visible="false">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
         <Label layoutX="46.0" layoutY="10.0" prefHeight="52.0" prefWidth="60.0">
             <font>
                 <Font name="System Bold" size="18.0" />

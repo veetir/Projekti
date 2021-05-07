@@ -169,7 +169,7 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor></Button>
-                        <Button fx:id="lopetaToimButton" cancelButton="true" disable="true" layoutX="687.0" layoutY="23.0" mnemonicParsing="false" onAction="#lopetaToimButtonOnAction" opacity="0.1" text="Lopeta">
+                        <Button fx:id="lopetaToimButton" cancelButton="true" disable="true" layoutX="660.0" layoutY="23.0" mnemonicParsing="false" onAction="#lopetaToimButtonOnAction" opacity="0.1" text="Lopeta/päivitä">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>

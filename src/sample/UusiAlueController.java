@@ -103,7 +103,7 @@ public class UusiAlueController {
             varma = false;
             plisaaUusiAlueButton.setDisable(false);
             plisaaUusiAlueButton.setOpacity(1);
-            uusiToimAlueTextField.setDisable(true);
+            uusiToimAlueTextField.setDisable(false);
             poistaVarmaButton.setDisable(true);
             poistaVarmaButton.setOpacity(0.1);
             poistaVarmaButton.setVisible(false);

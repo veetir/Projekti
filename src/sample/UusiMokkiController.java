@@ -92,7 +92,8 @@ public class UusiMokkiController {
             }
         }
     }
-
-    public void poistaButtonOnAction(ActionEvent actionEvent) {
+    // Käyttää SQL_Yhteyden poistaMökki- metodia
+    public void poistaButtonOnAction(ActionEvent actionEvent) throws SQLException{
+        poistaButton.setOnAction(SQL_yhteys.poistaMokki(mokkiId));
     }
 }

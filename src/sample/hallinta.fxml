@@ -91,7 +91,7 @@
                            <center>
                               <ScrollPane prefHeight="200.0" prefWidth="754.0" BorderPane.alignment="CENTER">
                                  <content>
-                                    <VBox fx:id="mokkiVbox" prefHeight="633.0" prefWidth="782.0" />
+                                    <VBox fx:id="mokkiVbox" prefHeight="633.0" prefWidth="766.0" />
                                  </content>
                               </ScrollPane>
                            </center>

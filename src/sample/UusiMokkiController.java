@@ -67,8 +67,10 @@ public class UusiMokkiController {
         String uusiMokkiVarustelu = mokkiVarusteluTextArea.getText();
         String uusiMokkiKuvaus = mokkiKuvausTextArea.getText();
 
-        Mokki uusiMokki = new Mokki(mokkiId, 2, "ruka", uusiMokkiZip, uusiMokkiNimi, uusiMokkiOsoite, uusiMokkiKuvaus, 3, uusiMokkiVarustelu, 3);
-        //int mokki_id, int toimintaalue_id,String toimintaalue_nimi, String postinro, String mokkinimi, String katuosoite,String kuvaus, int henkilomaara,String varustelu, long hinta
+        Mokki uusiMokki = new Mokki(mokkiId, 2, "ruka",
+                uusiMokkiZip, uusiMokkiNimi, uusiMokkiOsoite,
+                uusiMokkiKuvaus, 3, uusiMokkiVarustelu, 3);
+
 
         // Ei lisätä tyhjää aluetta
         if (uusiMokki == null) {
@@ -78,10 +80,6 @@ public class UusiMokkiController {
             ArrayList<Mokki> mokit; // Tähän taulukkolistaan ladataan olemassa olevat toim.alueet
             mokit = SQL_yhteys.getMokit();
             // Ei lisätä olemassa olevaa aluetta
-            /**
-             * Huom. pahimmassa tilanteessa verrataan kaikkia alue-listan alkioita lisättävään
-             * (itseasiassa aina siinä tilanteessa kun lisättävä on kelpo).
-             */
             for (int i = 0; i < mokit.size(); i++) {
                 if (mokit.get(i).get_mokkinimi().equalsIgnoreCase(uusiMokki.get_mokkinimi())) { // Huom. vertailu mökkinimellä
                     errorLabel.setText("Tämän niminen mökki on jo olemassa!");
@@ -93,8 +91,6 @@ public class UusiMokkiController {
                 errorLabel.setText("Mökki lisätty. Päivitä.");
             }
         }
-
-
     }
 
     public void poistaButtonOnAction(ActionEvent actionEvent) {

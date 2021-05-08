@@ -64,9 +64,16 @@ public class UusiAlueController {
             if (paivitys == null) {
                 SQL_yhteys.insertToiminta(uusiAlue, null, false, false);
                 errorLabel.setText("Alue lisätty. Päivitä.");
+                lisaaUusiAlueButton.setDisable(true);
+                lisaaUusiAlueButton.setOpacity(0.1);
             } else
                 SQL_yhteys.insertToiminta(uusiAlue, id, true, false);
-            errorLabel.setText("Lisätty/päivitetty. Päivitä.");
+                errorLabel.setText("Alue päivitetty. Päivitä.");
+                plisaaUusiAlueButton.setDisable(true);
+                plisaaUusiAlueButton.setOpacity(0.1);
+                poistaButton.setOpacity(0.1);
+                poistaButton.setDisable(true);
+
         }
     }
 
@@ -78,15 +85,20 @@ public class UusiAlueController {
             poistaButton.setText("Peru");
             varma = true;
             errorLabel.setText("Oletko varma?");
+            plisaaUusiAlueButton.setDisable(true);
+            plisaaUusiAlueButton.setOpacity(0.1);
             poistaVarmaButton.setDisable(false);
             poistaVarmaButton.setOpacity(1);
             poistaVarmaButton.setVisible(true);
         } else {
             varma = false;
+            plisaaUusiAlueButton.setDisable(false);
+            plisaaUusiAlueButton.setOpacity(1);
             uusiToimAlueTextField.setDisable(true);
             poistaVarmaButton.setDisable(true);
             poistaVarmaButton.setOpacity(0.1);
             poistaVarmaButton.setVisible(false);
+            poistaButton.setText("Poista");
         }
 
     }
@@ -94,5 +106,8 @@ public class UusiAlueController {
     public void poistaVarmaButtonOnAction(ActionEvent actionEvent) throws SQLException {
         SQL_yhteys.insertToiminta(paivitys, id, false, true);
         errorLabel.setText("Alue poistettu. Päivitä.");
+        poistaButton.setVisible(false);
+        plisaaUusiAlueButton.setVisible(false);
+        poistaVarmaButton.setVisible(false);
     }
 }

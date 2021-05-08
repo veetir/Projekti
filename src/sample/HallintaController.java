@@ -218,12 +218,14 @@ public class HallintaController implements Initializable {
                     z.getAndIncrement();
                     if (z.get() % 2 == 1 & muokattava == null) {
                         lisaaUusiToimAlueButton.setText("Muokkaa");
-                        root.setStyle("-fx-background-color: #ffccb3");
+                        root.setStyle("-fx-background-color: #dbd9ff; " +
+                                "-fx-border-color: #40424a; -fx-border-width: 3");
                         valittu = true;
                         muokattava = k;
                     } else if (valittu == true & k.equals(muokattava)) {
                         lisaaUusiToimAlueButton.setText("Lisää");
-                        root.setStyle("-fx-background-color: #f4f4f4");
+                        root.setStyle("-fx-background-color: #f4f4f4; " +
+                                "-fx-border-color:  #dbd9ff; -fx-border-width: 1");
                         valittu = false;
                         muokattava = null;
                     } else {
@@ -315,13 +317,15 @@ public class HallintaController implements Initializable {
                     System.out.println("MÖKKI NYT " + k);
                     if (z.get() % 2 == 1 & muokattavaMokki == null) {
                         lisaaMokkiButton.setText("Muokkaa");
-                        root.setStyle("-fx-background-color: #ffccb3");
+                        root.setStyle("-fx-background-color: #dbd9ff; " +
+                                "-fx-border-color: #40424a; -fx-border-width: 6");
                         valittu = true;
                         muokattavaMokki = k;
 
                     } else if (valittu == true & k.equals(muokattavaMokki)) {
                         lisaaMokkiButton.setText("Lisää");
-                        root.setStyle("-fx-background-color: #f4f4f4");
+                        root.setStyle("-fx-background-color: #f4f4f4; " +
+                                "-fx-border-color: #dbd9ff; -fx-border-width: 4");
                         valittu = false;
                         muokattavaMokki = null;
                     } else {

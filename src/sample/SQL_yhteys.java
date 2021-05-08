@@ -303,7 +303,7 @@ public class SQL_yhteys {
 
     public static void setMokit(String kysely, String alueid, String zip, String nimi, String osoite,
                                 String kuvaus, String hlolkm,
-                                String varustelu, String hinta) throws SQLException {
+                                String varustelu, String hinta, boolean lisays, boolean poisto) throws SQLException {
         try {
             Connection conn = SQL_yhteys.getYhteys();
             PreparedStatement pstmt = conn.prepareStatement(kysely,

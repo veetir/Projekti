@@ -1,9 +1,10 @@
 package sample;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 
@@ -11,12 +12,12 @@ public class SQL_yhteys {
     // Huom! Vaihda user & password, tarkista myös url !
     String url = "jdbc:mysql://localhost:3306/vn";
     String user = "root";
-    String password = "scape123";
+    String password = "allukys123";
 
     // Palauttaa SQL yhteys olion
     public static Connection getYhteys() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/vn?serverTimezone=Europe/Helsinki";
-        String user = "root", password = "scape123";
+        String user = "root", password = "allukys123";
         Connection conn = null;
 
         try {
@@ -638,6 +639,42 @@ public class SQL_yhteys {
         }
         return alueet;
 
+    }
+    // Metodi poistaa mökin tietokannasta, voidaan käyttää mökin hallinnassa liitettynä nappiin.
+    public static EventHandler<ActionEvent> poistaMokki(int mokki_id) throws SQLException {
+        String sql = "DELETE * FROM mokki WHERE mokki_id = ?";
+        ResultSet rs = null;
+
+        try (
+                Connection conn = SQL_yhteys.getYhteys();
+                PreparedStatement pstmt = conn.prepareStatement(sql,
+                        Statement.RETURN_GENERATED_KEYS);){
+            pstmt.setInt(1, mokki_id);
+            int rowAffected = pstmt.executeUpdate();
+            if(rowAffected == 1)
+            {
+                // get candidate id
+                rs =  pstmt.getGeneratedKeys();
+                if(rs.next())
+                    mokki_id = rs.getInt(1);
+
+            }
+            System.out.println("Mökki poistettu");
+
+
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        }finally {
+            try {
+                if(rs != null)  rs.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+
+        }
+        return null;
     }
 
 }

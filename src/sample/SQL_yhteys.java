@@ -295,52 +295,59 @@ public class SQL_yhteys {
                 Mokki mokki = new Mokki(mokki_id, toimintaAlue_id, toimintaAlue_nimi, postinro, mokkiNimi, Osoite, Kuvaus, henkilomaara, Varustelu, hinta);
                 mokit.add(mokki);
             }
-
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
         return mokit;
     }
 
+    public static void setMokit(Mokki uusimokki, boolean paivita, boolean poista, String poistoId) throws SQLException {
+        String mokkiId = "", alueid = "", zip = "", nimi = "", osoite = "", kuvaus = "", hlolkm = "", varustelu = "", hinta = "", kysely = "";
+        if (!poista) {
+            mokkiId = String.valueOf(uusimokki.get_mokki_id());
+            alueid = String.valueOf(uusimokki.get_toimintaalue_id());
+            zip = uusimokki.get_postinro();
+            nimi = uusimokki.get_mokkinimi();
+            osoite = uusimokki.get_katuosoite();
+            kuvaus = uusimokki.get_kuvaus();
+            hlolkm = String.valueOf(uusimokki.get_henkilomaara());
+            varustelu = uusimokki.get_varustelu();
+            hinta = String.valueOf(uusimokki.getHinta());
+        } else {
+            mokkiId = poistoId;
+        }
 
-
-    public static void setMokit(Mokki uusimokki, boolean paivita, boolean poista) throws SQLException {
-        String mokkiId, alueid, zip, nimi, osoite, kuvaus, hlolkm, varustelu, hinta, kysely ="";
-        mokkiId = String.valueOf(uusimokki.get_mokki_id());
-        alueid = String.valueOf(uusimokki.get_toimintaalue_id());
-        zip = uusimokki.get_postinro();
-        nimi = uusimokki.get_mokkinimi();
-        osoite = uusimokki.get_katuosoite();
-        kuvaus = uusimokki.get_kuvaus();
-        hlolkm = String.valueOf(uusimokki.get_henkilomaara());
-        varustelu = uusimokki.get_varustelu();
-        hinta = String.valueOf(uusimokki.getHinta());
-
-        if (!paivita & !poista){
-             kysely = "INSERT INTO mokki (toimintaalue_id, postinro, mokkinimi, katuosoite, kuvaus, henkilomaara, varustelu, hinta) \n" +
+        if (!paivita & !poista) {
+            kysely = "INSERT INTO mokki (toimintaalue_id, postinro, mokkinimi, katuosoite, kuvaus, henkilomaara, varustelu, hinta) \n" +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-        } else if (paivita & !poista){
-             kysely = "UPDATE mokki " +
-            "SET toimintaalue_id = ?, postinro =?, mokkinimi=?, katuosoite=?, kuvaus=?, henkilomaara=?, varustelu=?, hinta=? " +
-                    "WHERE mokki_id = ?;";;
+        } else if (paivita & !poista) {
+            kysely = "UPDATE mokki " +
+                    "SET toimintaalue_id = ?, postinro =?, mokkinimi=?, katuosoite=?, kuvaus=?, henkilomaara=?, varustelu=?, hinta=? " +
+                    "WHERE mokki_id = ?;";
+        } else if (poista) {
+            kysely = "DELETE FROM mokki WHERE mokki_id = ?";
         }
 
         try {
             Connection conn = SQL_yhteys.getYhteys();
             PreparedStatement pstmt = conn.prepareStatement(kysely,
                     Statement.RETURN_GENERATED_KEYS);
-            pstmt.setString(1, alueid);
-            pstmt.setString(2, zip);
-            pstmt.setString(3, nimi);
-            pstmt.setString(4, osoite);
-            pstmt.setString(5, kuvaus);
-            pstmt.setString(6, hlolkm);
-            pstmt.setString(7, varustelu);
-            pstmt.setString(8, hinta);
-            if (paivita){
+            if (!poista) {
+                pstmt.setString(1, alueid);
+                pstmt.setString(2, zip);
+                pstmt.setString(3, nimi);
+                pstmt.setString(4, osoite);
+                pstmt.setString(5, kuvaus);
+                pstmt.setString(6, hlolkm);
+                pstmt.setString(7, varustelu);
+                pstmt.setString(8, hinta);
+            }
+            if (paivita) {
                 pstmt.setString(9, mokkiId);
             }
-
+            if (poista) {
+                pstmt.setString(1, mokkiId);
+            }
 
             int rowAffected = pstmt.executeUpdate();
             if (rowAffected == 1) {

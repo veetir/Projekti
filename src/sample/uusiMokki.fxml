@@ -9,10 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.UusiMokkiController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.UusiMokkiController">
    <children>
-      <VBox>
+      <VBox maxWidth="-Infinity" minWidth="-Infinity" prefWidth="750.0">
           <children>
               <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="895.0">
                   <children>
@@ -119,7 +118,7 @@
                   </Pane>
                   </children>
               </HBox>
-              <HBox layoutX="10.0" layoutY="110.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="96.0" prefWidth="895.0">
+              <HBox layoutX="10.0" layoutY="110.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="96.0" prefWidth="766.0">
                   <children>
                       <Label prefHeight="50.0" prefWidth="93.0" text="Varustelu">
                           <font>
@@ -148,10 +147,10 @@
       <Pane layoutX="527.0" layoutY="337.0" prefHeight="99.0" prefWidth="205.0">
          <children>
             <Button fx:id="lisaaUusiMokkiButton" layoutX="50.0" mnemonicParsing="false" onAction="#lisaaUusiMokkiButtonOnAction" prefHeight="47.0" prefWidth="93.0" text="Lisää" />
-            <Button fx:id="plisaaUusiMokkiButton" layoutX="3.0" layoutY="63.0" mnemonicParsing="false" onAction="#lisaaUusiMokkiButtonOnAction" text="Päivitä" />
-            <Button fx:id="poistaButton" layoutX="143.0" layoutY="63.0" mnemonicParsing="false" onAction="#poistaButtonOnAction" text="Poista" />
+            <Button fx:id="plisaaUusiMokkiButton" disable="true" layoutX="3.0" layoutY="63.0" mnemonicParsing="false" onAction="#lisaaUusiMokkiButtonOnAction" opacity="0.1" text="Päivitä" />
+            <Button fx:id="poistaButton" disable="true" layoutX="143.0" layoutY="63.0" mnemonicParsing="false" onAction="#poistaButtonOnAction" opacity="0.1" text="Poista" />
          </children>
       </Pane>
-      <Button fx:id="poistaVarmaButton" layoutX="781.0" layoutY="335.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="72.0" style="-fx-background-color: #ff5e5e;" text="Poista" />
+      <Button fx:id="poistaVarmaButton" disable="true" layoutX="95.0" layoutY="370.0" mnemonicParsing="false" onAction="#poistaVarmaButtonOnAction" prefHeight="47.0" prefWidth="72.0" style="-fx-background-color: #ff5e5e;" text="Poista" visible="false" />
    </children>
 </Pane>

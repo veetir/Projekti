@@ -56,15 +56,6 @@ public class HallintaController implements Initializable {
     public void varausLoppuPvmOnAction(ActionEvent actionEvent) {
     }
 
-    public void lisaaMokkiButtonOnAction(ActionEvent actionEvent) {
-    }
-
-    public void muokkaaMokkiaButtonOnAction(ActionEvent actionEvent) {
-    }
-
-    public void poistaMokkiButtonOnAction(ActionEvent actionEvent) {
-    }
-
     public void lisaaAsiakasButtonOnAction(ActionEvent actionEvent) {
     }
 
@@ -74,20 +65,12 @@ public class HallintaController implements Initializable {
     public void poistaAsiakasButtonOnAction(ActionEvent actionEvent) {
     }
 
-    public void muokkaaHallintaaButtonOnAction(ActionEvent actionEvent) {
-    }
-
-    public void poistaVarausButtonOnAction(ActionEvent actionEvent) {
-    }
-
-
-
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 
         try {
             naytaVaraukset();
-        }catch(SQLException e) {
+        } catch (SQLException e) {
             e.getSQLState();
             e.getErrorCode();
             e.getMessage();
@@ -116,31 +99,31 @@ public class HallintaController implements Initializable {
         HBox varausBox = new HBox(10);
         varausBox.setPadding(new Insets(5, 5, 5, 5));
 
-        Label varausOtsikko = new Label("varausID #"+v.getVarausId());
+        Label varausOtsikko = new Label("varausID #" + v.getVarausId());
         Label asiakasOtsikko = new Label("ASIAKAS:");
         varausOtsikko.setFont(Font.font(null, FontWeight.BOLD, 16));
         asiakasOtsikko.setFont(Font.font(null, FontWeight.SEMI_BOLD, 14));
 
-        Label asiakasTiedot = new Label("ASIAKAS:\t        "+"ID #"+v.getAsiakasId()+", "+v.getEtunimi()+" "+v.getSukunimi());
-        Label varauksenTiedot = new Label("VARATTU:\t"+v.getVarattuPvm()/*+"\nsaapumis pvm: "+v.getVarattuAlkupvm()+"\nlahto pvm: "+v.getVarattuLoppupvm()*/);
+        Label asiakasTiedot = new Label("ASIAKAS:\t        " + "ID #" + v.getAsiakasId() + ", " + v.getEtunimi() + " " + v.getSukunimi());
+        Label varauksenTiedot = new Label("VARATTU:\t" + v.getVarattuPvm()/*+"\nsaapumis pvm: "+v.getVarattuAlkupvm()+"\nlahto pvm: "+v.getVarattuLoppupvm()*/);
         varauksenTiedot.setFont(Font.font(null, FontWeight.SEMI_BOLD, 13));
         asiakasTiedot.setFont(Font.font(null, FontWeight.SEMI_BOLD, 13));
 
         Button avaaButton = new Button("avaa");
         avaaButton.setOnAction(avaaVaraus -> {
-            ArrayList<VarauksenPalvelu_Hallinta> varauksenPalvelut = SQL_yhteys.getVarauksenPalvelut((int)v.getVarausId());
+            ArrayList<VarauksenPalvelu_Hallinta> varauksenPalvelut = SQL_yhteys.getVarauksenPalvelut((int) v.getVarausId());
             HBox mokkiHBox = new HBox();
             HBox palveluHBox = new HBox();
             varausBox.getChildren().remove(avaaButton);
 
             Label mokkiOtsikko = new Label("MÖKKI:\t          ");
-            Label mokinTiedot = new Label("mökkiID #"+v.getMokkiMokkiId()+"\n"+v.getMokkinimi()+", "+v.getKatuosoite()+", "+v.getToimintaalue()+
-            "\nsaapumis pvm:\t  "+ v.getVarattuAlkupvm()+
-            "\nlähtö pvm:\t  "+ v.getVarattuLoppupvm());
+            Label mokinTiedot = new Label("mökkiID #" + v.getMokkiMokkiId() + "\n" + v.getMokkinimi() + ", " + v.getKatuosoite() + ", " + v.getToimintaalue() +
+                    "\nsaapumis pvm:\t  " + v.getVarattuAlkupvm() +
+                    "\nlähtö pvm:\t  " + v.getVarattuLoppupvm());
 
             Label palveluOtsikko = new Label("PALVELUT:\t  ");
             VBox palveluVbox = new VBox(2);
-            for(VarauksenPalvelu_Hallinta vp : varauksenPalvelut) {
+            for (VarauksenPalvelu_Hallinta vp : varauksenPalvelut) {
                 Label lbl = new Label(vp.toString());
                 palveluVbox.getChildren().add(lbl);
             }
@@ -155,8 +138,8 @@ public class HallintaController implements Initializable {
                 ButtonType ei = new ButtonType("Ei", ButtonData.CANCEL_CLOSE);
                 peruutusAlert.getDialogPane().getButtonTypes().addAll(kylla, ei);
                 Optional<ButtonType> result = peruutusAlert.showAndWait();
-                if(result.isPresent() && result.get() == kylla)  {
-                    SQL_yhteys.peruutaVaraus((int)v.getVarausId());
+                if (result.isPresent() && result.get() == kylla) {
+                    SQL_yhteys.peruutaVaraus((int) v.getVarausId());
                     Alert peruutusOnnistuiAlert = new Alert(AlertType.INFORMATION);
                     peruutusOnnistuiAlert.setHeaderText("Varaus peruutettu onnistuneesti.");
                     peruutusOnnistuiAlert.showAndWait();
@@ -172,7 +155,7 @@ public class HallintaController implements Initializable {
                 varauksenTiedotVb.getChildren().remove(palveluHBox);
                 varausBox.getChildren().add(avaaButton);
             });
-            if(v.getVarattuAlkupvm().toLocalDate().compareTo(LocalDate.now()) < 6) {
+            if (v.getVarattuAlkupvm().toLocalDate().compareTo(LocalDate.now()) < 6) {
                 peruutaVarausButton.setDisable(true);
             }
 
@@ -182,15 +165,12 @@ public class HallintaController implements Initializable {
 
         varauksenTiedotVb.getChildren().addAll(varausOtsikko, varauksenTiedot, asiakasTiedot);
         Pane pane = new Pane();
-        varausBox.getChildren().addAll(varauksenTiedotVb,pane, avaaButton);
+        varausBox.getChildren().addAll(varauksenTiedotVb, pane, avaaButton);
         varausBox.setHgrow(pane, Priority.ALWAYS);
         varausBox.setAlignment(Pos.BOTTOM_LEFT);
         varausBox.setStyle("-fx-border-color: aquamarine");
         return varausBox;
     }
-
-
-
 
 
     // Toiminta-alueet -tabin toiminnallisuus
@@ -243,6 +223,7 @@ public class HallintaController implements Initializable {
                         muokattava = k;
                     } else if (valittu == true & k.equals(muokattava)) {
                         lisaaUusiToimAlueButton.setText("Lisää");
+                        root.setStyle("-fx-background-color: #f4f4f4");
                         valittu = false;
                         muokattava = null;
                     } else {
@@ -296,5 +277,107 @@ public class HallintaController implements Initializable {
         valittu = false;
         lisays = false;
         muokattava = null;
+    }
+
+
+    /**
+     * MÖKKIEN HALLINTA ALLA
+     */
+
+
+    @FXML
+    private VBox mokkiVbox;
+    public Button lisaaMokkiButton, lopetaMokkiButton;
+    private Mokki muokattavaMokki;
+
+    public void mokitTabSelected(Event event) throws SQLException {
+        valittu = false;
+        lisays = false;
+        muokattavaMokki = null;
+        mokkiVbox.getChildren().clear();
+        ArrayList<Mokki> mokit;
+        mokit = SQL_yhteys.getMokit();
+
+        for (int i = 0; i < mokit.size(); i++) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("mokki.fxml"));
+                Parent root = loader.load();
+
+                MokkiController controller = loader.getController();
+                controller.initData(mokit.get(i));
+                final Mokki k = mokit.get(i);
+                AtomicInteger z = new AtomicInteger();
+
+                root.setOnMousePressed(event1 -> {
+                    z.getAndIncrement();
+                    //System.out.println(z.get());
+                    System.out.println("MÖKKI NYT " + k);
+                    if (z.get() % 2 == 1 & muokattavaMokki == null) {
+                        lisaaMokkiButton.setText("Muokkaa");
+                        root.setStyle("-fx-background-color: #ffccb3");
+                        valittu = true;
+                        muokattavaMokki = k;
+
+                    } else if (valittu == true & k.equals(muokattavaMokki)) {
+                        lisaaMokkiButton.setText("Lisää");
+                        root.setStyle("-fx-background-color: #f4f4f4");
+                        valittu = false;
+                        muokattavaMokki = null;
+                    } else {
+                        return;
+                    }
+                });
+                mokkiVbox.getChildren().add(root);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void lisaaMokkiButtonOnAction(ActionEvent actionEvent) {
+        if (!lisays) {
+            try {
+                lisaaMokkiButton.setDisable(true);
+                lopetaMokkiButton.setDisable(false);
+                lopetaMokkiButton.setOpacity(1);
+                lisays = true;
+                lisaaMokkiButton.setText("Lisää mokki");
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("uusimokki.fxml"));
+                Parent root = loader.load();
+                UusiMokkiController controller = loader.getController();
+
+                if (muokattavaMokki != null) {
+                    controller.initData(muokattavaMokki);
+                }
+                root.setOnMousePressed(event1 -> {
+                    root.setStyle("-fx-background-color: #ffccb3");
+                });
+
+                // Tässä käytetään add-metodia, jolla root-node saadaan laitettua tiettyyn indeksiin: tässä 0 eli alkuun
+                mokkiVbox.getChildren().add(0, root);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void actionPerformedRefreshMokki(Event e) throws SQLException {
+        mokitTabSelected(e);
+    }
+
+    public void lopetaMokkiButtonOnAction(ActionEvent actionEvent) throws SQLException {
+        mokkiVbox.getChildren().remove(0);
+        lisays = false;
+        lopetaMokkiButton.setDisable(true);
+        lopetaMokkiButton.setOpacity(0.1);
+        lisaaMokkiButton.setDisable(false);
+        actionPerformedRefreshMokki(e);
+        valittu = false;
+        lisays = false;
+        muokattavaMokki = null;
     }
 }

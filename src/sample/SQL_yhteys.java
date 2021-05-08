@@ -301,7 +301,55 @@ public class SQL_yhteys {
         return mokit;
     }
 
-    public static void setMokit(String kysely, String alueid, String zip, String nimi, String osoite, String kuvaus, String hlolkm, String varustelu, String hinta) throws SQLException {
+    public static void setMokit(String kysely, String alueid, String zip, String nimi, String osoite,
+                                String kuvaus, String hlolkm,
+                                String varustelu, String hinta) throws SQLException {
+        try {
+            Connection conn = SQL_yhteys.getYhteys();
+            PreparedStatement pstmt = conn.prepareStatement(kysely,
+                    Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, alueid);
+            pstmt.setString(2, zip);
+            pstmt.setString(3, nimi);
+            pstmt.setString(4, osoite);
+            pstmt.setString(5, kuvaus);
+            pstmt.setString(6, hlolkm);
+            pstmt.setString(7, varustelu);
+            pstmt.setString(8, hinta);
+
+            int rowAffected = pstmt.executeUpdate();
+            if (rowAffected == 1) {
+                // process further here
+            }
+
+            // get candidate id
+            int candidateId = 0;
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next())
+                candidateId = rs.getInt(1);
+
+
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        }
+    }
+
+    public static void setMokitX(Mokki uusimokki, boolean paivita, boolean poista) throws SQLException {
+        String alueid,zip, nimi, osoite, kuvaus, hlolkm, varustelu, hinta;
+        alueid = String.valueOf(uusimokki.get_toimintaalue_id());
+        zip = uusimokki.get_postinro();
+        nimi = uusimokki.get_mokkinimi();
+        osoite = uusimokki.get_katuosoite();
+        kuvaus = uusimokki.get_kuvaus();
+        hlolkm = String.valueOf(uusimokki.get_henkilomaara());
+        varustelu = uusimokki.get_varustelu();
+        hinta = String.valueOf(uusimokki.getHinta());
+
+
+        String kysely = "INSERT INTO mokki (toimintaalue_id, postinro, mokkinimi, katuosoite, kuvaus, henkilomaara, varustelu, hinta) \n" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
         try {
             Connection conn = SQL_yhteys.getYhteys();
             PreparedStatement pstmt = conn.prepareStatement(kysely,

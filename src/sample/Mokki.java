@@ -25,7 +25,9 @@ public class Mokki {
         this.hinta = hinta;
 
     }
-    
+
+
+
     public String getToimintaalue_nimi() {
         return toimintaalue_nimi;
     }

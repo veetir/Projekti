@@ -69,9 +69,9 @@ public class UusiMokkiController {
         String uusiMokkiVarustelu = mokkiVarusteluTextArea.getText();
         String uusiMokkiKuvaus = mokkiKuvausTextArea.getText();
 
-        Mokki uusiMokki = new Mokki(mokkiId, 2, "ruka",
+        Mokki uusiMokki = new Mokki(mokkiId, 2, mokkiToimAlueNimi.getText(),
                 uusiMokkiZip, uusiMokkiNimi, uusiMokkiOsoite,
-                uusiMokkiKuvaus, 3, uusiMokkiVarustelu, 3);
+                uusiMokkiKuvaus, Integer.valueOf(uusiMokkiHloMaara), uusiMokkiVarustelu, Integer.valueOf(uusiMokkiHinta));
 
 
         // Ei lisätä tyhjää aluetta

@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.InputMethodEvent;
 
@@ -17,6 +18,7 @@ public class UusiAlueController {
     public Label alueIdLabel, errorLabel;
     public TextField uusiToimAlueTextField;
     public Button lisaaUusiAlueButton, plisaaUusiAlueButton, poistaButton, poistaVarmaButton;
+    public TextArea ohjeTextArea;
     String paivitys = null, id = null;
     boolean varma = false;
 
@@ -37,10 +39,17 @@ public class UusiAlueController {
         poistaButton.setOpacity(1);
         lisaaUusiAlueButton.setDisable(true);
         lisaaUusiAlueButton.setOpacity(0.1);
+        ohjeTextArea.setText("Muokkaa olemassa olevaa toiminta-aluetta. \nPäivittäessä nimi vaihtuu, mutta ID pysyy samana.\n" +
+                "Poistettaessa ID ja nimi poistetaan tietokannasta. ");
     }
 
     public void lisaaUusiAlueButtonOnAction(ActionEvent actionEvent) throws SQLException {
         errorLabel.setText("");
+        if (id == null){
+            ohjeTextArea.setText("Lisää uusi toiminta-alue. \n" +
+                    "Kirjoita toiminta-alueen nimi. ID luodaan automaattisesti. \n" +
+                    "Päivitä näkymä lisättyäsi alueen.");
+        }
         String uusiAlue = uusiToimAlueTextField.getText();
 
         // Ei lisätä tyhjää aluetta

@@ -91,7 +91,10 @@
                            <center>
                               <ScrollPane prefHeight="200.0" prefWidth="754.0" BorderPane.alignment="CENTER">
                                  <content>
-                                    <VBox fx:id="mokkiVbox" prefHeight="633.0" prefWidth="766.0" />
+                                    <VBox fx:id="mokkiVbox" prefHeight="633.0" prefWidth="766.0" spacing="5.0">
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding></VBox>
                                  </content>
                               </ScrollPane>
                            </center>
@@ -159,7 +162,10 @@
                         </Label>
                         <ScrollPane layoutX="49.0" layoutY="58.0" prefHeight="600.0" prefWidth="910.0">
                            <content>
-                              <VBox fx:id="toimAlueVbox" prefHeight="600.0" prefWidth="895.0" />
+                              <VBox fx:id="toimAlueVbox" prefHeight="600.0" prefWidth="895.0" spacing="5.0">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding></VBox>
                            </content>
                         </ScrollPane>
                         <Label layoutX="119.0" layoutY="40.0" text="ID">

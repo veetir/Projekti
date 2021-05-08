@@ -2,56 +2,66 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.UusiAlueController">
-    <children>
-        <Label prefHeight="67.0" prefWidth="72.0">
-            <font>
-                <Font name="System Bold" size="18.0" />
-            </font>
-        </Label>
-        <Label fx:id="alueIdLabel" opacity="0.3" prefHeight="50.0" prefWidth="85.0" text="ID">
-            <font>
-                <Font size="18.0" />
-            </font></Label>
-      <Pane>
-         <children>
-            <Button fx:id="poistaVarmaButton" mnemonicParsing="false" onAction="#poistaVarmaButtonOnAction" prefHeight="50.0" prefWidth="69.0" style="-fx-background-color: #ff8f8f;" text="Poista" visible="false">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
-         </children>
-      </Pane>
-        <Label layoutX="46.0" layoutY="10.0" prefHeight="52.0" prefWidth="60.0">
-            <font>
-                <Font name="System Bold" size="18.0" />
-            </font>
-        </Label>
-      <Pane>
-         <children>
-            <TextField fx:id="uusiToimAlueTextField" layoutY="10.0" prefHeight="30.0" prefWidth="261.0" promptText="Uuden toiminta-alueen nimi">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </TextField>
-         </children>
-      </Pane>
-      <Pane prefHeight="50.0" prefWidth="372.0">
-         <children>
-            <Label fx:id="errorLabel" layoutX="14.0" layoutY="17.0" prefHeight="17.0" prefWidth="191.0" textFill="RED">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.UusiAlueController">
+   <children>
+      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="895.0">
+          <children>
+              <Label prefHeight="67.0" prefWidth="72.0">
+                  <font>
+                      <Font name="System Bold" size="18.0" />
+                  </font>
+              </Label>
+              <Label fx:id="alueIdLabel" opacity="0.3" prefHeight="50.0" prefWidth="85.0" text="ID">
+                  <font>
+                      <Font size="18.0" />
+                  </font>
             </Label>
-            <Button fx:id="poistaButton" disable="true" layoutX="181.0" layoutY="13.0" mnemonicParsing="false" onAction="#poistaButtonOnAction" opacity="0.1" text="Poista" />
-            <Button fx:id="plisaaUusiAlueButton" disable="true" layoutX="229.0" layoutY="13.0" mnemonicParsing="false" onAction="#lisaaUusiAlueButtonOnAction" opacity="0.1" text="Päivitä" />
-            <Button fx:id="lisaaUusiAlueButton" defaultButton="true" layoutX="307.0" layoutY="8.0" mnemonicParsing="false" onAction="#lisaaUusiAlueButtonOnAction" prefHeight="30.0" prefWidth="60.0" text="Lisää" />
-         </children>
-      </Pane>
-    </children>
-</HBox>
+            <Pane>
+               <children>
+                  <Button fx:id="poistaVarmaButton" mnemonicParsing="false" onAction="#poistaVarmaButtonOnAction" prefHeight="50.0" prefWidth="69.0" style="-fx-background-color: #ff8f8f;" text="Poista" visible="false">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
+              <Label layoutX="46.0" layoutY="10.0" prefHeight="52.0" prefWidth="60.0">
+                  <font>
+                      <Font name="System Bold" size="18.0" />
+                  </font>
+              </Label>
+            <Pane>
+               <children>
+                  <TextField fx:id="uusiToimAlueTextField" layoutY="10.0" prefHeight="30.0" prefWidth="261.0" promptText="Uuden toiminta-alueen nimi">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </Pane>
+            <Pane prefHeight="50.0" prefWidth="372.0">
+               <children>
+                  <Label fx:id="errorLabel" layoutX="14.0" layoutY="17.0" prefHeight="17.0" prefWidth="191.0" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="poistaButton" disable="true" layoutX="181.0" layoutY="13.0" mnemonicParsing="false" onAction="#poistaButtonOnAction" opacity="0.1" text="Poista" />
+                  <Button fx:id="plisaaUusiAlueButton" disable="true" layoutX="229.0" layoutY="13.0" mnemonicParsing="false" onAction="#lisaaUusiAlueButtonOnAction" opacity="0.1" text="Päivitä" />
+                  <Button fx:id="lisaaUusiAlueButton" defaultButton="true" layoutX="307.0" layoutY="8.0" mnemonicParsing="false" onAction="#lisaaUusiAlueButtonOnAction" prefHeight="30.0" prefWidth="60.0" text="Lisää" />
+               </children>
+            </Pane>
+          </children>
+      </HBox>
+      <TextArea fx:id="ohjeTextArea" editable="false" layoutX="64.0" layoutY="105.0" prefHeight="120.0" prefWidth="469.0">
+         <font>
+            <Font name="System Italic" size="14.0" />
+         </font></TextArea>
+   </children>
+</Pane>

@@ -255,9 +255,10 @@ public class HallintaController implements Initializable {
 
                 if (muokattava != null) {
                     controller.initData(muokattava);
+                    toimAlueVbox.getChildren().clear();
                 }
                 root.setOnMousePressed(event1 -> {
-                    root.setStyle("-fx-background-color: #ffccb3");
+                    root.setStyle("-fx-background-color: #dbd9ff");
                 });
 
                 // Tässä käytetään add-metodia, jolla root-node saadaan laitettua tiettyyn indeksiin: tässä 0 eli alkuun
@@ -318,14 +319,14 @@ public class HallintaController implements Initializable {
                     if (z.get() % 2 == 1 & muokattavaMokki == null) {
                         lisaaMokkiButton.setText("Muokkaa");
                         root.setStyle("-fx-background-color: #dbd9ff; " +
-                                "-fx-border-color: #40424a; -fx-border-width: 6");
+                                "-fx-border-color: #40424a; -fx-border-width: 3");
                         valittu = true;
                         muokattavaMokki = k;
 
                     } else if (valittu == true & k.equals(muokattavaMokki)) {
                         lisaaMokkiButton.setText("Lisää");
                         root.setStyle("-fx-background-color: #f4f4f4; " +
-                                "-fx-border-color: #dbd9ff; -fx-border-width: 4");
+                                "-fx-border-color: #dbd9ff; -fx-border-width: 1");
                         valittu = false;
                         muokattavaMokki = null;
                     } else {
@@ -383,5 +384,6 @@ public class HallintaController implements Initializable {
         valittu = false;
         lisays = false;
         muokattavaMokki = null;
+        lisaaMokkiButton.setText("Lisää mokki");
     }
 }

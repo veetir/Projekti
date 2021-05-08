@@ -358,10 +358,11 @@ public class HallintaController implements Initializable {
                     controller.initData(muokattavaMokki);
                 }
                 root.setOnMousePressed(event1 -> {
-                    root.setStyle("-fx-background-color: #ffccb3");
+                    root.setStyle("-fx-background-color: #dbd9ff");
                 });
 
                 // Tässä käytetään add-metodia, jolla root-node saadaan laitettua tiettyyn indeksiin: tässä 0 eli alkuun
+                mokkiVbox.getChildren().clear();
                 mokkiVbox.getChildren().add(0, root);
 
             } catch (IOException e) {

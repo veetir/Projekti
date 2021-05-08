@@ -42,13 +42,14 @@ public class UusiMokkiController {
         mokkiKuvausTextArea.setText(mokki.get_kuvaus());
         mokkiTalueIdLabel.setText(String.valueOf(mokki.get_toimintaalue_id()));
         mokkiToimAlueNimi.setText(mokki.getToimintaalue_nimi());
-
         mokkiId = mokki.get_mokki_id();
         mokkiTalueId = mokki.get_toimintaalue_id();
 
         paivitys = mokki.get_mokkinimi();
         System.out.println(paivitys);
         id = String.valueOf(mokki.get_mokki_id());
+
+
         plisaaUusiMokkiButton.setDisable(false);
         plisaaUusiMokkiButton.setOpacity(1);
         poistaButton.setDisable(false);
@@ -87,8 +88,11 @@ public class UusiMokkiController {
                 }
             }
             if (paivitys == null) {
-                SQL_yhteys.setMokitX(uusiMokki, false, false);
+                SQL_yhteys.setMokit(uusiMokki, false, false);
                 errorLabel.setText("Mökki lisätty. Päivitä.");
+            } else{
+                SQL_yhteys.setMokit(uusiMokki, true, false);
+                errorLabel.setText("Mökki päivitetty. Päivitä.");
             }
         }
     }

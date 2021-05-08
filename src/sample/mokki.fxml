@@ -56,19 +56,24 @@
             </Label>
          </children>
       </HBox>
-      <HBox layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="752.0">
+      <HBox layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="725.0">
          <children>
-            <Label prefHeight="50.0" prefWidth="157.0" text="Toiminta-alue ID">
+            <Label prefHeight="50.0" prefWidth="147.0" text="Toiminta-alue ID">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="mokkiTalueIdLabel" prefHeight="50.0" prefWidth="237.0">
+            <Label fx:id="mokkiTalueIdLabel" prefHeight="50.0" prefWidth="249.0">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="74.0" layoutY="10.0" prefHeight="50.0" prefWidth="327.0">
+            <Label layoutX="74.0" layoutY="10.0" prefHeight="50.0" prefWidth="64.0" text="Alue">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="mokkiToimAlueNimiLabel" layoutX="404.0" layoutY="10.0" prefHeight="50.0" prefWidth="262.0">
                <font>
                   <Font size="18.0" />
                </font>

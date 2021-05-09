@@ -368,6 +368,52 @@ public class SQL_yhteys {
         }
     }
 
+    public static void setPalvelu(Palvelu palvelu, boolean paivita, boolean poista) throws SQLException {
+        // TODO: päivitys ja poisto
+        String kysely = "", nimi = "", kuvaus = "", toimintaalue_id ="", hinta ="";
+
+        if (!poista & !paivita) {
+            toimintaalue_id = String.valueOf(palvelu.getToimintaalueId());
+            nimi = palvelu.getNimi();
+            kuvaus = palvelu.getKuvaus();
+            hinta = String.valueOf(palvelu.getHinta());
+        }
+
+        if (!paivita & !poista) {
+            kysely = "INSERT INTO palvelu (toimintaalue_id, nimi, kuvaus, hinta) \n" +
+                    "VALUES (?,?,?,?);";
+        }
+
+        try {
+            Connection conn = SQL_yhteys.getYhteys();
+            PreparedStatement pstmt = conn.prepareStatement(kysely,
+                    Statement.RETURN_GENERATED_KEYS);
+            if (!poista) {
+                pstmt.setString(1, toimintaalue_id);
+                pstmt.setString(2, nimi);
+                pstmt.setString(3, kuvaus);
+                pstmt.setString(4, hinta);
+            }
+
+            int rowAffected = pstmt.executeUpdate();
+            if (rowAffected == 1) {
+                // process further here
+            }
+
+            // get candidate id
+            int candidateId = 0;
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next())
+                candidateId = rs.getInt(1);
+
+
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        }
+    }
+
     public static void setAsiakkaat(String kysely, String zip, String etunimi, String sukunimi, String osoite, String email, String puhnro) throws SQLException {
 
         try {
@@ -441,7 +487,7 @@ public class SQL_yhteys {
         return asiakas_id;
     }
 
-    //Lisää uuden toiminta-alueen tietokantaan ja palauttaa luodun ...? TODO: kait palauttaa toiminta-alueen id:n
+    //Lisää uuden toiminta-alueen tietokantaan ja palauttaa luodun ...?
     public static int insertToiminta(String nimi, String id, boolean update, boolean poisto) throws SQLException {
         ResultSet rs = null;
         int toimintaalue_id = 0;

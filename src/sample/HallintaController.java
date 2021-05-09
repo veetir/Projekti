@@ -258,13 +258,13 @@ public class HallintaController implements Initializable {
 
                 if (muokattava != null) {
                     controller.initData(muokattava);
-                    toimAlueVbox.getChildren().clear();
                 }
                 root.setOnMousePressed(event1 -> {
                     root.setStyle("-fx-background-color: #dbd9ff");
                 });
 
                 // Tässä käytetään add-metodia, jolla root-node saadaan laitettua tiettyyn indeksiin: tässä 0 eli alkuun
+                toimAlueVbox.getChildren().clear();
                 toimAlueVbox.getChildren().add(0, root);
 
             } catch (IOException e) {

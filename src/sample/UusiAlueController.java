@@ -1,18 +1,47 @@
 package sample;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 import javafx.scene.input.InputMethodEvent;
 
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 
-public class UusiAlueController {
+public class UusiAlueController implements Initializable {
+
+    @FXML
+    private CheckBox golfP;
+    @FXML
+    private CheckBox hiihtoP;
+    @FXML
+    private CheckBox marjastusP;
+    @FXML
+    private CheckBox hiihtokeskusP;
+    @FXML
+    private CheckBox maastopyorailyP;
+    @FXML
+    private CheckBox moottorikelkkailuP;
+    @FXML
+    private CheckBox retkeilyP;
+    @FXML
+    private CheckBox uintiP;
+    @FXML
+    private CheckBox tennisP;
+    @FXML
+    private CheckBox sienestysP;
+    @FXML
+    private CheckBox veneilyP;
+    @FXML
+    private CheckBox kalastaminenP;
+
+    ObservableList<String> valitutPalvelut = FXCollections.observableArrayList();
 
     @FXML
     public Label alueIdLabel, errorLabel;
@@ -40,8 +69,10 @@ public class UusiAlueController {
     }
 
     public void lisaaUusiAlueButtonOnAction(ActionEvent actionEvent) throws SQLException {
-        errorLabel.setText("");
+        // Lisätään ensin valitut palvelut tietokantaan
+        //valitutPalvelut
 
+        errorLabel.setText("");
         String uusiAlue = uusiToimAlueTextField.getText();
 
         // Ei lisätä tyhjää aluetta
@@ -53,24 +84,35 @@ public class UusiAlueController {
             alueet = SQL_yhteys.getToimintaAlueetX();
             // Ei lisätä olemassa olevaa aluetta
 
-            for (int i = 0; i < alueet.size(); i++) {
-                if (alueet.get(i).get_nimi().equalsIgnoreCase(uusiAlue)) { // Huom. Vertailu equalsIGNORECASE !
-                    errorLabel.setText("Alue on jo olemassa!");
-                    return;
+            if (alueIdLabel.getText().equalsIgnoreCase("id")) {
+                for (int i = 0; i < alueet.size(); i++) {
+                    if (alueet.get(i).get_nimi().equalsIgnoreCase(uusiAlue)) { // Huom. Vertailu equalsIGNORECASE !
+                        errorLabel.setText("Alue on jo olemassa!");
+                        return;
+                    }
                 }
             }
+
             if (paivitys == null) {
                 SQL_yhteys.insertToiminta(uusiAlue, null, false, false);
                 errorLabel.setText("Alue lisätty. Päivitä.");
                 lisaaUusiAlueButton.setDisable(true);
                 lisaaUusiAlueButton.setOpacity(0.1);
-            } else
+            } else{
+
+                for (int i = 0; i < valitutPalvelut.size(); i++) {
+                    Palvelu palvelu = new Palvelu(-1, Long.valueOf(id), valitutPalvelut.get(i), valitutPalvelut.get(i), -1);
+                    SQL_yhteys.setPalvelu(palvelu, false, false);
+                }
+
                 SQL_yhteys.insertToiminta(uusiAlue, id, true, false);
                 errorLabel.setText("Alue päivitetty. Päivitä.");
                 plisaaUusiAlueButton.setDisable(true);
                 plisaaUusiAlueButton.setOpacity(0.1);
                 poistaButton.setOpacity(0.1);
                 poistaButton.setDisable(true);
+            }
+
 
         }
     }
@@ -107,5 +149,45 @@ public class UusiAlueController {
         poistaButton.setVisible(false);
         plisaaUusiAlueButton.setVisible(false);
         poistaVarmaButton.setVisible(false);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        golfP.setOnAction(e -> {
+            valitutPalvelut.add(golfP.getText());
+        });
+        hiihtoP.setOnAction(e -> {
+            valitutPalvelut.add(hiihtoP.getText());
+        });
+        marjastusP.setOnAction(e -> {
+            valitutPalvelut.add(marjastusP.getText());
+        });
+        hiihtokeskusP.setOnAction(e -> {
+            valitutPalvelut.add(hiihtokeskusP.getText());
+        });
+        maastopyorailyP.setOnAction(e -> {
+            valitutPalvelut.add(maastopyorailyP.getText());
+        });
+        moottorikelkkailuP.setOnAction(e -> {
+            valitutPalvelut.add(moottorikelkkailuP.getText());
+        });
+        retkeilyP.setOnAction(e -> {
+            valitutPalvelut.add(retkeilyP.getText());
+        });
+        uintiP.setOnAction(e -> {
+            valitutPalvelut.add(uintiP.getText());
+        });
+        tennisP.setOnAction(e -> {
+            valitutPalvelut.add(tennisP.getText());
+        });
+        sienestysP.setOnAction(e -> {
+            valitutPalvelut.add(sienestysP.getText());
+        });
+        veneilyP.setOnAction(e -> {
+            valitutPalvelut.add(veneilyP.getText());
+        });
+        kalastaminenP.setOnAction(e -> {
+            valitutPalvelut.add(kalastaminenP.getText());
+        });
     }
 }

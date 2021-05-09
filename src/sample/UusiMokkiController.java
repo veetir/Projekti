@@ -43,7 +43,6 @@ public class UusiMokkiController implements Initializable {
     public void initData(Mokki mokki) {
 
 
-
         mokkiIdLabel.setText(String.valueOf(mokki.get_mokki_id()));
         mokkiNimiTextField.setText(mokki.get_mokkinimi());
         mokkiOsoiteTextField.setText(mokki.get_katuosoite());
@@ -87,9 +86,9 @@ public class UusiMokkiController implements Initializable {
         int toimintaalue_id = -1;
 
         String valittuAlue = mokkiAlueBox.getSelectionModel().getSelectedItem().toString();
-        if (!valittuAlue.equals("Uusi alue")){
+        if (!valittuAlue.equals("Uusi alue")) {
             toimintaalue_id = ToimintaAlue.findId(valittuAlue);
-        } else if (mokkiAlueNimiLabel.getText() != null){
+        } else if (mokkiAlueNimiLabel.getText() != null) {
             toimintaalue_id = ToimintaAlue.findId(mokkiAlueNimiLabel.getText());
         }
 

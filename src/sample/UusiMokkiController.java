@@ -3,11 +3,9 @@ package sample;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
+import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -31,8 +29,11 @@ public class UusiMokkiController {
     boolean varma = false;
     int mokkiId, mokkiTalueId;
 
+    public ChoiceBox mokkiAlueBox;
+
 
     public void initData(Mokki mokki) {
+
         mokkiIdLabel.setText(String.valueOf(mokki.get_mokki_id()));
         mokkiNimiTextField.setText(mokki.get_mokkinimi());
         mokkiOsoiteTextField.setText(mokki.get_katuosoite());
@@ -42,7 +43,11 @@ public class UusiMokkiController {
         mokkiVarusteluTextArea.setText(mokki.get_varustelu());
         mokkiKuvausTextArea.setText(mokki.get_kuvaus());
         mokkiTalueIdLabel.setText(String.valueOf(mokki.get_toimintaalue_id()));
-        mokkiToimAlueNimi.setText(mokki.getToimintaalue_nimi());
+
+
+        mokkiAlueBox.setValue(mokki.getToimintaalue_nimi());
+
+
         mokkiTalueId = mokki.get_toimintaalue_id();
         mokkiId = mokki.get_mokki_id();
         paivitys = mokki.get_mokkinimi();
@@ -60,6 +65,7 @@ public class UusiMokkiController {
 
 
     public void lisaaUusiMokkiButtonOnAction(ActionEvent actionEvent) throws SQLException {
+
         errorLabel.setText("");
         String uusiMokkiNimi = mokkiNimiTextField.getText();
         String uusiMokkiOsoite = mokkiOsoiteTextField.getText();
@@ -69,7 +75,9 @@ public class UusiMokkiController {
         String uusiMokkiVarustelu = mokkiVarusteluTextArea.getText();
         String uusiMokkiKuvaus = mokkiKuvausTextArea.getText();
 
-        Mokki uusiMokki = new Mokki(mokkiId, 2, mokkiToimAlueNimi.getText(),
+
+        // Huom. ei tarvitse lähettää oikeaa toim.alueen nimeä (tai nimeä ollenkaan), koska SQL-lause tekee mökin pelkän ID:n perusteella
+        Mokki uusiMokki = new Mokki(mokkiId, 2, "ei toimi",
                 uusiMokkiZip, uusiMokkiNimi, uusiMokkiOsoite,
                 uusiMokkiKuvaus, Integer.valueOf(uusiMokkiHloMaara), uusiMokkiVarustelu, Integer.valueOf(uusiMokkiHinta));
 

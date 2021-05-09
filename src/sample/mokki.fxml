@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -10,24 +11,24 @@
    <children>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="895.0">
           <children>
-              <Label prefHeight="50.0" prefWidth="72.0" text="ID">
+              <Label prefHeight="50.0" prefWidth="41.0" text="ID">
                   <font>
                       <Font name="System Bold" size="18.0" />
                   </font>
               </Label>
-              <Label fx:id="mokkiIdLabel" prefHeight="50.0" prefWidth="322.0">
+              <Label fx:id="mokkiIdLabel" prefHeight="50.0" prefWidth="76.0">
                   <font>
                       <Font size="18.0" />
                   </font>
               </Label>
-              <Label layoutX="46.0" layoutY="10.0" prefHeight="50.0" prefWidth="103.0" text="Mökin nimi">
+              <Label layoutX="46.0" layoutY="10.0" prefHeight="50.0" prefWidth="103.0" text=":">
                   <font>
                       <Font name="System Bold" size="18.0" />
                   </font>
               </Label>
               <Label fx:id="mokkiNimiLabel" layoutX="74.0" layoutY="10.0" prefHeight="50.0" prefWidth="327.0">
                   <font>
-                      <Font size="18.0" />
+                      <Font name="System Bold Italic" size="24.0" />
                   </font>
               </Label>
           </children>
@@ -73,11 +74,15 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="mokkiToimAlueNimiLabel" layoutX="404.0" layoutY="10.0" prefHeight="50.0" prefWidth="262.0">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
+            <Pane prefHeight="50.0" prefWidth="256.0">
+               <children>
+                  <Label fx:id="mokkiAlueBox" layoutX="114.0" layoutY="17.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
          </children>
       </HBox>
       <HBox layoutX="10.0" layoutY="60.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="895.0">
@@ -104,7 +109,7 @@
             </Label>
          </children>
       </HBox>
-      <HBox layoutX="10.0" layoutY="110.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="895.0">
+      <HBox layoutX="10.0" layoutY="110.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="895.0">
          <children>
             <Label prefHeight="50.0" prefWidth="93.0" text="Varustelu">
                <font>

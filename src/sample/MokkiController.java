@@ -3,9 +3,12 @@ package sample;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MokkiController implements Initializable {
@@ -20,10 +23,13 @@ public class MokkiController implements Initializable {
     public Label mokkiNimiLabel;
     public Label mokkiIdLabel;
 
+    public Label mokkiAlueBox;
+
 
 
 
     public void initData(Mokki mokki){
+
         mokkiHloMaaraLabel.setText(String.valueOf(mokki.get_henkilomaara()));
         mokkiHintaLabel.setText(String.valueOf(mokki.getHinta())); ;
         mokkiVarusteluLabel.setText(mokki.get_varustelu());
@@ -33,6 +39,7 @@ public class MokkiController implements Initializable {
         mokkiOsoiteLabel.setText(mokki.get_katuosoite());
         mokkiNimiLabel.setText(mokki.get_mokkinimi());
         mokkiIdLabel.setText(String.valueOf(mokki.get_mokki_id()));
+        mokkiAlueBox.setText(mokki.getToimintaalue_nimi());
     }
 
     @Override

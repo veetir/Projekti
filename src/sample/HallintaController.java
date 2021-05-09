@@ -13,6 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -20,6 +22,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -292,8 +295,13 @@ public class HallintaController implements Initializable {
     private VBox mokkiVbox;
     public Button lisaaMokkiButton, lopetaMokkiButton;
     private Mokki muokattavaMokki;
+    public ChoiceBox mokkiAlueBox;
+
+
+
 
     public void mokitTabSelected(Event event) throws SQLException {
+
         valittu = false;
         lisays = false;
         muokattavaMokki = null;
@@ -333,6 +341,7 @@ public class HallintaController implements Initializable {
                         return;
                     }
                 });
+
                 mokkiVbox.getChildren().add(root);
 
             } catch (IOException e) {
@@ -341,7 +350,10 @@ public class HallintaController implements Initializable {
         }
     }
 
-    public void lisaaMokkiButtonOnAction(ActionEvent actionEvent) {
+    public void lisaaMokkiButtonOnAction(ActionEvent actionEvent) throws SQLException {
+        ArrayList<ToimintaAlue> alueet; // Tähän taulukkolistaan ladataan olemassa olevat toim.alueet
+        alueet = SQL_yhteys.getToimintaAlueetX();
+
         if (!lisays) {
             try {
                 lisaaMokkiButton.setDisable(true);

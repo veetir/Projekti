@@ -22,10 +22,6 @@ public class UusiAlueController {
     String paivitys = null, id = null;
     boolean varma = false;
 
-    // getteri sille, mitä textfieldiin on kirjoitettu
-    public TextField getUusiToimAlueTextField() {
-        return uusiToimAlueTextField;
-    }
 
     public void initData(ToimintaAlue alue) {
         alueIdLabel.setText(String.valueOf(alue.get_toimintaalue_id()));
@@ -45,11 +41,7 @@ public class UusiAlueController {
 
     public void lisaaUusiAlueButtonOnAction(ActionEvent actionEvent) throws SQLException {
         errorLabel.setText("");
-        if (id == null){
-            ohjeTextArea.setText("Lisää uusi toiminta-alue. \n" +
-                    "Kirjoita toiminta-alueen nimi. ID luodaan automaattisesti. \n" +
-                    "Päivitä näkymä lisättyäsi alueen.");
-        }
+
         String uusiAlue = uusiToimAlueTextField.getText();
 
         // Ei lisätä tyhjää aluetta

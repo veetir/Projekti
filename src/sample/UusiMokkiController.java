@@ -1,18 +1,23 @@
 package sample;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
+import java.net.URL;
 import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 
-public class UusiMokkiController {
+public class UusiMokkiController implements Initializable {
     @FXML
-    public Label mokkiIdLabel, mokkiTalueIdLabel, mokkiToimAlueNimi, errorLabel;
+    public Label mokkiIdLabel, mokkiTalueIdLabel, errorLabel;
     public Button lisaaUusiMokkiButton, plisaaUusiMokkiButton, poistaButton, poistaVarmaButton;
 
     // Muokattavat kentät
@@ -23,6 +28,7 @@ public class UusiMokkiController {
     public TextField mokkiHintaTextField;
     public TextArea mokkiVarusteluTextArea;
     public TextArea mokkiKuvausTextArea;
+    public Label mokkiAlueNimiLabel;
 
 
     String paivitys = null, id = null, mokkiToimAlue;
@@ -30,9 +36,13 @@ public class UusiMokkiController {
     int mokkiId, mokkiTalueId;
 
     public ChoiceBox mokkiAlueBox;
+    // Täytetään valintaboxi. Credit: Lassi (VarausController)
 
 
+    // Tätä kutsutaan, kun mökkiä halutaan muokata. Käytetään siis alustamaan muokkauskortti muokattavalla datalla
     public void initData(Mokki mokki) {
+
+
 
         mokkiIdLabel.setText(String.valueOf(mokki.get_mokki_id()));
         mokkiNimiTextField.setText(mokki.get_mokkinimi());
@@ -45,8 +55,7 @@ public class UusiMokkiController {
         mokkiTalueIdLabel.setText(String.valueOf(mokki.get_toimintaalue_id()));
 
 
-        mokkiAlueBox.setValue(mokki.getToimintaalue_nimi());
-
+        mokkiAlueNimiLabel.setText(mokki.getToimintaalue_nimi());
 
         mokkiTalueId = mokki.get_toimintaalue_id();
         mokkiId = mokki.get_mokki_id();
@@ -63,7 +72,7 @@ public class UusiMokkiController {
         lisaaUusiMokkiButton.setOpacity(0.1);
     }
 
-
+    // Tätä kutsutaan kun halutaan lisätä täysin uusi mökki tai jos halutaan päivittää tiedot
     public void lisaaUusiMokkiButtonOnAction(ActionEvent actionEvent) throws SQLException {
 
         errorLabel.setText("");
@@ -75,11 +84,25 @@ public class UusiMokkiController {
         String uusiMokkiVarustelu = mokkiVarusteluTextArea.getText();
         String uusiMokkiKuvaus = mokkiKuvausTextArea.getText();
 
+        int toimintaalue_id = -1;
+
+        String valittuAlue = mokkiAlueBox.getSelectionModel().getSelectedItem().toString();
+        if (!valittuAlue.equals("Uusi alue")){
+            toimintaalue_id = ToimintaAlue.findId(valittuAlue);
+        } else if (mokkiAlueNimiLabel.getText() != null){
+            toimintaalue_id = ToimintaAlue.findId(mokkiAlueNimiLabel.getText());
+        }
 
         // Huom. ei tarvitse lähettää oikeaa toim.alueen nimeä (tai nimeä ollenkaan), koska SQL-lause tekee mökin pelkän ID:n perusteella
-        Mokki uusiMokki = new Mokki(mokkiId, 2, "ei toimi",
-                uusiMokkiZip, uusiMokkiNimi, uusiMokkiOsoite,
-                uusiMokkiKuvaus, Integer.valueOf(uusiMokkiHloMaara), uusiMokkiVarustelu, Integer.valueOf(uusiMokkiHinta));
+        Mokki uusiMokki = null;
+        try {
+            uusiMokki = new Mokki(mokkiId, toimintaalue_id, "ei toimi",
+                    uusiMokkiZip, uusiMokkiNimi, uusiMokkiOsoite,
+                    uusiMokkiKuvaus, Integer.valueOf(uusiMokkiHloMaara), uusiMokkiVarustelu, Integer.valueOf(uusiMokkiHinta));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            errorLabel.setText("Kaikkia kenttiä ei täytetty oikein!");
+        }
 
 
         // Ei lisätä tyhjää aluetta
@@ -90,7 +113,7 @@ public class UusiMokkiController {
             ArrayList<Mokki> mokit; // Tähän taulukkolistaan ladataan olemassa olevat toim.alueet
             mokit = SQL_yhteys.getMokit();
             // Ei lisätä olemassa olevaa aluetta
-            if(paivitys == null){
+            if (paivitys == null) {
                 for (int i = 0; i < mokit.size(); i++) {
                     if (mokit.get(i).get_mokkinimi().equalsIgnoreCase(uusiMokki.get_mokkinimi())) { // Huom. vertailu mökkinimellä
                         errorLabel.setText("Tämän niminen mökki on jo olemassa!");
@@ -99,20 +122,22 @@ public class UusiMokkiController {
                 }
             }
 
+            // Lähetetään tiedot. Lisäksi kerrotaan SQL_yhteys-luokan metodille onko kyseessä uusi lisäys vai päivitys
             if (paivitys == null) {
                 SQL_yhteys.setMokit(uusiMokki, false, false, null);
                 errorLabel.setText("Mökki lisätty. Päivitä.");
-            } else{
+            } else {
                 SQL_yhteys.setMokit(uusiMokki, true, false, null);
                 errorLabel.setText("Mökki päivitetty. Päivitä.");
             }
         }
     }
-    // Käyttää SQL_Yhteyden poistaMökki- metodia
-    public void poistaButtonOnAction(ActionEvent actionEvent) throws SQLException{
+
+    // Kutsutaan tätä kun halutaan poistaa mökki. Tällä ei varsinaisesti vielä poisteta: se tehdään poistaVarmaButtonilla
+    // jotta ei vahingossa poisteta aluetta.
+    public void poistaButtonOnAction(ActionEvent actionEvent) throws SQLException {
         errorLabel.setText("");
         if (!varma) {
-
             mokkiNimiTextField.setVisible(false);
             mokkiOsoiteTextField.setVisible(false);
             mokkiZipTextField.setVisible(false);
@@ -120,7 +145,6 @@ public class UusiMokkiController {
             mokkiHintaTextField.setVisible(false);
             mokkiVarusteluTextArea.setVisible(false);
             mokkiKuvausTextArea.setVisible(false);
-
 
             poistaButton.setText("Peru");
             varma = true;
@@ -158,5 +182,21 @@ public class UusiMokkiController {
         poistaButton.setVisible(false);
         plisaaUusiMokkiButton.setVisible(false);
         poistaVarmaButton.setVisible(false);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        ObservableList<String> toimintaAlueet = FXCollections.observableArrayList();
+        try {
+            ArrayList<String> alueet = SQL_yhteys.getToimintaAlueet();
+            toimintaAlueet.add("Uusi alue");
+            for (String alue : alueet) {
+                toimintaAlueet.add(alue);
+            }
+            mokkiAlueBox.setItems(toimintaAlueet);
+            mokkiAlueBox.getSelectionModel().selectFirst();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

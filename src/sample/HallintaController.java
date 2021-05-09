@@ -301,7 +301,6 @@ public class HallintaController implements Initializable {
 
 
     public void mokitTabSelected(Event event) throws SQLException {
-
         valittu = false;
         lisays = false;
         muokattavaMokki = null;
@@ -341,9 +340,7 @@ public class HallintaController implements Initializable {
                         return;
                     }
                 });
-
                 mokkiVbox.getChildren().add(root);
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -351,9 +348,6 @@ public class HallintaController implements Initializable {
     }
 
     public void lisaaMokkiButtonOnAction(ActionEvent actionEvent) throws SQLException {
-        ArrayList<ToimintaAlue> alueet; // Tähän taulukkolistaan ladataan olemassa olevat toim.alueet
-        alueet = SQL_yhteys.getToimintaAlueetX();
-
         if (!lisays) {
             try {
                 lisaaMokkiButton.setDisable(true);

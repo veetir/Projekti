@@ -94,6 +94,15 @@
                         <ChoiceBox fx:id="mokkiAlueBox" layoutX="14.0" layoutY="12.0" prefWidth="150.0" />
                      </children>
                   </Pane>
+                  <Pane prefHeight="48.0" prefWidth="134.0">
+                     <children>
+                        <Label fx:id="mokkiAlueNimiLabel" layoutX="46.0" layoutY="11.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
                </children>
             </HBox>
               <HBox layoutX="10.0" layoutY="60.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="734.0">

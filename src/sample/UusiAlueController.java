@@ -51,8 +51,10 @@ public class UusiAlueController implements Initializable {
     String paivitys = null, id = null;
     boolean varma = false;
 
+    ArrayList<String> palveluLista;
 
-    public void initData(ToimintaAlue alue) {
+
+    public void initData(ToimintaAlue alue) throws SQLException {
         alueIdLabel.setText(String.valueOf(alue.get_toimintaalue_id()));
         uusiToimAlueTextField.setText(alue.get_nimi());
         paivitys = alue.get_nimi();
@@ -66,12 +68,15 @@ public class UusiAlueController implements Initializable {
         lisaaUusiAlueButton.setOpacity(0.1);
         ohjeTextArea.setText("Muokkaa olemassa olevaa toiminta-aluetta. \nPäivittäessä nimi vaihtuu, mutta ID pysyy samana.\n" +
                 "Poistettaessa ID ja nimi poistetaan tietokannasta. ");
+
+        palveluLista = SQL_yhteys.getAlueenPalvelut(alue.get_toimintaalue_id());
+        for (int i = 0; i < palveluLista.size(); i++) {
+            System.out.println(palveluLista.get(i));
+        }
+
     }
 
     public void lisaaUusiAlueButtonOnAction(ActionEvent actionEvent) throws SQLException {
-        // Lisätään ensin valitut palvelut tietokantaan
-        //valitutPalvelut
-
         errorLabel.setText("");
         String uusiAlue = uusiToimAlueTextField.getText();
 
@@ -95,6 +100,11 @@ public class UusiAlueController implements Initializable {
 
             if (paivitys == null) {
                 SQL_yhteys.insertToiminta(uusiAlue, null, false, false);
+                int alueenId = ToimintaAlue.findId(uusiToimAlueTextField.getText());
+                for (int i = 0; i < valitutPalvelut.size(); i++) {
+                    Palvelu palvelu = new Palvelu(-1, Long.valueOf(alueenId), valitutPalvelut.get(i), valitutPalvelut.get(i), -1);
+                    SQL_yhteys.setPalvelu(palvelu, false, false);
+                }
                 errorLabel.setText("Alue lisätty. Päivitä.");
                 lisaaUusiAlueButton.setDisable(true);
                 lisaaUusiAlueButton.setOpacity(0.1);
@@ -112,8 +122,6 @@ public class UusiAlueController implements Initializable {
                 poistaButton.setOpacity(0.1);
                 poistaButton.setDisable(true);
             }
-
-
         }
     }
 
@@ -153,6 +161,7 @@ public class UusiAlueController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println("hello");
         golfP.setOnAction(e -> {
             valitutPalvelut.add(golfP.getText());
         });

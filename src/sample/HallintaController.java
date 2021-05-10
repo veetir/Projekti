@@ -449,6 +449,12 @@ public class HallintaController implements Initializable {
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
                     }
+                } else {
+                    try {
+                        initMokit(null);
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
                 }
             }
         });

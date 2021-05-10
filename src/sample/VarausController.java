@@ -173,6 +173,7 @@ public class VarausController implements Initializable {
              for (Mokki mokki : mokit) {
                  
                  HBox mokkiPaneeli = new HBox(10);
+                 mokkiPaneeli.setAlignment(Pos.BOTTOM_LEFT);
                  mokkiPaneeli.setPadding(new Insets(10, 10, 10, 10));
                  mokkiPaneeli.setStyle("-fx-border-color: aquamarine");
                  VBox mokinTiedotVb = new VBox(5);
@@ -260,25 +261,29 @@ public class VarausController implements Initializable {
                         palveluVb.getChildren().add(palveluHb);
 
                         lisaaBtn.setOnAction(lisaaPalvelu ->  {
-                            Palvelu p = mokinPalvelut.get(palveluCb.getSelectionModel().getSelectedIndex());
-                            VarauksenPalvelu vp = new VarauksenPalvelu(p, Integer.parseInt(palveluTf.getText()));
-                            varauksenPalvelut.add(vp);
-                            for(VarauksenPalvelu x : varauksenPalvelut) {
-                                System.out.println(x);
-                            }
-
-                            palveluHb.getChildren().clear();
-                            Button poistaPalveluButton = new Button("poista");
-                            Label palveluLbl = new Label(p.getNimi()+", "+palveluTf.getText()+" kpl", poistaPalveluButton);
-                            palveluHb.getChildren().add(palveluLbl);
-
-                            poistaPalveluButton.setOnAction(poistaPalvelu -> {
-                                varauksenPalvelut.remove(vp);
-                                palveluVb.getChildren().remove(palveluHb);
+                            if (palveluTf.getText() == null || palveluTf.getText().trim().isEmpty() || ! onNumero(palveluTf.getText())){
+                                palveluTf.setStyle("-fx-border-color: red");
+                            }else {
+                                Palvelu p = mokinPalvelut.get(palveluCb.getSelectionModel().getSelectedIndex());
+                                VarauksenPalvelu vp = new VarauksenPalvelu(p, Integer.parseInt(palveluTf.getText()));
+                                varauksenPalvelut.add(vp);
                                 for(VarauksenPalvelu x : varauksenPalvelut) {
                                     System.out.println(x);
                                 }
-                            });
+
+                                palveluHb.getChildren().clear();
+                                Button poistaPalveluButton = new Button("poista");
+                                Label palveluLbl = new Label(p.getNimi()+", "+palveluTf.getText()+" kpl", poistaPalveluButton);
+                                palveluHb.getChildren().add(palveluLbl);
+
+                                poistaPalveluButton.setOnAction(poistaPalvelu -> {
+                                    varauksenPalvelut.remove(vp);
+                                    palveluVb.getChildren().remove(palveluHb);
+                                    for(VarauksenPalvelu x : varauksenPalvelut) {
+                                        System.out.println(x);
+                                    }
+                                });
+                            }   
                         });
                     });
                      //teeVaraus napin toiminnallisuus, joka tekee asiakastietojen perusteella uuden asiakkaan, jos ei ole jo olemassa.

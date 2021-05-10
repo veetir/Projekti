@@ -35,7 +35,7 @@ public class UusiAlueController implements Initializable {
     public Label alueIdLabel, errorLabel;
     public TextField uusiToimAlueTextField;
     public Button lisaaUusiAlueButton, plisaaUusiAlueButton, poistaButton, poistaVarmaButton;
-    public TextArea ohjeTextArea;
+
     String paivitys = null, id = null;
     boolean varma = false;
 
@@ -109,12 +109,9 @@ public class UusiAlueController implements Initializable {
         poistaButton.setOpacity(1);
         lisaaUusiAlueButton.setDisable(true);
         lisaaUusiAlueButton.setOpacity(0.1);
-        ohjeTextArea.setText("Muokkaa olemassa olevaa toiminta-aluetta. \nPäivittäessä nimi vaihtuu, mutta ID pysyy samana.\n" +
-                "Poistettaessa ID ja nimi poistetaan tietokannasta. ");
 
         alusta(alue);
     }
-
 
     public void lisaaUusiAlueButtonOnAction(ActionEvent actionEvent) throws SQLException {
         errorLabel.setText("");
@@ -141,20 +138,10 @@ public class UusiAlueController implements Initializable {
             if (paivitys == null) {
                 SQL_yhteys.insertToiminta(uusiAlue, null, false, false);
                 int alueenId = ToimintaAlue.findId(uusiToimAlueTextField.getText());
-                for (int i = 0; i < valitutPalvelut.size(); i++) {
-                    Palvelu palvelu = new Palvelu(-1, Long.valueOf(alueenId), valitutPalvelut.get(i), valitutPalvelut.get(i), -1);
-                    SQL_yhteys.setPalvelu(palvelu, false, false);
-                }
                 errorLabel.setText("Alue lisätty. Päivitä.");
                 lisaaUusiAlueButton.setDisable(true);
                 lisaaUusiAlueButton.setOpacity(0.1);
             } else {
-
-                for (int i = 0; i < valitutPalvelut.size(); i++) {
-                    Palvelu palvelu = new Palvelu(-1, Long.valueOf(id), valitutPalvelut.get(i), valitutPalvelut.get(i), -1);
-                    SQL_yhteys.setPalvelu(palvelu, false, false);
-                }
-
                 SQL_yhteys.insertToiminta(uusiAlue, id, true, false);
                 errorLabel.setText("Alue päivitetty. Päivitä.");
                 plisaaUusiAlueButton.setDisable(true);
@@ -210,7 +197,7 @@ public class UusiAlueController implements Initializable {
                 peruutaPalveluButton.setDisable(false);
                 peruutaPalveluButton.setOpacity(1);
                 lisays = true;
-                lisaaPalveluButton.setText("Lisää alue");
+                lisaaPalveluButton.setText("Lisää palvelu");
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("uusiPalvelu.fxml"));
                 Parent root = loader.load();
@@ -221,9 +208,6 @@ public class UusiAlueController implements Initializable {
                 } else{
                     controller.sendAlue(tamaAlue);
                 }
-                root.setOnMousePressed(event1 -> {
-                    root.setStyle("-fx-background-color: #dbd9ff");
-                });
 
                 // Tässä käytetään add-metodia, jolla root-node saadaan laitettua tiettyyn indeksiin: tässä 0 eli alkuun
                 palveluBox.getChildren().clear();

@@ -287,9 +287,6 @@ public class HallintaController implements Initializable {
                 if (muokattava != null) {
                     controller.initData(muokattava);
                 }
-                root.setOnMousePressed(event1 -> {
-                    root.setStyle("-fx-background-color: #dbd9ff");
-                });
 
                 // Tässä käytetään add-metodia, jolla root-node saadaan laitettua tiettyyn indeksiin: tässä 0 eli alkuun
                 toimAlueVbox.getChildren().clear();
@@ -387,9 +384,6 @@ public class HallintaController implements Initializable {
                 if (muokattavaMokki != null) {
                     controller.initData(muokattavaMokki);
                 }
-                root.setOnMousePressed(event1 -> {
-                    root.setStyle("-fx-background-color: #dbd9ff");
-                });
 
                 // Tässä käytetään add-metodia, jolla root-node saadaan laitettua tiettyyn indeksiin: tässä 0 eli alkuun
                 mokkiVbox.getChildren().clear();

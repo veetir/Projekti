@@ -129,20 +129,21 @@ public class SQL_yhteys {
         }
         return varaukset;
     }
+
     public static ArrayList<Varaus> getVaraukset(String haku) throws SQLException {
-        haku = "%"+haku+"%";
+        haku = "%" + haku + "%";
         String sql = "SELECT * " +
                 "FROM varaushaku " +
-                "WHERE concat(etunimi, ' ', sukunimi) like ? "+
-                "OR mokkinimi LIKE ? "+
-                "OR katuosoite LIKE ? "+
-                "ORDER BY varaus_id DESC"; 
+                "WHERE concat(etunimi, ' ', sukunimi) like ? " +
+                "OR mokkinimi LIKE ? " +
+                "OR katuosoite LIKE ? " +
+                "ORDER BY varaus_id DESC";
         ArrayList<Varaus> varaukset = new ArrayList<Varaus>();
         ResultSet rs = null;
 
         try (Connection conn = SQL_yhteys.getYhteys();
              PreparedStatement stmt = conn.prepareStatement(sql);) {
-            
+
             stmt.setString(1, haku);
             stmt.setString(2, haku);
             stmt.setString(3, haku);
@@ -443,31 +444,49 @@ public class SQL_yhteys {
         }
     }
 
-    public static void setPalvelu(Palvelu palvelu, boolean paivita, boolean poista) throws SQLException {
-        // TODO: päivitys ja poisto
-        String kysely = "", nimi = "", kuvaus = "", toimintaalue_id = "", hinta = "";
+    public static void setPalvelu(Palvelu palvelu, boolean paivita, boolean poista, String poistoId) throws SQLException {
+        // TODO: poisto
+        String kysely = "", nimi = "", kuvaus = "", toimintaalue_id = "", hinta = "", palvelu_id = "";
 
-        if (!poista & !paivita) {
+        if (!poista) {
             toimintaalue_id = String.valueOf(palvelu.getToimintaalueId());
             nimi = palvelu.getNimi();
             kuvaus = palvelu.getKuvaus();
             hinta = String.valueOf(palvelu.getHinta());
+            if (paivita) {
+                palvelu_id = String.valueOf(palvelu.getPalveluId());
+            }
+        } else {
+            palvelu_id = poistoId;
         }
 
         if (!paivita & !poista) {
             kysely = "INSERT INTO palvelu (toimintaalue_id, nimi, kuvaus, hinta) \n" +
                     "VALUES (?,?,?,?);";
+        } else if (paivita & !poista) {
+            kysely = "UPDATE palvelu " +
+                    "SET  nimi=?, kuvaus=?, hinta=?" +
+                    "WHERE palvelu_id = ?;";
+        } else if (poista) {
+            kysely = "DELETE FROM palvelu WHERE palvelu_id = ?";
         }
 
         try {
             Connection conn = SQL_yhteys.getYhteys();
             PreparedStatement pstmt = conn.prepareStatement(kysely,
                     Statement.RETURN_GENERATED_KEYS);
-            if (!poista) {
+            if (!poista & !paivita) {
                 pstmt.setString(1, toimintaalue_id);
                 pstmt.setString(2, nimi);
                 pstmt.setString(3, kuvaus);
                 pstmt.setString(4, hinta);
+            } else if (paivita & !poista) {
+                pstmt.setString(1, nimi);
+                pstmt.setString(2, kuvaus);
+                pstmt.setString(3, hinta);
+                pstmt.setString(4, palvelu_id);
+            } else {
+                pstmt.setString(1, palvelu_id);
             }
 
             int rowAffected = pstmt.executeUpdate();

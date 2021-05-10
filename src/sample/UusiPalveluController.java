@@ -35,11 +35,13 @@ public class UusiPalveluController {
 
     String paivitys;
     Long id, tAlueId;
+    boolean varma = false;
 
     public void initData(Palvelu palvelu) {
         palveluNimiTextField.setText(palvelu.getNimi());
         palveluHintaTextField.setText(String.valueOf(palvelu.getHinta()));
         palveluIdLabel.setText(String.valueOf(palvelu.getPalveluId()));
+        palveluKuvausTextArea.setText(palvelu.getKuvaus());
 
         paivitys = palvelu.getNimi();
         System.out.println(paivitys);
@@ -94,19 +96,59 @@ public class UusiPalveluController {
 
             // Lähetetään tiedot. Lisäksi kerrotaan SQL_yhteys-luokan metodille onko kyseessä uusi lisäys vai päivitys
             if (paivitys == null) {
-                SQL_yhteys.setPalvelu(uusiPalvelu, false, false);
-                errorLabel.setText("Mökki lisätty. Päivitä.");
+                SQL_yhteys.setPalvelu(uusiPalvelu, false, false, null);
+                errorLabel.setText("Palvelu lisätty. Päivitä.");
             } else {
-                SQL_yhteys.setPalvelu(uusiPalvelu, true, false);
-                errorLabel.setText("Mökki päivitetty. Päivitä.");
+                SQL_yhteys.setPalvelu(uusiPalvelu, true, false, null);
+                errorLabel.setText("Palvelu päivitetty. Päivitä.");
             }
         }
     }
 
     public void poistaButtonOnAction(ActionEvent actionEvent) {
+        errorLabel.setText("");
+        if (!varma) {
+            palveluNimiTextField.setDisable(true);
+            palveluHintaTextField.setDisable(true);
+            lisaaUusiPalveluButton.setDisable(true);
+            plisaaUusiPalveluButton.setDisable(true);
+            palveluIdLabel.setDisable(true);
+            palveluKuvausTextArea.setDisable(true);
+
+            poistaButton.setText("Peru");
+            varma = true;
+            errorLabel.setText("Oletko varma?");
+
+            plisaaUusiPalveluButton.setDisable(true);
+            plisaaUusiPalveluButton.setOpacity(0.1);
+            poistaVarmaButton.setDisable(false);
+            poistaVarmaButton.setOpacity(1);
+            poistaVarmaButton.setVisible(true);
+        } else {
+            varma = false;
+            palveluNimiTextField.setDisable(false);
+            palveluHintaTextField.setDisable(false);
+            lisaaUusiPalveluButton.setDisable(false);
+            plisaaUusiPalveluButton.setDisable(false);
+            palveluIdLabel.setDisable(false);
+            palveluKuvausTextArea.setDisable(false);
+
+            poistaVarmaButton.setDisable(true);
+            poistaVarmaButton.setOpacity(0.1);
+            poistaVarmaButton.setVisible(false);
+            poistaButton.setText("Poista");
+
+            plisaaUusiPalveluButton.setDisable(false);
+            plisaaUusiPalveluButton.setOpacity(1);
+        }
     }
 
-    public void poistaVarmaButtonOnAction(ActionEvent actionEvent) {
+    public void poistaVarmaButtonOnAction(ActionEvent actionEvent) throws SQLException {
+        SQL_yhteys.setPalvelu(null, false, true, String.valueOf(palveluIdLabel.getText()));
+        errorLabel.setText("Palvelu poistettu. Päivitä.");
+        poistaButton.setVisible(false);
+        plisaaUusiPalveluButton.setVisible(false);
+        poistaVarmaButton.setVisible(false);
     }
 
     public void sendAlue(ToimintaAlue alue) {

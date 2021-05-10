@@ -4,14 +4,13 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.UusiAlueController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="555.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.UusiAlueController">
    <children>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="895.0">
           <children>
@@ -57,31 +56,26 @@
             </Pane>
           </children>
       </HBox>
-      <TextArea fx:id="ohjeTextArea" editable="false" layoutX="65.0" layoutY="109.0" prefHeight="99.0" prefWidth="469.0" text="Kirjoita uuden toiminta alueen nimi. ">
-         <font>
-            <Font name="System Italic" size="14.0" />
-         </font></TextArea>
-      <Label layoutX="65.0" layoutY="83.0" text="Ohje" textFill="#b9b9b9" />
-      <Label layoutX="78.0" layoutY="237.0" text="Alueen palvelut">
+      <Label layoutX="65.0" layoutY="106.0" text="Alueen palvelut">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="errorLabel" layoutX="274.0" layoutY="66.0" prefHeight="17.0" prefWidth="257.0" textFill="RED">
+      <Label fx:id="errorLabel" layoutX="206.0" layoutY="111.0" prefHeight="17.0" prefWidth="368.0" textFill="RED">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <ScrollPane layoutX="78.0" layoutY="276.0" prefHeight="300.0" prefWidth="750.0">
+      <ScrollPane layoutX="65.0" layoutY="139.0" prefHeight="400.0" prefWidth="750.0">
          <content>
-            <VBox fx:id="palveluBox" prefHeight="300.0" prefWidth="725.0" spacing="10.0">
+            <VBox fx:id="palveluBox" prefHeight="400.0" prefWidth="725.0" spacing="10.0">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </VBox>
          </content>
       </ScrollPane>
-      <Button fx:id="lisaaPalveluButton" layoutX="715.0" layoutY="238.0" mnemonicParsing="false" onAction="#lisaaPalveluButtonOnAction" text="Lisää palvelu" />
-      <Button fx:id="peruutaPalveluButton" layoutX="584.0" layoutY="238.0" mnemonicParsing="false" onAction="#peruutaPalveluButtonOnAction" text="Peruuta/päivitä" />
+      <Button fx:id="lisaaPalveluButton" layoutX="710.0" layoutY="107.0" mnemonicParsing="false" onAction="#lisaaPalveluButtonOnAction" text="Lisää palvelu" />
+      <Button fx:id="peruutaPalveluButton" disable="true" layoutX="584.0" layoutY="107.0" mnemonicParsing="false" onAction="#peruutaPalveluButtonOnAction" text="Peruuta/päivitä" />
    </children>
 </Pane>

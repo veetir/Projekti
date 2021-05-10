@@ -179,8 +179,8 @@ public class VarausController implements Initializable {
                  Label mokinTiedotLbl = new Label("Henkilömäärä: "+mokki.get_henkilomaara()+
                  "\nVarustelu: "+mokki.get_varustelu()+
                  "\nHinta: "+mokki.getHinta()+"€");
-                 mokkiOtsikkoLbl.setFont(Font.font(null, FontWeight.SEMI_BOLD, 16));
-                 mokinTiedotLbl.setFont(Font.font(null, FontWeight.SEMI_BOLD, 14));
+                 mokkiOtsikkoLbl.setFont(Font.font(null, FontWeight.BOLD, 16));
+                 mokinTiedotLbl.setFont(Font.font(null, FontWeight.SEMI_BOLD, 16));
                  mokinTiedotVb.getChildren().addAll(mokkiOtsikkoLbl, mokinTiedotLbl);
                  Pane vali = new Pane();
                  mokkiPaneeli.setHgrow(vali, Priority.ALWAYS);
@@ -193,9 +193,11 @@ public class VarausController implements Initializable {
                      ArrayList<VarauksenPalvelu> varauksenPalvelut = new ArrayList<>();
                      ArrayList<Palvelu> mokinPalvelut = suodataPalvelut(palvelut, mokki.get_toimintaalue_id());
                      Label mokinKuvaus = new Label("Kuvaus: " + mokki.get_kuvaus());
-                     mokinKuvaus.setFont(Font.font(null, FontWeight.SEMI_BOLD, 14));
+                     mokinKuvaus.setFont(Font.font(null, FontWeight.SEMI_BOLD, 16));
                      mokinTiedotVb.getChildren().add(mokinKuvaus);
                      VBox asiakasTiedot = new VBox(5);
+                     Label asiakasTietoLbl = new Label("Syötä asiakastiedot:");
+                     asiakasTietoLbl.setFont(Font.font(null, FontWeight.BOLD, 16));
                      TextField etunimiTF = new TextField();
                      TextField sukunimiTF = new TextField();
                      TextField osoiteTF = new TextField();
@@ -227,7 +229,7 @@ public class VarausController implements Initializable {
 
 
                      napit.getChildren().addAll(teeVarausBtn, peruutaBtn);
-                     asiakasTiedot.getChildren().addAll(etunimiLBL, sukunimiLBL, osoiteLBL, postinroLBL, puhelinLBL, sahkopostiLBL, napit);
+                     asiakasTiedot.getChildren().addAll(asiakasTietoLbl, etunimiLBL, sukunimiLBL, osoiteLBL, postinroLBL, puhelinLBL, sahkopostiLBL, napit);
                      mokkiPaneeli.getChildren().remove(varaaBtn);
                      mokkiPaneeli.getChildren().addAll(asiakasTiedot, palveluVb);
  

@@ -12,12 +12,12 @@ public class SQL_yhteys {
     // Huom! Vaihda user & password, tarkista myös url !
     String url = "jdbc:mysql://localhost:3306/vn";
     String user = "root";
-    String password = "scape123";
+    String password = "--------";
 
     // Palauttaa SQL yhteys olion
     public static Connection getYhteys() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/vn?serverTimezone=Europe/Helsinki";
-        String user = "root", password = "scape123";
+        String user = "root", password = "--------";
         Connection conn = null;
 
         try {
@@ -104,6 +104,51 @@ public class SQL_yhteys {
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
+            Varaus varaus = null;
+
+            // loop through the result set
+            while (rs.next()) {
+                int varausId = rs.getInt("varaus_id");
+                int asiakasId = rs.getInt("asiakas_id");
+                String etunimi = rs.getString("etunimi");
+                String sukunimi = rs.getString("sukunimi");
+                int mokkiId = rs.getInt("mokki_id");
+                String mokkinimi = rs.getString("mokkinimi");
+                String katuosoite = rs.getString("katuosoite");
+                String toimintaalue = rs.getString("toimintaalue");
+                Date varattuPvm = rs.getDate("varattu_pvm");
+                Date varattuAlkupvm = rs.getDate("varattu_alkupvm");
+                Date varattuLoppupvm = rs.getDate("varattu_loppupvm");
+
+                varaus = new Varaus(varausId, asiakasId, etunimi, sukunimi, mokkiId, mokkinimi, katuosoite, toimintaalue, varattuPvm, varattuAlkupvm, varattuLoppupvm);
+                varaukset.add(varaus);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return varaukset;
+    }
+    public static ArrayList<Varaus> getVaraukset(String haku) throws SQLException {
+        haku = "%"+haku+"%";
+        String sql = "SELECT * " +
+                "FROM varaushaku " +
+                "WHERE concat(etunimi, ' ', sukunimi) like ? "+
+                "OR mokkinimi LIKE ? "+
+                "OR katuosoite LIKE ? "+
+                "ORDER BY varaus_id DESC"; 
+        ArrayList<Varaus> varaukset = new ArrayList<Varaus>();
+        ResultSet rs = null;
+
+        try (Connection conn = SQL_yhteys.getYhteys();
+             PreparedStatement stmt = conn.prepareStatement(sql);) {
+            
+            stmt.setString(1, haku);
+            stmt.setString(2, haku);
+            stmt.setString(3, haku);
+
+
+            rs = stmt.executeQuery();
             Varaus varaus = null;
 
             // loop through the result set

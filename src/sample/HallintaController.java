@@ -13,8 +13,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -40,6 +42,8 @@ public class HallintaController implements Initializable {
     private BorderPane varausNaytto;
     @FXML
     private ScrollPane varausSp;
+    @FXML
+    private TextField varausHakuTf;
 
     public void hallintaButtonOnAction(ActionEvent actionEvent) throws IOException {
         Tyokalu.vaihdaIkkuna("hallinta.fxml", actionEvent);
@@ -67,6 +71,19 @@ public class HallintaController implements Initializable {
 
     public void poistaAsiakasButtonOnAction(ActionEvent actionEvent) {
     }
+    @FXML
+    void varausHakuTfOnAction(KeyEvent event) {
+        
+        try {
+            naytaVaraukset();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            e.getMessage();
+            e.getSQLState();
+            e.getErrorCode();
+        }
+    }
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -86,12 +103,23 @@ public class HallintaController implements Initializable {
         varausVb.setPadding(new Insets(15, 15, 15, 15));
         varausSp.setFitToWidth(true);
         varausSp.setContent(varausVb);
-        ArrayList<Varaus> varaukset = SQL_yhteys.getVaraukset();
-        for (Varaus v : varaukset) {
+        ArrayList<Varaus> varaukset;
+        if (varausHakuTf.getText() == null || varausHakuTf.getText().trim().isEmpty()) {
+            varaukset = SQL_yhteys.getVaraukset();
+        }else {
+            varaukset = SQL_yhteys.getVaraukset(varausHakuTf.getText());
 
-            VBox varauksenTiedotVb = new VBox(3);
-            HBox varausBox = getVarausBox(v);
-            varausVb.getChildren().add(varausBox);
+        }
+        if(varaukset.size() < 1) {
+            Label eiVarauksiaLbl = new Label("ei löytynyt varauksia");
+            eiVarauksiaLbl.setFont(Font.font(null, FontWeight.BOLD, 20));
+            varausVb.getChildren().add(eiVarauksiaLbl);
+        }else {
+            for (Varaus v : varaukset) {
+
+                HBox varausBox = getVarausBox(v);
+                varausVb.getChildren().add(varausBox);
+            }
         }
 
 
@@ -104,13 +132,13 @@ public class HallintaController implements Initializable {
 
         Label varausOtsikko = new Label("varausID #" + v.getVarausId());
         Label asiakasOtsikko = new Label("ASIAKAS:");
-        varausOtsikko.setFont(Font.font(null, FontWeight.BOLD, 16));
-        asiakasOtsikko.setFont(Font.font(null, FontWeight.SEMI_BOLD, 14));
+        varausOtsikko.setFont(Font.font(null, FontWeight.BOLD, 20));
+        asiakasOtsikko.setFont(Font.font(null, FontWeight.SEMI_BOLD, 16));
 
         Label asiakasTiedot = new Label("ASIAKAS:\t        " + "ID #" + v.getAsiakasId() + ", " + v.getEtunimi() + " " + v.getSukunimi());
         Label varauksenTiedot = new Label("VARATTU:\t" + v.getVarattuPvm()/*+"\nsaapumis pvm: "+v.getVarattuAlkupvm()+"\nlahto pvm: "+v.getVarattuLoppupvm()*/);
-        varauksenTiedot.setFont(Font.font(null, FontWeight.SEMI_BOLD, 13));
-        asiakasTiedot.setFont(Font.font(null, FontWeight.SEMI_BOLD, 13));
+        varauksenTiedot.setFont(Font.font(null, FontWeight.SEMI_BOLD, 16));
+        asiakasTiedot.setFont(Font.font(null, FontWeight.SEMI_BOLD, 16));
 
         Button avaaButton = new Button("avaa");
         avaaButton.setOnAction(avaaVaraus -> {
@@ -119,15 +147,19 @@ public class HallintaController implements Initializable {
             HBox palveluHBox = new HBox();
             varausBox.getChildren().remove(avaaButton);
 
-            Label mokkiOtsikko = new Label("MÖKKI:\t          ");
+            Label mokkiOtsikko = new Label("MÖKKI:\t        ");
             Label mokinTiedot = new Label("mökkiID #" + v.getMokkiMokkiId() + "\n" + v.getMokkinimi() + ", " + v.getKatuosoite() + ", " + v.getToimintaalue() +
                     "\nsaapumis pvm:\t  " + v.getVarattuAlkupvm() +
                     "\nlähtö pvm:\t  " + v.getVarattuLoppupvm());
+                    mokkiOtsikko.setFont(Font.font(null, FontWeight.SEMI_BOLD, 16));
+                    mokinTiedot.setFont(Font.font(null, FontWeight.SEMI_BOLD, 16));
 
-            Label palveluOtsikko = new Label("PALVELUT:\t  ");
+            Label palveluOtsikko = new Label("PALVELUT:\t ");
+            palveluOtsikko.setFont(Font.font(null, FontWeight.SEMI_BOLD, 16));
             VBox palveluVbox = new VBox(2);
             for (VarauksenPalvelu_Hallinta vp : varauksenPalvelut) {
                 Label lbl = new Label(vp.toString());
+                lbl.setFont(Font.font(null, FontWeight.SEMI_BOLD, 16));
                 palveluVbox.getChildren().add(lbl);
             }
 

@@ -1,5 +1,8 @@
 package sample;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 public class ToimintaAlue {
     private int toimintaalue_id;
     private String nimi;
@@ -8,6 +11,7 @@ public class ToimintaAlue {
         this.nimi = nimi;
         this.toimintaalue_id = tmid;
     }
+
 
     public int get_toimintaalue_id() {
         return this.toimintaalue_id;
@@ -28,5 +32,19 @@ public class ToimintaAlue {
         return "toimintaalue_id: " + this.toimintaalue_id + "\nnimi: " + this.nimi;
     }
 
+
+    // Metodi, joka palauttaa toim.alueen nimeä vastaavan ID:n
+    public static int findId(String nimi) throws SQLException {
+        ArrayList<ToimintaAlue> areas;
+        areas = SQL_yhteys.getToimintaAlueetX();
+        System.out.println("HAETAAN NIMELLÄ " + nimi);
+        for (int i = 0; i < areas.size(); i++) {
+            if (areas.get(i).get_nimi().equalsIgnoreCase(nimi)){
+                return areas.get(i).get_toimintaalue_id();
+            }
+        }
+        // Virhekoodi: ei löytynyt ID:tä tällä nimellä
+        return -1;
+    }
     
 }

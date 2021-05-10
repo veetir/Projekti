@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.UusiAlueController">
+   <children>
+      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="895.0">
+          <children>
+              <Label prefHeight="67.0" prefWidth="72.0">
+                  <font>
+                      <Font name="System Bold" size="18.0" />
+                  </font>
+              </Label>
+              <Label fx:id="alueIdLabel" opacity="0.3" prefHeight="50.0" prefWidth="85.0" text="ID">
+                  <font>
+                      <Font size="18.0" />
+                  </font>
+            </Label>
+            <Pane>
+               <children>
+                  <Button fx:id="poistaVarmaButton" mnemonicParsing="false" onAction="#poistaVarmaButtonOnAction" prefHeight="50.0" prefWidth="69.0" style="-fx-background-color: #ff8f8f;" text="Poista" visible="false">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
+              <Label layoutX="46.0" layoutY="10.0" prefHeight="52.0" prefWidth="60.0">
+                  <font>
+                      <Font name="System Bold" size="18.0" />
+                  </font>
+              </Label>
+            <Pane>
+               <children>
+                  <TextField fx:id="uusiToimAlueTextField" layoutY="10.0" prefHeight="30.0" prefWidth="261.0" promptText="Uuden toiminta-alueen nimi">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </Pane>
+            <Pane prefHeight="50.0" prefWidth="372.0">
+               <children>
+                  <Label fx:id="errorLabel" layoutX="14.0" layoutY="17.0" prefHeight="17.0" prefWidth="191.0" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="poistaButton" disable="true" layoutX="110.0" layoutY="13.0" mnemonicParsing="false" onAction="#poistaButtonOnAction" opacity="0.1" text="Poista" />
+                  <Button fx:id="plisaaUusiAlueButton" disable="true" layoutX="180.0" layoutY="13.0" mnemonicParsing="false" onAction="#lisaaUusiAlueButtonOnAction" opacity="0.1" text="Päivitä" />
+                  <Button fx:id="lisaaUusiAlueButton" defaultButton="true" layoutX="261.0" layoutY="11.0" mnemonicParsing="false" onAction="#lisaaUusiAlueButtonOnAction" prefHeight="30.0" prefWidth="60.0" text="Lisää" />
+               </children>
+            </Pane>
+          </children>
+      </HBox>
+      <TextArea fx:id="ohjeTextArea" editable="false" layoutX="65.0" layoutY="109.0" prefHeight="99.0" prefWidth="469.0" text="Kirjoita uuden toiminta alueen nimi. ">
+         <font>
+            <Font name="System Italic" size="14.0" />
+         </font></TextArea>
+      <Label layoutX="65.0" layoutY="83.0" text="Ohje" textFill="#b9b9b9" />
+      <Label layoutX="76.0" layoutY="242.0" text="Alueen palvelut">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <CheckBox fx:id="golfP" layoutX="78.0" layoutY="298.0" mnemonicParsing="false" text="Golf" />
+      <CheckBox fx:id="hiihtoP" layoutX="78.0" layoutY="336.0" mnemonicParsing="false" text="Hiihto" />
+      <CheckBox fx:id="marjastusP" layoutX="78.0" layoutY="374.0" mnemonicParsing="false" text="Marjastus" />
+      <CheckBox fx:id="hiihtokeskusP" layoutX="78.0" layoutY="410.0" mnemonicParsing="false" text="Hiihtokeskus" />
+      <CheckBox fx:id="maastopyorailyP" layoutX="208.0" layoutY="298.0" mnemonicParsing="false" text="Maastopyöräily" />
+      <CheckBox fx:id="moottorikelkkailuP" layoutX="208.0" layoutY="336.0" mnemonicParsing="false" text="Moottorikelkkailu" />
+      <CheckBox fx:id="retkeilyP" layoutX="208.0" layoutY="374.0" mnemonicParsing="false" text="Retkeily" />
+      <CheckBox fx:id="uintiP" layoutX="208.0" layoutY="410.0" mnemonicParsing="false" text="Uinti" />
+      <CheckBox fx:id="tennisP" layoutX="348.0" layoutY="298.0" mnemonicParsing="false" text="Tennis" />
+      <CheckBox fx:id="sienestysP" layoutX="348.0" layoutY="336.0" mnemonicParsing="false" text="Sienestys" />
+      <CheckBox fx:id="veneilyP" layoutX="348.0" layoutY="374.0" mnemonicParsing="false" text="Veneily" />
+      <CheckBox fx:id="kalastaminenP" layoutX="348.0" layoutY="410.0" mnemonicParsing="false" text="Kalastaminen" />
+   </children>
+</Pane>

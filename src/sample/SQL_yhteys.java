@@ -204,6 +204,40 @@ public class SQL_yhteys {
         }
         return palvelut;
     }
+    public static ArrayList<Mokki> getAlueenMokit(String alue) throws SQLException{
+        String area = String.valueOf(ToimintaAlue.findId(alue));
+        System.out.println(area);
+        String sql = "SELECT * " +
+                "FROM mokki " +
+                "WHERE toimintaalue_id = ?;";
+        ArrayList<Mokki> mokit = new ArrayList<>();
+
+        try (Connection conn = SQL_yhteys.getYhteys();
+             PreparedStatement stmt = conn.prepareStatement(sql);) {
+            stmt.setString(1, area);
+            ResultSet rs = stmt.executeQuery();
+            Mokki mokki = null;
+            while (rs.next()) {
+                int mokki_id = rs.getInt("mokki_id");
+                int toimintaalueen_id = rs.getInt("toimintaalue_id");
+                String mokkinimix = rs.getString("mokkinimi");
+                String katuosoite = rs.getString("katuosoite");
+                String postinumero = rs.getString("postinro");
+                String kuvaus = rs.getString("kuvaus");
+                int hlomaara = Integer.valueOf(rs.getString("henkilomaara"));
+                String varustelu = rs.getString("varustelu");
+                long hinta = rs.getLong("hinta");
+
+                mokki = new Mokki(mokki_id, toimintaalueen_id, ToimintaAlue.findNimi(toimintaalueen_id) ,
+                        postinumero, mokkinimix, katuosoite, kuvaus, hlomaara,varustelu, hinta);
+                mokit.add(mokki);
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return mokit;
+    }
 
     public static ArrayList<Palvelu> getAlueenPalvelut(int alueId) throws SQLException {
         String toimintaalue_id = String.valueOf(alueId);

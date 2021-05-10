@@ -46,5 +46,17 @@ public class ToimintaAlue {
         // Virhekoodi: ei löytynyt ID:tä tällä nimellä
         return -1;
     }
+    public static String findNimi(int id) throws SQLException {
+        ArrayList<ToimintaAlue> areas;
+        areas = SQL_yhteys.getToimintaAlueetX();
+        System.out.println("HAETAAN id:llä " + id);
+        for (int i = 0; i < areas.size(); i++) {
+            if (areas.get(i).get_toimintaalue_id() == id){
+                return areas.get(i).get_nimi();
+            }
+        }
+        // Virhekoodi: ei löytynyt ID:tä tällä nimellä
+        return "ei löydy";
+    }
     
 }

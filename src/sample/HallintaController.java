@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -7,9 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -20,21 +20,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
-
 
 public class HallintaController implements Initializable {
 
@@ -69,9 +65,10 @@ public class HallintaController implements Initializable {
 
     public void poistaAsiakasButtonOnAction(ActionEvent actionEvent) {
     }
+
     @FXML
     void varausHakuTfOnAction(KeyEvent event) {
-        
+
         try {
             naytaVaraukset();
         } catch (SQLException e) {
@@ -104,15 +101,15 @@ public class HallintaController implements Initializable {
         ArrayList<Varaus> varaukset;
         if (varausHakuTf.getText() == null || varausHakuTf.getText().trim().isEmpty()) {
             varaukset = SQL_yhteys.getVaraukset();
-        }else {
+        } else {
             varaukset = SQL_yhteys.getVaraukset(varausHakuTf.getText());
 
         }
-        if(varaukset.size() < 1) {
+        if (varaukset.size() < 1) {
             Label eiVarauksiaLbl = new Label("ei löytynyt varauksia");
             eiVarauksiaLbl.setFont(Font.font(null, FontWeight.BOLD, 20));
             varausVb.getChildren().add(eiVarauksiaLbl);
-        }else {
+        } else {
             for (Varaus v : varaukset) {
 
                 HBox varausBox = getVarausBox(v);
@@ -147,8 +144,8 @@ public class HallintaController implements Initializable {
             Label mokinTiedot = new Label("mökkiID #" + v.getMokkiMokkiId() + "\n" + v.getMokkinimi() + ", " + v.getKatuosoite() + ", " + v.getToimintaalue() +
                     "\nsaapumis pvm:\t  " + v.getVarattuAlkupvm() +
                     "\nlähtö pvm:\t  " + v.getVarattuLoppupvm());
-                    mokkiOtsikko.setFont(Font.font(null, FontWeight.SEMI_BOLD, 16));
-                    mokinTiedot.setFont(Font.font(null, FontWeight.SEMI_BOLD, 16));
+            mokkiOtsikko.setFont(Font.font(null, FontWeight.SEMI_BOLD, 16));
+            mokinTiedot.setFont(Font.font(null, FontWeight.SEMI_BOLD, 16));
 
             Label palveluOtsikko = new Label("PALVELUT:\t ");
             palveluOtsikko.setFont(Font.font(null, FontWeight.SEMI_BOLD, 16));
@@ -320,16 +317,25 @@ public class HallintaController implements Initializable {
     private VBox mokkiVbox;
     public Button lisaaMokkiButton, lopetaMokkiButton;
     private Mokki muokattavaMokki;
-    public ChoiceBox mokkiAlueBox;
-
 
     public void mokitTabSelected(Event event) throws SQLException {
         valittu = false;
         lisays = false;
         muokattavaMokki = null;
+
+        initMokit(null);
+        initSearch();
+    }
+
+    void initMokit(String area) throws SQLException {
         mokkiVbox.getChildren().clear();
-        ArrayList<Mokki> mokit;
-        mokit = SQL_yhteys.getMokit();
+        ArrayList<Mokki> mokit = null;
+        if (area == null) {
+            mokit = SQL_yhteys.getMokit();
+        } else {
+            mokit = SQL_yhteys.getAlueenMokit(area);
+        }
+
 
         for (int i = 0; i < mokit.size(); i++) {
             try {
@@ -410,5 +416,42 @@ public class HallintaController implements Initializable {
         lisays = false;
         muokattavaMokki = null;
         lisaaMokkiButton.setText("Lisää mokki");
+    }
+
+    /**
+     * haku mökissä
+     */
+
+    public ChoiceBox tAlueMokitBox;
+
+    void initSearch() {
+        ObservableList<String> toimintaAlueet = FXCollections.observableArrayList();
+        try {
+            ArrayList<String> alueet = SQL_yhteys.getToimintaAlueet();
+            toimintaAlueet.add("Hae alueelta");
+            for (String alue : alueet) {
+                toimintaAlueet.add(alue);
+            }
+            tAlueMokitBox.setItems(toimintaAlueet);
+            tAlueMokitBox.getSelectionModel().selectFirst();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        tAlueMokitBox.setOnAction(event -> {
+            if ( tAlueMokitBox.getValue() == null){
+                return;
+            } else{
+                if(!tAlueMokitBox.getValue().equals("Hae alueelta")){
+                    System.out.println(tAlueMokitBox.getValue().toString());
+                    try {
+                        initMokit(tAlueMokitBox.getValue().toString());
+                        System.out.println("j00");
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 }

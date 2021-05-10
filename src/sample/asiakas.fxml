@@ -1,43 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="633.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AsiakasController">
-   <center>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0" prefWidth="748.0" style="-fx-border-color: #dbd9ff; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AsiakasController">
+   <children>
+      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="895.0">
          <children>
-            <TextField fx:id="etunimiTextField" alignment="CENTER" layoutX="232.0" layoutY="91.0" onAction="#varausButtonOnAction" promptText="Asiakkkaan etunimi" />
-            <TextField fx:id="sukunimiTextField" alignment="CENTER" layoutX="232.0" layoutY="126.0" onAction="#varausButtonOnAction" promptText="Asiakkkaan sukunimi" />
-            <TextField fx:id="osoiteTextField" alignment="CENTER" layoutX="232.0" layoutY="163.0" onAction="#varausButtonOnAction" promptText="Asiakkkaan osoite" />
-            <TextField fx:id="emailTextField" alignment="CENTER" layoutX="232.0" layoutY="200.0" onAction="#varausButtonOnAction" promptText="Sähköposti" />
-            <TextField fx:id="zipTextField" alignment="CENTER" layoutX="231.0" layoutY="242.0" onAction="#varausButtonOnAction" promptText="Postinumero" />
-            <TextField fx:id="puhnroTextField" alignment="CENTER" layoutX="232.0" layoutY="280.0" onAction="#varausButtonOnAction" promptText="Puhelinnumero" />
-            <Button fx:id="varausButton" layoutX="260.0" layoutY="340.0" mnemonicParsing="false" onAction="#varausButtonOnAction" text="Tee varaus">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
+            <Label prefHeight="50.0" prefWidth="41.0" text="ID:">
                <font>
-                  <Font size="15.0" />
-               </font></Button>
-            <Button fx:id="takaisinButton" cancelButton="true" layoutX="546.0" layoutY="355.0" mnemonicParsing="false" onAction="#takaisinButtonOnAction" text="Takaisin">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="asiakasIdLabel" prefHeight="50.0" prefWidth="159.0">
                <font>
-                  <Font size="15.0" />
-               </font></Button>
-            <Label layoutX="255.0" layoutY="14.0" text="Asiakas">
-               <font>
-                  <Font name="System Bold" size="29.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
          </children>
-      </Pane>
-   </center>
-</BorderPane>
+      </HBox>
+      <HBox layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="895.0">
+         <children>
+            <Label prefHeight="50.0" prefWidth="104.0" text="Etunimi">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="etunimiLabel" prefHeight="50.0" prefWidth="272.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="46.0" layoutY="10.0" prefHeight="50.0" prefWidth="79.0" text="Osoite">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="osoiteLabel" layoutX="74.0" layoutY="10.0" prefHeight="50.0" prefWidth="300.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="725.0">
+         <children>
+            <Label prefHeight="50.0" prefWidth="99.0" text="Sukunimi">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="sukunimiLabel" prefHeight="50.0" prefWidth="278.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="74.0" layoutY="10.0" prefHeight="50.0" prefWidth="119.0" text="Postinumero">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="postinroLabel" prefHeight="66.0" prefWidth="227.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox layoutX="10.0" layoutY="60.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="895.0">
+         <children>
+            <Label prefHeight="50.0" prefWidth="144.0" text="Puhelinnumero">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="puhnroLabel" layoutX="46.0" layoutY="10.0" prefHeight="50.0" prefWidth="476.0">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox layoutX="10.0" layoutY="110.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="895.0">
+         <children>
+            <Label prefHeight="45.0" prefWidth="103.0" text="Sähköposti">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="spostiLabel" prefHeight="45.0" prefWidth="565.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </children>
+   <opaqueInsets>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </opaqueInsets>
+   <padding>
+      <Insets bottom="25.0" left="20.0" right="10.0" top="5.0" />
+   </padding>
+</VBox>

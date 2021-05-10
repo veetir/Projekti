@@ -2,43 +2,41 @@ package sample;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-import java.io.IOException;
-import java.sql.*;
-
-public class AsiakasController {
+public class AsiakasController implements Initializable {
     @FXML
-    // Asiakas
-    public TextField etunimiTextField, sukunimiTextField, zipTextField, emailTextField, puhnroTextField, osoiteTextField;
+    public Label etunimiLabel;
+    public Label sukunimiLabel;
+    public Label osoiteLabel;
+    public Label postinroLabel;
+    public Label puhnroLabel;
+    public Label asiakasIdLabel;
+    public Label spostiLabel;
 
-    public void varausButtonOnAction(ActionEvent actionEvent) throws SQLException {
-        // https://www.mysqltutorial.org/mysql-jdbc-insert/
-        String etunimi = etunimiTextField.getText();
-        String sukunimi = sukunimiTextField.getText();
-        String osoite = osoiteTextField.getText();
-        String zip = zipTextField.getText();
-        String email = emailTextField.getText();
-        String puhnro = puhnroTextField.getText();
-        String kysely = "INSERT INTO asiakas(postinro, etunimi, sukunimi, lahiosoite, email, puhelinnro) "
-                + "VALUES(?, ?, ?, ?, ?, ?);";
 
-        SQL_yhteys.setAsiakkaat(kysely, zip, etunimi, sukunimi, osoite, email, puhnro);
-        SQL_yhteys.getAsiakkaat();
+    public void initData(Asiakas asiakas){
+
+        asiakasIdLabel.setText(String.valueOf(asiakas.getAsiakasId()));
+        etunimiLabel.setText(String.valueOf(asiakas.getEtunimi()));
+        sukunimiLabel.setText(String.valueOf(asiakas.getSukunimi()));
+        osoiteLabel.setText(String.valueOf(asiakas.getLahiosoite()));
+        postinroLabel.setText(String.valueOf(asiakas.getPostinro()));
+        puhnroLabel.setText(String.valueOf(asiakas.getPuhelinnro()));
+        spostiLabel.setText(String.valueOf(asiakas.getEmail()));
+
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
 
-    public void takaisinButtonOnAction(ActionEvent actionEvent) throws IOException {
-        Parent toiseenNakymaan = FXMLLoader.load(getClass().getResource("varaushallinta.fxml"));
-        Scene toinenScene = new Scene(toiseenNakymaan);
-
-        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        window.setScene(toinenScene);
-        window.show();
     }
 }

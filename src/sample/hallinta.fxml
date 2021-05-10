@@ -80,7 +80,7 @@
                            <bottom>
                               <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="100.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Button fx:id="lopetaMokkiButton" mnemonicParsing="false" onAction="#lopetaMokkiButtonOnAction" text="Takaisin" />
+                                    <Button fx:id="lopetaMokkiButton" disable="true" mnemonicParsing="false" onAction="#lopetaMokkiButtonOnAction" text="Takaisin/päivitä" />
                                     <Button fx:id="lisaaMokkiButton" defaultButton="true" mnemonicParsing="false" onAction="#lisaaMokkiButtonOnAction" prefHeight="41.0" prefWidth="131.0" text="Lisää mökki">
                                        <font>
                                           <Font name="System Bold" size="18.0" />

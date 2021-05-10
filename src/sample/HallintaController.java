@@ -39,8 +39,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class HallintaController implements Initializable {
 
     @FXML
-    private BorderPane varausNaytto;
-    @FXML
     private ScrollPane varausSp;
     @FXML
     private TextField varausHakuTf;
@@ -121,8 +119,6 @@ public class HallintaController implements Initializable {
                 varausVb.getChildren().add(varausBox);
             }
         }
-
-
     }
 
     private HBox getVarausBox(Varaus v) {
@@ -299,7 +295,7 @@ public class HallintaController implements Initializable {
                 toimAlueVbox.getChildren().clear();
                 toimAlueVbox.getChildren().add(0, root);
 
-            } catch (IOException e) {
+            } catch (IOException | SQLException e) {
                 e.printStackTrace();
             }
         }
@@ -330,8 +326,6 @@ public class HallintaController implements Initializable {
     public ChoiceBox mokkiAlueBox;
 
 
-
-
     public void mokitTabSelected(Event event) throws SQLException {
         valittu = false;
         lisays = false;
@@ -353,8 +347,6 @@ public class HallintaController implements Initializable {
 
                 root.setOnMousePressed(event1 -> {
                     z.getAndIncrement();
-                    //System.out.println(z.get());
-                    System.out.println("MÖKKI NYT " + k);
                     if (z.get() % 2 == 1 & muokattavaMokki == null) {
                         lisaaMokkiButton.setText("Muokkaa");
                         root.setStyle("-fx-background-color: #dbd9ff; " +

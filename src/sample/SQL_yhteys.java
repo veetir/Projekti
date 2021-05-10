@@ -204,6 +204,36 @@ public class SQL_yhteys {
         return palvelut;
     }
 
+    public static ArrayList<String> getAlueenPalvelut(int alueId) throws SQLException {
+        String toimintaalue_id = String.valueOf(alueId);
+        String sql = "SELECT * " +
+                "FROM palvelu " +
+                "WHERE toimintaalue_id = ?;";
+        ArrayList<String> palvelut = new ArrayList<String>();
+
+        try (Connection conn = SQL_yhteys.getYhteys();
+             PreparedStatement stmt = conn.prepareStatement(sql);) {
+            stmt.setString(1, toimintaalue_id);
+            ResultSet rs = stmt.executeQuery();
+            Palvelu palvelu = null;
+            while (rs.next()) {
+               // int palveluId = rs.getInt("palvelu_id");
+               // int talueId = rs.getInt("toimintaalue_id");
+                String palveluNimi = rs.getString("nimi");
+               // String palveluKuvaus = rs.getString("kuvaus");
+               // Double palveluHinta = rs.getDouble("hinta");
+
+               // palvelu = new Palvelu(palveluId, talueId, palveluNimi, palveluKuvaus, palveluHinta);
+               // palvelut.add(palvelu);
+                palvelut.add(palveluNimi);
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return palvelut;
+    }
+
     public static ArrayList<VarauksenPalvelu_Hallinta> getVarauksenPalvelut(int varaus_id) {
         String sql = "Select vp.varaus_id as varaus_id, p.palvelu_id as palvelu_id, p.nimi as palvelu, vp.lkm as lkm, p.hinta as hinta " +
                 "from palvelu p join varauksen_palvelut vp " +
@@ -415,7 +445,7 @@ public class SQL_yhteys {
 
     public static void setPalvelu(Palvelu palvelu, boolean paivita, boolean poista) throws SQLException {
         // TODO: päivitys ja poisto
-        String kysely = "", nimi = "", kuvaus = "", toimintaalue_id ="", hinta ="";
+        String kysely = "", nimi = "", kuvaus = "", toimintaalue_id = "", hinta = "";
 
         if (!poista & !paivita) {
             toimintaalue_id = String.valueOf(palvelu.getToimintaalueId());

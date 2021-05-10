@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
@@ -48,11 +49,6 @@
             </Pane>
             <Pane prefHeight="50.0" prefWidth="372.0">
                <children>
-                  <Label fx:id="errorLabel" layoutX="14.0" layoutY="17.0" prefHeight="17.0" prefWidth="191.0" textFill="RED">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
                   <Button fx:id="poistaButton" disable="true" layoutX="110.0" layoutY="13.0" mnemonicParsing="false" onAction="#poistaButtonOnAction" opacity="0.1" text="Poista" />
                   <Button fx:id="plisaaUusiAlueButton" disable="true" layoutX="180.0" layoutY="13.0" mnemonicParsing="false" onAction="#lisaaUusiAlueButtonOnAction" opacity="0.1" text="Päivitä" />
                   <Button fx:id="lisaaUusiAlueButton" defaultButton="true" layoutX="261.0" layoutY="11.0" mnemonicParsing="false" onAction="#lisaaUusiAlueButtonOnAction" prefHeight="30.0" prefWidth="60.0" text="Lisää" />
@@ -70,17 +66,26 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <CheckBox fx:id="golfP" layoutX="78.0" layoutY="298.0" mnemonicParsing="false" text="Golf" />
-      <CheckBox fx:id="hiihtoP" layoutX="78.0" layoutY="336.0" mnemonicParsing="false" text="Hiihto" />
-      <CheckBox fx:id="marjastusP" layoutX="78.0" layoutY="374.0" mnemonicParsing="false" text="Marjastus" />
-      <CheckBox fx:id="hiihtokeskusP" layoutX="78.0" layoutY="410.0" mnemonicParsing="false" text="Hiihtokeskus" />
-      <CheckBox fx:id="maastopyorailyP" layoutX="208.0" layoutY="298.0" mnemonicParsing="false" text="Maastopyöräily" />
-      <CheckBox fx:id="moottorikelkkailuP" layoutX="208.0" layoutY="336.0" mnemonicParsing="false" text="Moottorikelkkailu" />
-      <CheckBox fx:id="retkeilyP" layoutX="208.0" layoutY="374.0" mnemonicParsing="false" text="Retkeily" />
-      <CheckBox fx:id="uintiP" layoutX="208.0" layoutY="410.0" mnemonicParsing="false" text="Uinti" />
-      <CheckBox fx:id="tennisP" layoutX="348.0" layoutY="298.0" mnemonicParsing="false" text="Tennis" />
-      <CheckBox fx:id="sienestysP" layoutX="348.0" layoutY="336.0" mnemonicParsing="false" text="Sienestys" />
-      <CheckBox fx:id="veneilyP" layoutX="348.0" layoutY="374.0" mnemonicParsing="false" text="Veneily" />
-      <CheckBox fx:id="kalastaminenP" layoutX="348.0" layoutY="410.0" mnemonicParsing="false" text="Kalastaminen" />
+      <Group fx:id="palvelutGroup" layoutX="78.0" layoutY="298.0">
+         <children>
+            <CheckBox fx:id="golfP" mnemonicParsing="false" text="Golf" />
+            <CheckBox fx:id="hiihtoP" layoutY="38.0" mnemonicParsing="false" text="Hiihto" />
+            <CheckBox fx:id="marjastusP" layoutY="76.0" mnemonicParsing="false" text="Marjastus" />
+            <CheckBox fx:id="hiihtokeskusP" layoutY="112.0" mnemonicParsing="false" text="Hiihtokeskus" />
+            <CheckBox fx:id="maastopyorailyP" layoutX="130.0" mnemonicParsing="false" text="Maastopyöräily" />
+            <CheckBox fx:id="moottorikelkkailuP" layoutX="130.0" layoutY="38.0" mnemonicParsing="false" text="Moottorikelkkailu" />
+            <CheckBox fx:id="retkeilyP" layoutX="130.0" layoutY="76.0" mnemonicParsing="false" text="Retkeily" />
+            <CheckBox fx:id="uintiP" layoutX="130.0" layoutY="112.0" mnemonicParsing="false" text="Uinti" />
+            <CheckBox fx:id="tennisP" layoutX="270.0" mnemonicParsing="false" text="Tennis" />
+            <CheckBox fx:id="sienestysP" layoutX="270.0" layoutY="38.0" mnemonicParsing="false" text="Sienestys" />
+            <CheckBox fx:id="veneilyP" layoutX="270.0" layoutY="76.0" mnemonicParsing="false" text="Veneily" />
+            <CheckBox fx:id="kalastaminenP" layoutX="270.0" layoutY="112.0" mnemonicParsing="false" text="Kalastaminen" />
+         </children>
+      </Group>
+      <Label fx:id="errorLabel" layoutX="274.0" layoutY="66.0" prefHeight="17.0" prefWidth="257.0" textFill="RED">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

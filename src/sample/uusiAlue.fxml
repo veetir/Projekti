@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Group?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.UusiAlueController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.UusiAlueController">
    <children>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="895.0">
           <children>
@@ -61,31 +62,26 @@
             <Font name="System Italic" size="14.0" />
          </font></TextArea>
       <Label layoutX="65.0" layoutY="83.0" text="Ohje" textFill="#b9b9b9" />
-      <Label layoutX="76.0" layoutY="242.0" text="Alueen palvelut">
+      <Label layoutX="78.0" layoutY="237.0" text="Alueen palvelut">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Group fx:id="palvelutGroup" layoutX="78.0" layoutY="298.0">
-         <children>
-            <CheckBox fx:id="golfP" mnemonicParsing="false" text="Golf" />
-            <CheckBox fx:id="hiihtoP" layoutY="38.0" mnemonicParsing="false" text="Hiihto" />
-            <CheckBox fx:id="marjastusP" layoutY="76.0" mnemonicParsing="false" text="Marjastus" />
-            <CheckBox fx:id="hiihtokeskusP" layoutY="112.0" mnemonicParsing="false" text="Hiihtokeskus" />
-            <CheckBox fx:id="maastopyorailyP" layoutX="130.0" mnemonicParsing="false" text="Maastopyöräily" />
-            <CheckBox fx:id="moottorikelkkailuP" layoutX="130.0" layoutY="38.0" mnemonicParsing="false" text="Moottorikelkkailu" />
-            <CheckBox fx:id="retkeilyP" layoutX="130.0" layoutY="76.0" mnemonicParsing="false" text="Retkeily" />
-            <CheckBox fx:id="uintiP" layoutX="130.0" layoutY="112.0" mnemonicParsing="false" text="Uinti" />
-            <CheckBox fx:id="tennisP" layoutX="270.0" mnemonicParsing="false" text="Tennis" />
-            <CheckBox fx:id="sienestysP" layoutX="270.0" layoutY="38.0" mnemonicParsing="false" text="Sienestys" />
-            <CheckBox fx:id="veneilyP" layoutX="270.0" layoutY="76.0" mnemonicParsing="false" text="Veneily" />
-            <CheckBox fx:id="kalastaminenP" layoutX="270.0" layoutY="112.0" mnemonicParsing="false" text="Kalastaminen" />
-         </children>
-      </Group>
       <Label fx:id="errorLabel" layoutX="274.0" layoutY="66.0" prefHeight="17.0" prefWidth="257.0" textFill="RED">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
+      <ScrollPane layoutX="78.0" layoutY="276.0" prefHeight="300.0" prefWidth="750.0">
+         <content>
+            <VBox fx:id="palveluBox" prefHeight="300.0" prefWidth="725.0" spacing="10.0">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </VBox>
+         </content>
+      </ScrollPane>
+      <Button fx:id="lisaaPalveluButton" layoutX="715.0" layoutY="238.0" mnemonicParsing="false" onAction="#lisaaPalveluButtonOnAction" text="Lisää palvelu" />
+      <Button fx:id="peruutaPalveluButton" layoutX="584.0" layoutY="238.0" mnemonicParsing="false" onAction="#peruutaPalveluButtonOnAction" text="Peruuta/päivitä" />
    </children>
 </Pane>

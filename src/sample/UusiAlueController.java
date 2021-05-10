@@ -3,43 +3,31 @@ package sample;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.InputMethodEvent;
+import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class UusiAlueController implements Initializable {
 
     @FXML
-    private CheckBox golfP;
+    private VBox palveluBox;
     @FXML
-    private CheckBox hiihtoP;
+    private Button lisaaPalveluButton;
     @FXML
-    private CheckBox marjastusP;
-    @FXML
-    private CheckBox hiihtokeskusP;
-    @FXML
-    private CheckBox maastopyorailyP;
-    @FXML
-    private CheckBox moottorikelkkailuP;
-    @FXML
-    private CheckBox retkeilyP;
-    @FXML
-    private CheckBox uintiP;
-    @FXML
-    private CheckBox tennisP;
-    @FXML
-    private CheckBox sienestysP;
-    @FXML
-    private CheckBox veneilyP;
-    @FXML
-    private CheckBox kalastaminenP;
+    private Button peruutaPalveluButton;
 
     ObservableList<String> valitutPalvelut = FXCollections.observableArrayList();
 
@@ -51,8 +39,63 @@ public class UusiAlueController implements Initializable {
     String paivitys = null, id = null;
     boolean varma = false;
 
-    ArrayList<String> palveluLista;
+    private Palvelu muokattavaPalvelu = null;
+    boolean valittu, lisays;
+    ToimintaAlue tamaAlue;
 
+    public void alusta(ToimintaAlue alue) throws SQLException {
+        /**
+         * Ladataan valitun alueen palvelut-listaan kaikki sen alueen palvelut.
+         * Listan on tarkoitus toimia samalla tavalla kuin toiminta-alueiden listan toim.alueiden hallinnassa
+         */
+        tamaAlue = alue;
+
+        palveluBox.getChildren().clear();
+        ArrayList<Palvelu> palvelut; // Tähän taulukkolistaan ladataan olemassa olevat toim.alueet
+        palvelut = SQL_yhteys.getAlueenPalvelut(alue.get_toimintaalue_id()); // Metodi palauttaa taulukkolistan, jonka alkiot ovat ToimintaAlue:ita
+
+        // Seuraavalla silmukalla käydään läpi kaikki palvelut, jos niitä on, ja ladataan ne
+        if (palvelut != null) {
+            for (int i = 0; i < palvelut.size(); i++) {
+                try {
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getResource("palvelu.fxml"));
+                    Parent root = loader.load(); // root on nyt node-tyyppiä, eli se voidaan lisätä VBoxiin
+
+                    // Pitää vielä ladata AlueControllerin initData-metodin avulla oikeat tiedot (taulukkolistasta alueet)
+                    PalveluController controller = loader.getController();
+                    controller.initData(palvelut.get(i));
+                    final Palvelu k = palvelut.get(i);
+                    AtomicInteger z = new AtomicInteger();
+
+                    // Värin muutos kun hiiri menee tuloksen päälle
+
+                    root.setOnMousePressed(event1 -> {
+                        z.getAndIncrement();
+                        if (z.get() % 2 == 1 & muokattavaPalvelu == null) {
+                            lisaaPalveluButton.setText("Muokkaa");
+                            root.setStyle("-fx-background-color: #dbd9ff; " +
+                                    "-fx-border-color: #40424a; -fx-border-width: 3");
+                            valittu = true;
+                            muokattavaPalvelu = k;
+                        } else if (valittu == true & k.equals(muokattavaPalvelu)) {
+                            lisaaPalveluButton.setText("Lisää");
+                            root.setStyle("-fx-background-color: #f4f4f4; " +
+                                    "-fx-border-color:  #dbd9ff; -fx-border-width: 1");
+                            valittu = false;
+                            muokattavaPalvelu = null;
+                        } else {
+                            return;
+                        }
+                    });
+                    palveluBox.getChildren().add(root);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     public void initData(ToimintaAlue alue) throws SQLException {
         alueIdLabel.setText(String.valueOf(alue.get_toimintaalue_id()));
@@ -69,12 +112,9 @@ public class UusiAlueController implements Initializable {
         ohjeTextArea.setText("Muokkaa olemassa olevaa toiminta-aluetta. \nPäivittäessä nimi vaihtuu, mutta ID pysyy samana.\n" +
                 "Poistettaessa ID ja nimi poistetaan tietokannasta. ");
 
-        palveluLista = SQL_yhteys.getAlueenPalvelut(alue.get_toimintaalue_id());
-        for (int i = 0; i < palveluLista.size(); i++) {
-            System.out.println(palveluLista.get(i));
-        }
-
+        alusta(alue);
     }
+
 
     public void lisaaUusiAlueButtonOnAction(ActionEvent actionEvent) throws SQLException {
         errorLabel.setText("");
@@ -108,7 +148,7 @@ public class UusiAlueController implements Initializable {
                 errorLabel.setText("Alue lisätty. Päivitä.");
                 lisaaUusiAlueButton.setDisable(true);
                 lisaaUusiAlueButton.setOpacity(0.1);
-            } else{
+            } else {
 
                 for (int i = 0; i < valitutPalvelut.size(); i++) {
                     Palvelu palvelu = new Palvelu(-1, Long.valueOf(id), valitutPalvelut.get(i), valitutPalvelut.get(i), -1);
@@ -161,42 +201,50 @@ public class UusiAlueController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("hello");
-        golfP.setOnAction(e -> {
-            valitutPalvelut.add(golfP.getText());
-        });
-        hiihtoP.setOnAction(e -> {
-            valitutPalvelut.add(hiihtoP.getText());
-        });
-        marjastusP.setOnAction(e -> {
-            valitutPalvelut.add(marjastusP.getText());
-        });
-        hiihtokeskusP.setOnAction(e -> {
-            valitutPalvelut.add(hiihtokeskusP.getText());
-        });
-        maastopyorailyP.setOnAction(e -> {
-            valitutPalvelut.add(maastopyorailyP.getText());
-        });
-        moottorikelkkailuP.setOnAction(e -> {
-            valitutPalvelut.add(moottorikelkkailuP.getText());
-        });
-        retkeilyP.setOnAction(e -> {
-            valitutPalvelut.add(retkeilyP.getText());
-        });
-        uintiP.setOnAction(e -> {
-            valitutPalvelut.add(uintiP.getText());
-        });
-        tennisP.setOnAction(e -> {
-            valitutPalvelut.add(tennisP.getText());
-        });
-        sienestysP.setOnAction(e -> {
-            valitutPalvelut.add(sienestysP.getText());
-        });
-        veneilyP.setOnAction(e -> {
-            valitutPalvelut.add(veneilyP.getText());
-        });
-        kalastaminenP.setOnAction(e -> {
-            valitutPalvelut.add(kalastaminenP.getText());
-        });
+    }
+
+    public void lisaaPalveluButtonOnAction(ActionEvent actionEvent) {
+        if (!lisays) {
+            try {
+                lisaaPalveluButton.setDisable(true);
+                peruutaPalveluButton.setDisable(false);
+                peruutaPalveluButton.setOpacity(1);
+                lisays = true;
+                lisaaPalveluButton.setText("Lisää alue");
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("uusiPalvelu.fxml"));
+                Parent root = loader.load();
+                UusiPalveluController controller = loader.getController();
+
+                if (muokattavaPalvelu != null) {
+                    controller.initData(muokattavaPalvelu);
+                } else{
+                    controller.sendAlue(tamaAlue);
+                }
+                root.setOnMousePressed(event1 -> {
+                    root.setStyle("-fx-background-color: #dbd9ff");
+                });
+
+                // Tässä käytetään add-metodia, jolla root-node saadaan laitettua tiettyyn indeksiin: tässä 0 eli alkuun
+                palveluBox.getChildren().clear();
+                palveluBox.getChildren().add(0, root);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public void peruutaPalveluButtonOnAction(ActionEvent actionEvent) throws SQLException {
+        palveluBox.getChildren().remove(0);
+        lisays = false;
+        peruutaPalveluButton.setDisable(true);
+        peruutaPalveluButton.setOpacity(0.1);
+        lisaaPalveluButton.setDisable(false);
+        alusta(tamaAlue);
+        valittu = false;
+        lisays = false;
+        muokattavaPalvelu = null;
     }
 }

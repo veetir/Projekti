@@ -127,7 +127,7 @@
             <Button fx:id="lisaaUusiMokkiButton" defaultButton="true" layoutX="50.0" mnemonicParsing="false" onAction="#lisaaUusiMokkiButtonOnAction" prefHeight="47.0" prefWidth="93.0" text="Lisää" />
             <Button fx:id="plisaaUusiMokkiButton" disable="true" layoutX="3.0" layoutY="63.0" mnemonicParsing="false" onAction="#lisaaUusiMokkiButtonOnAction" opacity="0.1" text="Päivitä" />
             <Button fx:id="poistaButton" disable="true" layoutX="143.0" layoutY="63.0" mnemonicParsing="false" onAction="#poistaButtonOnAction" opacity="0.1" text="Poista" />
-            <Button fx:id="poistaVarmaButton" layoutX="325.0" mnemonicParsing="false" onAction="#poistaVarmaButtonOnAction" prefHeight="47.0" prefWidth="72.0" style="-fx-background-color: #ff5e5e;" text="Poista" />
+            <Button fx:id="poistaVarmaButton" disable="true" layoutX="325.0" mnemonicParsing="false" onAction="#poistaVarmaButtonOnAction" prefHeight="47.0" prefWidth="72.0" style="-fx-background-color: #ff5e5e;" text="Poista" visible="false" />
          </children>
       </Pane>
           <Label layoutX="7.0" layoutY="6.0" prefHeight="67.0" prefWidth="72.0" text="ID">
@@ -140,7 +140,7 @@
                   <Font size="18.0" />
               </font>
           </Label>
-          <Label fx:id="errorLabel" layoutX="-20.0" layoutY="528.0" prefHeight="48.0" prefWidth="245.0">
+          <Label fx:id="errorLabel" layoutX="23.0" layoutY="528.0" prefHeight="48.0" prefWidth="245.0">
               <font>
                   <Font size="18.0" />
               </font>

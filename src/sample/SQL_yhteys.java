@@ -12,12 +12,12 @@ public class SQL_yhteys {
     // Huom! Vaihda user & password, tarkista myös url !
     String url = "jdbc:mysql://localhost:3306/vn";
     String user = "root";
-    String password = "--------";
+    String password = "scape123";
 
     // Palauttaa SQL yhteys olion
     public static Connection getYhteys() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/vn?serverTimezone=Europe/Helsinki";
-        String user = "root", password = "--------";
+        String user = "root", password = "scape123";
         Connection conn = null;
 
         try {
@@ -204,12 +204,12 @@ public class SQL_yhteys {
         return palvelut;
     }
 
-    public static ArrayList<String> getAlueenPalvelut(int alueId) throws SQLException {
+    public static ArrayList<Palvelu> getAlueenPalvelut(int alueId) throws SQLException {
         String toimintaalue_id = String.valueOf(alueId);
         String sql = "SELECT * " +
                 "FROM palvelu " +
                 "WHERE toimintaalue_id = ?;";
-        ArrayList<String> palvelut = new ArrayList<String>();
+        ArrayList<Palvelu> palvelut = new ArrayList<>();
 
         try (Connection conn = SQL_yhteys.getYhteys();
              PreparedStatement stmt = conn.prepareStatement(sql);) {
@@ -217,15 +217,15 @@ public class SQL_yhteys {
             ResultSet rs = stmt.executeQuery();
             Palvelu palvelu = null;
             while (rs.next()) {
-               // int palveluId = rs.getInt("palvelu_id");
-               // int talueId = rs.getInt("toimintaalue_id");
+                int palveluId = rs.getInt("palvelu_id");
+                int talueId = rs.getInt("toimintaalue_id");
                 String palveluNimi = rs.getString("nimi");
-               // String palveluKuvaus = rs.getString("kuvaus");
-               // Double palveluHinta = rs.getDouble("hinta");
+                String palveluKuvaus = rs.getString("kuvaus");
+                Double palveluHinta = rs.getDouble("hinta");
 
-               // palvelu = new Palvelu(palveluId, talueId, palveluNimi, palveluKuvaus, palveluHinta);
-               // palvelut.add(palvelu);
-                palvelut.add(palveluNimi);
+                palvelu = new Palvelu(palveluId, talueId, palveluNimi, palveluKuvaus, palveluHinta);
+                palvelut.add(palvelu);
+                //palvelut.add(palveluNimi);
             }
             rs.close();
         } catch (SQLException ex) {

@@ -446,7 +446,6 @@ public class HallintaController implements Initializable {
                     System.out.println(tAlueMokitBox.getValue().toString());
                     try {
                         initMokit(tAlueMokitBox.getValue().toString());
-                        System.out.println("j00");
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
                     }

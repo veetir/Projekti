@@ -1,0 +1,15 @@
+/*
+        https://stackoverflow.com/a/46813074
+
+        Tämä .css -tiedosto on täällä vain testimielessä. Sen saa helposti pois käytöstä poistamalla yhden
+        rivin koodia mainista ja Tyokalusta
+ */
+
+.text-field {
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 1 0 ;
+    -fx-background-radius: 0 ;
+}
+.text-field:focused {
+    -fx-background-color: -fx-focus-color, -fx-background ;
+}

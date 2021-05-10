@@ -3,17 +3,15 @@ package sample;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
 
-public class UusiPalveluController {
+public class UusiPalveluController implements Initializable {
     @FXML
     private TextField palveluNimiTextField;
     @FXML
@@ -33,13 +31,17 @@ public class UusiPalveluController {
     @FXML
     private TextArea palveluKuvausTextArea;
 
+
     String paivitys;
     Long id, tAlueId;
     boolean varma = false;
+    double palvelunHinta = -1.0;
 
     public void initData(Palvelu palvelu) {
         palveluNimiTextField.setText(palvelu.getNimi());
-        palveluHintaTextField.setText(String.valueOf(palvelu.getHinta()));
+        // laitetaan prompt text, sillä tämä kenttä ei ota vastaan muuta kuin numeroita
+        palveluHintaTextField.setPromptText(String.valueOf(palvelu.getHinta()));
+        palvelunHinta = palvelu.getHinta();
         palveluIdLabel.setText(String.valueOf(palvelu.getPalveluId()));
         palveluKuvausTextArea.setText(palvelu.getKuvaus());
 
@@ -57,9 +59,16 @@ public class UusiPalveluController {
     }
 
     public void lisaaUusiPalveluButtonOnAction(ActionEvent actionEvent) throws SQLException {
-        errorLabel.setText("");
         String uusiPalveluNimi = palveluNimiTextField.getText();
-        Double uusiPalveluHinta = Double.valueOf(palveluHintaTextField.getText());
+        Double uusiPalveluHinta = 0.0;
+        if (palveluHintaTextField.getText() != "") {
+            uusiPalveluHinta = Double.valueOf(palveluHintaTextField.getText());
+        } else if (palvelunHinta != -1.0) {
+            uusiPalveluHinta = palvelunHinta;
+        } else {
+            errorLabel.setText("Syötä hinta!");
+        }
+
         String uusiPalveluKuvaus = palveluKuvausTextArea.getText();
 
         // Huom. ei tarvitse lähettää oikeaa toim.alueen nimeä (tai nimeä ollenkaan), koska SQL-lause tekee mökin pelkän ID:n perusteella
@@ -153,5 +162,55 @@ public class UusiPalveluController {
 
     public void sendAlue(ToimintaAlue alue) {
         tAlueId = Long.valueOf(alue.get_toimintaalue_id());
+    }
+
+    /**
+     * https://stackoverflow.com/a/36436243
+     * <p>
+     * Hinta-kentän pitäisi ottaa vastaan pelkästään numeroita
+     */
+
+    UnaryOperator<TextFormatter.Change> filter = change -> {
+        String text = change.getText();
+        if (text.matches("[0-9]*")) {
+            return change;
+        }
+        return null;
+    };
+    TextFormatter<String> textFormatter = new TextFormatter<>(filter);
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Oikeastaan minkään kentän ei ole mielekästä olla tyhjä, mutta ainakaan nimen ei pitäisi olla tyhjä
+        // Alla olevaa metodia ei voida soveltaa jokaiseen tekstikenttään, koska toinen tekstikenttä voi togglettaa
+        // napin disablen vaikka sen pitäisi perustua siihen onko *jokaisessa* tekstikentässä ainakin jotain... (siis tämä on kehno ratkaisu)
+        ToggleDisableTextField(palveluNimiTextField);
+        // Pakottaa kentän numeeriseksi. ks. https://stackoverflow.com/a/36436243
+        palveluHintaTextField.setTextFormatter(textFormatter);
+
+    }
+
+    private void ToggleDisableTextField(TextField palveluNimiTextField) {
+        palveluNimiTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.equals("")) {
+                lisaaUusiPalveluButton.setDisable(true);
+                plisaaUusiPalveluButton.setDisable(true);
+                palveluNimiTextField.getStyleClass().add("Stylesheets/testi.css");
+                errorLabel.setText("Nimi ei voi olla tyhjä.");
+            } else {
+                lisaaUusiPalveluButton.setDisable(false);
+                plisaaUusiPalveluButton.setDisable(false);
+                palveluNimiTextField.getStylesheets().remove("Stylesheets/testi.css");
+                errorLabel.setText("");
+            }
+        });
+    }
+
+    @FXML
+    Button testButton;
+
+    public void testButtonOnAction(ActionEvent actionEvent) {
+        System.out.println(testButton.getScene());
     }
 }

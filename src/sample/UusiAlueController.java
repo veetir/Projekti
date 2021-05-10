@@ -1,15 +1,11 @@
 package sample;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -28,8 +24,6 @@ public class UusiAlueController implements Initializable {
     private Button lisaaPalveluButton;
     @FXML
     private Button peruutaPalveluButton;
-
-    ObservableList<String> valitutPalvelut = FXCollections.observableArrayList();
 
     @FXML
     public Label alueIdLabel, errorLabel;
@@ -98,6 +92,7 @@ public class UusiAlueController implements Initializable {
     }
 
     public void initData(ToimintaAlue alue) throws SQLException {
+        lisaaPalveluButton.setDisable(false);
         alueIdLabel.setText(String.valueOf(alue.get_toimintaalue_id()));
         uusiToimAlueTextField.setText(alue.get_nimi());
         paivitys = alue.get_nimi();
@@ -109,7 +104,6 @@ public class UusiAlueController implements Initializable {
         poistaButton.setOpacity(1);
         lisaaUusiAlueButton.setDisable(true);
         lisaaUusiAlueButton.setOpacity(0.1);
-
         alusta(alue);
     }
 
@@ -205,7 +199,7 @@ public class UusiAlueController implements Initializable {
 
                 if (muokattavaPalvelu != null) {
                     controller.initData(muokattavaPalvelu);
-                } else{
+                } else {
                     controller.sendAlue(tamaAlue);
                 }
 

@@ -75,7 +75,7 @@
             </VBox>
          </content>
       </ScrollPane>
-      <Button fx:id="lisaaPalveluButton" layoutX="710.0" layoutY="107.0" mnemonicParsing="false" onAction="#lisaaPalveluButtonOnAction" text="Lisää palvelu" />
+      <Button fx:id="lisaaPalveluButton" disable="true" layoutX="710.0" layoutY="107.0" mnemonicParsing="false" onAction="#lisaaPalveluButtonOnAction" text="Lisää palvelu" />
       <Button fx:id="peruutaPalveluButton" disable="true" layoutX="584.0" layoutY="107.0" mnemonicParsing="false" onAction="#peruutaPalveluButtonOnAction" text="Peruuta/päivitä" />
    </children>
 </Pane>

@@ -41,7 +41,7 @@
         </HBox>
         <Pane layoutX="251.0" layoutY="197.0" prefHeight="99.0" prefWidth="424.0">
             <children>
-                <Button fx:id="lisaaUusiPalveluButton" defaultButton="true" layoutX="50.0" mnemonicParsing="false" onAction="#lisaaUusiPalveluButtonOnAction" prefHeight="47.0" prefWidth="93.0" text="Lisää" />
+                <Button fx:id="lisaaUusiPalveluButton" defaultButton="true" disable="true" layoutX="50.0" mnemonicParsing="false" onAction="#lisaaUusiPalveluButtonOnAction" prefHeight="47.0" prefWidth="93.0" text="Lisää" />
                 <Button fx:id="plisaaUusiPalveluButton" disable="true" layoutX="3.0" layoutY="63.0" mnemonicParsing="false" onAction="#lisaaUusiPalveluButtonOnAction" opacity="0.1" text="Päivitä" />
                 <Button fx:id="poistaButton" disable="true" layoutX="143.0" layoutY="63.0" mnemonicParsing="false" onAction="#poistaButtonOnAction" opacity="0.1" text="Poista" />
                 <Button fx:id="poistaVarmaButton" disable="true" layoutX="325.0" mnemonicParsing="false" onAction="#poistaVarmaButtonOnAction" prefHeight="47.0" prefWidth="72.0" style="-fx-background-color: #ff5e5e;" text="Poista" visible="false" />
@@ -57,7 +57,7 @@
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label fx:id="errorLabel" layoutX="14.0" layoutY="197.0" prefHeight="48.0" prefWidth="245.0">
+        <Label fx:id="errorLabel" layoutX="14.0" layoutY="197.0" prefHeight="48.0" prefWidth="245.0" text="Nimi ei voi olla tyhjä" textFill="RED">
             <font>
                 <Font size="18.0" />
             </font>

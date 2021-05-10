@@ -18,6 +18,7 @@ public class Tyokalu {
         Scene toinenScene = new Scene(toiseenNakymaan);
         Stage window = (Stage) ((Node) ikkuna.getSource()).getScene().getWindow();
         window.setScene(toinenScene);
+        //window.getScene().getStylesheets().add("Stylesheets/testi.css"); // lisää css
         window.show();
     }
 }

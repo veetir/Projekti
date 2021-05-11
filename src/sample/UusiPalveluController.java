@@ -36,6 +36,7 @@ public class UusiPalveluController implements Initializable {
     Long id, tAlueId;
     boolean varma = false;
     double palvelunHinta = -1.0;
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
     public void initData(Palvelu palvelu) {
         palveluNimiTextField.setText(palvelu.getNimi());
@@ -107,9 +108,18 @@ public class UusiPalveluController implements Initializable {
             if (paivitys == null) {
                 SQL_yhteys.setPalvelu(uusiPalvelu, false, false, null);
                 errorLabel.setText("Palvelu lisätty. Päivitä.");
+                alert.setTitle("Palvelun lisäys");
+                alert.setHeaderText(null);
+                alert.setContentText("Palvelu lisättiin tietokantaan.");
+                alert.showAndWait();
             } else {
                 SQL_yhteys.setPalvelu(uusiPalvelu, true, false, null);
                 errorLabel.setText("Palvelu päivitetty. Päivitä.");
+                errorLabel.setText("Palvelu lisätty. Päivitä.");
+                alert.setTitle("Palvelun tietojen päivitys");
+                alert.setHeaderText(null);
+                alert.setContentText("Palvelun tiedot päivitettiin tietokannassa.");
+                alert.showAndWait();
             }
         }
     }
@@ -158,6 +168,10 @@ public class UusiPalveluController implements Initializable {
         poistaButton.setVisible(false);
         plisaaUusiPalveluButton.setVisible(false);
         poistaVarmaButton.setVisible(false);
+        alert.setTitle("Palvelun poisto");
+        alert.setHeaderText(null);
+        alert.setContentText("Palvelu poistettiin tietokannasta.");
+        alert.showAndWait();
     }
 
     public void sendAlue(ToimintaAlue alue) {

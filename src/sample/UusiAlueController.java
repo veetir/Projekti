@@ -36,6 +36,7 @@ public class UusiAlueController implements Initializable {
     private Palvelu muokattavaPalvelu = null;
     boolean valittu, lisays;
     ToimintaAlue tamaAlue;
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
     public void alusta(ToimintaAlue alue) throws SQLException {
         /**
@@ -135,6 +136,10 @@ public class UusiAlueController implements Initializable {
                 errorLabel.setText("Alue lisätty. Päivitä.");
                 lisaaUusiAlueButton.setDisable(true);
                 lisaaUusiAlueButton.setOpacity(0.1);
+                alert.setTitle("Alueen lisäys");
+                alert.setHeaderText(null);
+                alert.setContentText("Toiminta-alue lisättiin tietokantaan.");
+                alert.showAndWait();
             } else {
                 SQL_yhteys.insertToiminta(uusiAlue, id, true, false);
                 errorLabel.setText("Alue päivitetty. Päivitä.");
@@ -142,6 +147,10 @@ public class UusiAlueController implements Initializable {
                 plisaaUusiAlueButton.setOpacity(0.1);
                 poistaButton.setOpacity(0.1);
                 poistaButton.setDisable(true);
+                alert.setTitle("Alueen päivitys");
+                alert.setHeaderText(null);
+                alert.setContentText("Toiminta-alueen tiedot päivitettiin tietokannassa.");
+                alert.showAndWait();
             }
         }
     }
@@ -178,6 +187,10 @@ public class UusiAlueController implements Initializable {
         poistaButton.setVisible(false);
         plisaaUusiAlueButton.setVisible(false);
         poistaVarmaButton.setVisible(false);
+        alert.setTitle("Alueen poisto");
+        alert.setHeaderText(null);
+        alert.setContentText("Toiminta-alueen tiedot poistettiin tietokannasta.");
+        alert.showAndWait();
     }
 
     @Override

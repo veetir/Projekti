@@ -36,6 +36,8 @@ public class UusiMokkiController implements Initializable {
     boolean varma = false;
     int mokkiId, mokkiTalueId;
 
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
     public ChoiceBox mokkiAlueBox;
 
     // Tätä kutsutaan, kun mökkiä halutaan muokata. Käytetään siis alustamaan muokkauskortti muokattavalla datalla
@@ -122,9 +124,17 @@ public class UusiMokkiController implements Initializable {
             if (paivitys == null) {
                 SQL_yhteys.setMokit(uusiMokki, false, false, null);
                 errorLabel.setText("Mökki lisätty. Päivitä.");
+                alert.setTitle("Mökin lisäys");
+                alert.setHeaderText(null);
+                alert.setContentText("Mökki  '" + uusiMokki.get_mokkinimi() + "'  lisättiin tietokantaan.");
+                alert.showAndWait();
             } else {
                 SQL_yhteys.setMokit(uusiMokki, true, false, null);
                 errorLabel.setText("Mökki päivitetty. Päivitä.");
+                alert.setTitle("Mökin päivitys");
+                alert.setHeaderText(null);
+                alert.setContentText("Mökin  '" + uusiMokki.get_mokkinimi() + "'  tiedot päivitettiin tietokannassa.");
+                alert.showAndWait();
             }
         }
     }
@@ -178,6 +188,10 @@ public class UusiMokkiController implements Initializable {
         poistaButton.setVisible(false);
         plisaaUusiMokkiButton.setVisible(false);
         poistaVarmaButton.setVisible(false);
+        alert.setTitle("Mökin poisto");
+        alert.setHeaderText(null);
+        alert.setContentText("Mökin tiedot poistettiin tietokannasta.");
+        alert.showAndWait();
     }
 
     //https://stackoverflow.com/a/36436243

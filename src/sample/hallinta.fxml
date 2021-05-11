@@ -211,6 +211,73 @@
                   </AnchorPane>
               </content>
             </Tab>
+            <Tab fx:id="laskutTab" onSelectionChanged="#laskutTabSelected" text="Laskut">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="681.0" prefWidth="261.0">
+                     <children>
+                        <BorderPane prefHeight="683.0" prefWidth="1024.0">
+                           <left>
+                              <VBox prefHeight="634.0" prefWidth="240.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Pane>
+                                       <children>
+                                          <Label layoutX="92.0" prefHeight="28.0" prefWidth="78.0" text="Hakuehdot">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <Label text="Toiminta-alue" />
+                                    <Pane>
+                                       <children>
+                                          <ChoiceBox fx:id="laskutAlueBox" layoutX="45.0" prefWidth="150.0" />
+                                       </children>
+                                    </Pane>
+                                    <Label layoutX="10.0" layoutY="38.0" text="Aikaväli" />
+                                    <Pane layoutX="10.0" layoutY="55.0" prefHeight="79.0" prefWidth="240.0">
+                                       <children>
+                                          <DatePicker fx:id="alkuPvmLasku" layoutX="33.0" layoutY="2.0" promptText="Alkupvm." />
+                                          <DatePicker fx:id="loppuPvmLasku" layoutX="33.0" layoutY="40.0" promptText="Loppupvm." />
+                                       </children>
+                                    </Pane>
+                                    <Pane prefHeight="65.0" prefWidth="240.0">
+                                       <children>
+                                          <Label text="Laskujen lukumäärä " />
+                                          <Label fx:id="laskujenLkmLabel" layoutX="66.0" layoutY="24.0" prefHeight="17.0" prefWidth="82.0" />
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </VBox>
+                           </left>
+                           <bottom>
+                              <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="100.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Button fx:id="lopetaLaskuButton" disable="true" mnemonicParsing="false" onAction="#lopetaLaskuButtonOnAction" text="Takaisin/päivitä" />
+                                    <Button fx:id="avaaLaskuButton" defaultButton="true" mnemonicParsing="false" onAction="#avaaLaskuButtonOnAction" prefHeight="41.0" prefWidth="131.0" text="Avaa lasku">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </bottom>
+                           <center>
+                              <ScrollPane prefHeight="200.0" prefWidth="754.0" BorderPane.alignment="CENTER">
+                                 <content>
+                                    <VBox fx:id="laskutVBox" prefHeight="633.0" prefWidth="766.0" spacing="12.0">
+                                       <padding>
+                                          <Insets bottom="10.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                    </VBox>
+                                 </content>
+                              </ScrollPane>
+                           </center>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
         </tabs>
       </TabPane>
    </center>

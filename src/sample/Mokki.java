@@ -1,5 +1,8 @@
 package sample;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 public class Mokki {
     private int mokki_id;
     private int toimintaalue_id;
@@ -26,7 +29,16 @@ public class Mokki {
 
     }
 
-
+    public static int getMokinToimintaAlue(int mokkiId) throws SQLException {
+        ArrayList<Mokki> mokki;
+        mokki = SQL_yhteys.getMokit();
+        for (int i = 0; i < mokki.size(); i++) {
+            if (mokki.get(i).get_mokki_id() == mokkiId){
+                return mokki.get(i).get_toimintaalue_id();
+            }
+        }
+        return -1; // Jos ei löydy
+    }
 
     public String getToimintaalue_nimi() {
         return toimintaalue_nimi;

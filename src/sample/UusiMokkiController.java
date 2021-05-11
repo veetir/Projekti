@@ -3,15 +3,14 @@ package sample;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
-import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 
@@ -126,8 +125,13 @@ public class UusiMokkiController implements Initializable {
                 errorLabel.setText("Mökki lisätty. Päivitä.");
                 alert.setTitle("Mökin lisäys");
                 alert.setHeaderText(null);
+                lisaaUusiMokkiButton.setDisable(true);
                 alert.setContentText("Mökki  '" + uusiMokki.get_mokkinimi() + "'  lisättiin tietokantaan.");
                 alert.showAndWait();
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK){
+
+                }
             } else {
                 SQL_yhteys.setMokit(uusiMokki, true, false, null);
                 errorLabel.setText("Mökki päivitetty. Päivitä.");

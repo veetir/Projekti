@@ -318,6 +318,7 @@ public class HallintaController implements Initializable {
     public Button lisaaMokkiButton, lopetaMokkiButton;
     private Mokki muokattavaMokki;
 
+
     public void mokitTabSelected(Event event) throws SQLException {
         valittu = false;
         lisays = false;
@@ -439,10 +440,10 @@ public class HallintaController implements Initializable {
         }
 
         tAlueMokitBox.setOnAction(event -> {
-            if ( tAlueMokitBox.getValue() == null){
+            if (tAlueMokitBox.getValue() == null) {
                 return;
-            } else{
-                if(!tAlueMokitBox.getValue().equals("Hae alueelta")){
+            } else {
+                if (!tAlueMokitBox.getValue().equals("Hae alueelta")) {
                     System.out.println(tAlueMokitBox.getValue().toString());
                     try {
                         initMokit(tAlueMokitBox.getValue().toString());
@@ -459,4 +460,169 @@ public class HallintaController implements Initializable {
             }
         });
     }
+
+    /**
+     * LASKUJEN HALLINTA
+     */
+    @FXML
+    public ChoiceBox laskutAlueBox;
+    @FXML
+    private DatePicker alkuPvmLasku;
+    @FXML
+    private DatePicker loppuPvmLasku;
+    @FXML
+    private Button lopetaLaskuButton;
+    @FXML
+    private Button avaaLaskuButton;
+    @FXML
+    private VBox laskutVBox;
+    @FXML
+    private Label laskujenLkmLabel;
+
+    private Lasku muokattavaLasku;
+    private int laskujenLkm;
+
+    void initLaskuSearch() {
+        ObservableList<String> toimintaAlueet = FXCollections.observableArrayList();
+        try {
+            ArrayList<String> alueet = SQL_yhteys.getToimintaAlueet();
+            toimintaAlueet.add("Hae alueelta");
+            for (String alue : alueet) {
+                toimintaAlueet.add(alue);
+            }
+            laskutAlueBox.setItems(toimintaAlueet);
+            laskutAlueBox.getSelectionModel().selectFirst();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        laskutAlueBox.setOnAction(event -> {
+            if (tAlueMokitBox.getValue() == null) {
+                return;
+            } else {
+                if (!laskutAlueBox.getValue().equals("Hae alueelta")) {
+                    System.out.println(laskutAlueBox.getValue().toString());
+                    try {
+                        initLaskut(laskutAlueBox.getValue().toString());
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                } else {
+                    try {
+                        initLaskut(null);
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
+    public void laskutTabSelected(Event event) throws SQLException {
+        valittu = false;
+        lisays = false;
+        muokattavaLasku = null;
+        initLaskuSearch();
+        initLaskut(null);
+    }
+
+    public void initLaskut(String area) throws SQLException {
+        laskutVBox.getChildren().clear();
+        ArrayList<Lasku> laskut = null;
+        if (area == null) {
+            laskut = SQL_yhteys.getLaskut();
+        } else {
+            //laskut = SQL_yhteys.getAlueenMokit(area);
+        }
+
+
+        for (int i = 0; i < laskut.size(); i++) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("lasku.fxml"));
+                Parent root = loader.load();
+
+                LaskuController controller = loader.getController();
+                controller.initData(laskut.get(i));
+                laskujenLkm++;
+                laskujenLkmLabel.setText(String.valueOf(laskujenLkm));
+                final Lasku k = laskut.get(i);
+                AtomicInteger z = new AtomicInteger();
+
+
+                root.setOnMousePressed(event1 -> {
+                    z.getAndIncrement();
+                    if (z.get() % 2 == 1 & muokattavaLasku == null) {
+                        avaaLaskuButton.setText("Toimenpiteet");
+                        root.setStyle("-fx-background-color: #dbd9ff; " +
+                                "-fx-border-color: #40424a; -fx-border-width: 3");
+                        valittu = true;
+                        muokattavaLasku = k;
+
+                    } else if (valittu == true & k.equals(muokattavaLasku)) {
+                        avaaLaskuButton.setText("Valitse lasku");
+                        root.setStyle("-fx-background-color: #f4f4f4; " +
+                                "-fx-border-color: #dbd9ff; -fx-border-width: 1");
+                        valittu = false;
+                        muokattavaLasku = null;
+                    } else {
+                        return;
+                    }
+                });
+                laskutVBox.getChildren().add(root);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+        /*public void avaaLaskuButton(ActionEvent actionEvent) throws SQLException {
+            if (!lisays) {
+                try {
+                    avaaLaskuButton.setDisable(true);
+                    lopetaLaskuButton.setDisable(false);
+                    lopetaLaskuButton.setOpacity(1);
+                    lisays = true;
+                    avaaLaskuButton.setText("Lisää mokki");
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getResource("uusimokki.fxml"));
+                    Parent root = loader.load();
+                    UusiMokkiController controller = loader.getController();
+
+                    if (muokattavaLasku != null) {
+                        controller.initData(muokattavaLasku);
+                    }
+
+                    // Tässä käytetään add-metodia, jolla root-node saadaan laitettua tiettyyn indeksiin: tässä 0 eli alkuun
+                    laskutVBox.getChildren().clear();
+                    laskutVBox.getChildren().add(0, root);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }*/
+
+    public void actionPerformedRefreshLaskut(Event e) throws SQLException {
+        laskutTabSelected(e);
+    }
+
+    public void lopetaLaskuButtonOnAction(ActionEvent actionEvent) {
+    }
+
+    public void avaaLaskuButtonOnAction(ActionEvent actionEvent) {
+    }
+
+        /*public void lopetaMokkiButtonOnAction(ActionEvent actionEvent) throws SQLException {
+            laskutVBox.getChildren().remove(0);
+            lisays = false;
+            lopetaLaskuButton.setDisable(true);
+            lopetaLaskuButton.setOpacity(0.1);
+            avaaLaskuButton.setDisable(false);
+            actionPerformedRefreshLaskut(e);
+            valittu = false;
+            lisays = false;
+            muokattavaLasku = null;
+            avaaLaskuButton.setText("Lisää mokki");
+        }*/
 }

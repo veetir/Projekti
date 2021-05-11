@@ -204,7 +204,8 @@ public class SQL_yhteys {
         }
         return palvelut;
     }
-    public static ArrayList<Mokki> getAlueenMokit(String alue) throws SQLException{
+
+    public static ArrayList<Mokki> getAlueenMokit(String alue) throws SQLException {
         String area = String.valueOf(ToimintaAlue.findId(alue));
         System.out.println(area);
         String sql = "SELECT * " +
@@ -228,8 +229,8 @@ public class SQL_yhteys {
                 String varustelu = rs.getString("varustelu");
                 long hinta = rs.getLong("hinta");
 
-                mokki = new Mokki(mokki_id, toimintaalueen_id, ToimintaAlue.findNimi(toimintaalueen_id) ,
-                        postinumero, mokkinimix, katuosoite, kuvaus, hlomaara,varustelu, hinta);
+                mokki = new Mokki(mokki_id, toimintaalueen_id, ToimintaAlue.findNimi(toimintaalueen_id),
+                        postinumero, mokkinimix, katuosoite, kuvaus, hlomaara, varustelu, hinta);
                 mokit.add(mokki);
             }
             rs.close();
@@ -371,6 +372,34 @@ public class SQL_yhteys {
             System.out.println(ex.getMessage());
         }
         return mokit;
+    }
+
+    public static ArrayList<Lasku> getLaskut() throws SQLException {
+        String sql = "SELECT * " +
+                "FROM lasku";
+        ArrayList<Lasku> laskut = new ArrayList<Lasku>();
+
+        try (Connection conn = SQL_yhteys.getYhteys();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            Lasku lasku = null;
+
+            // loop through the result set
+            while (rs.next()) {
+                Long laskuId = rs.getLong("lasku_id");
+                Long varausId = rs.getLong("varaus_id");
+                Double summa = rs.getDouble("summa");
+
+
+                lasku = new Lasku(laskuId, varausId, summa);
+                laskut.add(lasku);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return laskut;
     }
 
     // Hakee tietokannasta mökit jotka ovat vapaana välillä alkupvm - loppupvm, ja palauttaa listana.

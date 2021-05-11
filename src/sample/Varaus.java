@@ -2,139 +2,153 @@ package sample;
 
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Varaus {
-  private long asiakasId;
-  private String etunimi;
-  private String sukunimi;
-  private long mokkiMokkiId;
-  private String mokkinimi;
-  private String katuosoite;
-  private String toimintaalue;
-  private Date varattuPvm;
-  private Date vahvistusPvm;
-  private Date varattuAlkupvm;
-  private Date varattuLoppupvm;
+    private long asiakasId;
+    private String etunimi;
+    private String sukunimi;
+    private long mokkiMokkiId;
+    private String mokkinimi;
+    private String katuosoite;
+    private String toimintaalue;
+    private Date varattuPvm;
+    private Date vahvistusPvm;
+    private Date varattuAlkupvm;
+    private Date varattuLoppupvm;
 
-  private long varausId;
-  public Varaus(long varausId, long asiakasId, String etunimi, String sukunimi, long mokkiMokkiId, String mokkinimi,
-      String katuosoite, String toimintaalue, Date varattuPvm, Date varattuAlkupvm,
-      Date varattuLoppupvm) {
-    this.varausId = varausId;
-    this.asiakasId = asiakasId;
-    this.etunimi = etunimi;
-    this.sukunimi =sukunimi;
-    this.mokkiMokkiId = mokkiMokkiId;
-    this.mokkinimi = mokkinimi;
-    this.katuosoite= katuosoite;
-    this.toimintaalue=toimintaalue;
-    this.varattuPvm = varattuPvm;
-    this.varattuAlkupvm = varattuAlkupvm;
-    this.varattuLoppupvm = varattuLoppupvm;
-  }
+    private long varausId;
 
-  public String getToimintaalue() {
-    return toimintaalue;
-  }
+    public Varaus(long varausId, long asiakasId, String etunimi, String sukunimi, long mokkiMokkiId, String mokkinimi,
+                  String katuosoite, String toimintaalue, Date varattuPvm, Date varattuAlkupvm,
+                  Date varattuLoppupvm) {
+        this.varausId = varausId;
+        this.asiakasId = asiakasId;
+        this.etunimi = etunimi;
+        this.sukunimi = sukunimi;
+        this.mokkiMokkiId = mokkiMokkiId;
+        this.mokkinimi = mokkinimi;
+        this.katuosoite = katuosoite;
+        this.toimintaalue = toimintaalue;
+        this.varattuPvm = varattuPvm;
+        this.varattuAlkupvm = varattuAlkupvm;
+        this.varattuLoppupvm = varattuLoppupvm;
+    }
 
-  public void setToimintaalue(String toimintaalue) {
-    this.toimintaalue = toimintaalue;
-  }
+    public static long getVarauksenMokki(int varausId) throws SQLException {
+        ArrayList<Varaus> varaukset;
+        varaukset = SQL_yhteys.getVaraukset();
+        for (int i = 0; i < varaukset.size(); i++) {
+            if (varaukset.get(i).getVarausId() == varausId) {
+                return varaukset.get(i).getMokkiMokkiId();
+            }
+        }
+        return -1; // ei löydy
+    }
 
-  public String getKatuosoite() {
-    return katuosoite;
-  }
+    public String getToimintaalue() {
+        return toimintaalue;
+    }
 
-  public void setKatuosoite(String katuosoite) {
-    this.katuosoite = katuosoite;
-  }
+    public void setToimintaalue(String toimintaalue) {
+        this.toimintaalue = toimintaalue;
+    }
 
-  public String getMokkinimi() {
-    return mokkinimi;
-  }
+    public String getKatuosoite() {
+        return katuosoite;
+    }
 
-  public void setMokkinimi(String mokkinimi) {
-    this.mokkinimi = mokkinimi;
-  }
+    public void setKatuosoite(String katuosoite) {
+        this.katuosoite = katuosoite;
+    }
 
-  public String getSukunimi() {
-    return sukunimi;
-  }
+    public String getMokkinimi() {
+        return mokkinimi;
+    }
 
-  public void setSukunimi(String sukunimi) {
-    this.sukunimi = sukunimi;
-  }
+    public void setMokkinimi(String mokkinimi) {
+        this.mokkinimi = mokkinimi;
+    }
 
-  public String getEtunimi() {
-    return etunimi;
-  }
+    public String getSukunimi() {
+        return sukunimi;
+    }
 
-  public void setEtunimi(String etunimi) {
-    this.etunimi = etunimi;
-  }
+    public void setSukunimi(String sukunimi) {
+        this.sukunimi = sukunimi;
+    }
 
-  public long getVarausId() {
-    return varausId;
-  }
+    public String getEtunimi() {
+        return etunimi;
+    }
 
-  public void setVarausId(long varausId) {
-    this.varausId = varausId;
-  }
+    public void setEtunimi(String etunimi) {
+        this.etunimi = etunimi;
+    }
 
+    public long getVarausId() {
+        return varausId;
+    }
 
-  public long getAsiakasId() {
-    return asiakasId;
-  }
-
-  public void setAsiakasId(long asiakasId) {
-    this.asiakasId = asiakasId;
-  }
-
-
-  public long getMokkiMokkiId() {
-    return mokkiMokkiId;
-  }
-
-  public void setMokkiMokkiId(long mokkiMokkiId) {
-    this.mokkiMokkiId = mokkiMokkiId;
-  }
+    public void setVarausId(long varausId) {
+        this.varausId = varausId;
+    }
 
 
-  public java.sql.Date getVarattuPvm() {
-    return varattuPvm;
-  }
+    public long getAsiakasId() {
+        return asiakasId;
+    }
 
-  public void setVarattuPvm(java.sql.Date varattuPvm) {
-    this.varattuPvm = varattuPvm;
-  }
-
-
-  public java.sql.Date getVahvistusPvm() {
-    return vahvistusPvm;
-  }
-
-  public void setVahvistusPvm(java.sql.Date vahvistusPvm) {
-    this.vahvistusPvm = vahvistusPvm;
-  }
+    public void setAsiakasId(long asiakasId) {
+        this.asiakasId = asiakasId;
+    }
 
 
-  public java.sql.Date getVarattuAlkupvm() {
-    return varattuAlkupvm;
-  }
+    public long getMokkiMokkiId() {
+        return mokkiMokkiId;
+    }
 
-  public void setVarattuAlkupvm(java.sql.Date varattuAlkupvm) {
-    this.varattuAlkupvm = varattuAlkupvm;
-  }
+    public void setMokkiMokkiId(long mokkiMokkiId) {
+        this.mokkiMokkiId = mokkiMokkiId;
+    }
 
 
-  public Date getVarattuLoppupvm() {
-    return varattuLoppupvm;
-  }
+    public java.sql.Date getVarattuPvm() {
+        return varattuPvm;
+    }
 
-  public void setVarattuLoppupvm(java.sql.Date varattuLoppupvm) {
-    this.varattuLoppupvm = varattuLoppupvm;
-  }
+    public void setVarattuPvm(java.sql.Date varattuPvm) {
+        this.varattuPvm = varattuPvm;
+    }
+
+
+    public java.sql.Date getVahvistusPvm() {
+        return vahvistusPvm;
+    }
+
+    public void setVahvistusPvm(java.sql.Date vahvistusPvm) {
+        this.vahvistusPvm = vahvistusPvm;
+    }
+
+
+    public java.sql.Date getVarattuAlkupvm() {
+        return varattuAlkupvm;
+    }
+
+    public void setVarattuAlkupvm(java.sql.Date varattuAlkupvm) {
+        this.varattuAlkupvm = varattuAlkupvm;
+    }
+
+
+    public Date getVarattuLoppupvm() {
+        return varattuLoppupvm;
+    }
+
+    public void setVarattuLoppupvm(java.sql.Date varattuLoppupvm) {
+        this.varattuLoppupvm = varattuLoppupvm;
+    }
 
 }

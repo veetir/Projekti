@@ -11,8 +11,8 @@
    <children>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="895.0">
           <children>
-              <Label prefHeight="50.0" prefWidth="90.0" text="ID" />
-              <Label fx:id="mokkiIdLabel" prefHeight="50.0" prefWidth="76.0">
+              <Label prefHeight="50.0" prefWidth="90.0" text="ID" visible="false" />
+              <Label fx:id="mokkiIdLabel" prefHeight="50.0" prefWidth="76.0" visible="false">
                   <font>
                       <Font size="18.0" />
                   </font>
@@ -24,16 +24,16 @@
               </Label>
               <Label fx:id="mokkiNimiLabel" layoutX="74.0" layoutY="10.0" prefHeight="50.0" prefWidth="327.0">
                   <font>
-                      <Font name="System Bold Italic" size="24.0" />
+                      <Font name="System Bold" size="24.0" />
                   </font>
               </Label>
           </children>
       </HBox>
       <HBox layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="895.0">
          <children>
-            <Label prefHeight="50.0" prefWidth="91.0" text="Osoite">
+            <Label prefHeight="50.0" prefWidth="91.0" text="Osoite:">
                <font>
-                  <Font name="System Italic" size="18.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
             <Label fx:id="mokkiOsoiteLabel" prefHeight="50.0" prefWidth="232.0">
@@ -41,9 +41,9 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="46.0" layoutY="10.0" prefHeight="50.0" prefWidth="50.0" text=",">
+            <Label layoutX="46.0" layoutY="10.0" prefHeight="50.0" prefWidth="85.0" text="Postinro:">
                <font>
-                  <Font name="System Italic" size="18.0" />
+                  <Font size="14.0" />
                </font>
             </Label>
             <Label fx:id="mokkiZipLabel" layoutX="74.0" layoutY="10.0" prefHeight="50.0" prefWidth="327.0">
@@ -55,13 +55,13 @@
       </HBox>
       <HBox layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="725.0">
          <children>
-            <Label prefHeight="50.0" prefWidth="90.0" text="Toiminta-alue ID" />
-            <Label fx:id="mokkiTalueIdLabel" prefHeight="50.0" prefWidth="232.0">
+            <Label prefHeight="50.0" prefWidth="90.0" text="Toiminta-alue ID" visible="false" />
+            <Label fx:id="mokkiTalueIdLabel" prefHeight="50.0" prefWidth="232.0" visible="false">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="74.0" layoutY="10.0" prefHeight="50.0" prefWidth="51.0" text="Alue">
+            <Label layoutX="74.0" layoutY="10.0" prefHeight="50.0" prefWidth="91.0" text="Alue:">
                <font>
                   <Font size="18.0" />
                </font>
@@ -79,13 +79,16 @@
       </HBox>
       <HBox layoutX="10.0" layoutY="60.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="895.0">
          <children>
-            <Label prefHeight="50.0" prefWidth="93.0" text="Henkilömäärä" />
+            <Label prefHeight="50.0" prefWidth="93.0" text="Henkilömäärä:">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
             <Label fx:id="mokkiHloMaaraLabel" prefHeight="50.0" prefWidth="230.0">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="46.0" layoutY="10.0" prefHeight="50.0" prefWidth="57.0" text="Hinta">
+            <Label layoutX="46.0" layoutY="10.0" prefHeight="50.0" prefWidth="96.0" text="Hinta:">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -99,9 +102,9 @@
       </HBox>
       <HBox layoutX="10.0" layoutY="110.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="895.0">
          <children>
-            <Label prefHeight="50.0" prefWidth="93.0" text="Varustelu">
+            <Label prefHeight="50.0" prefWidth="93.0" text="Varustelu:">
                <font>
-                  <Font name="System Italic" size="18.0" />
+                  <Font size="14.0" />
                </font>
             </Label>
             <Label fx:id="mokkiVarusteluLabel" prefHeight="45.0" prefWidth="229.0">
@@ -109,9 +112,9 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="46.0" layoutY="10.0" prefHeight="45.0" prefWidth="60.0" text="Kuvaus">
+            <Label layoutX="46.0" layoutY="10.0" prefHeight="45.0" prefWidth="102.0" text="Kuvaus:">
                <font>
-                  <Font name="System Italic" size="18.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
             <Label fx:id="mokkiKuvausLabel" layoutX="74.0" layoutY="10.0" prefHeight="100.0" prefWidth="426.0">

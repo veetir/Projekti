@@ -177,7 +177,7 @@ public class UusiPalveluController implements Initializable {
         }
         return null;
     };
-    TextFormatter<String> textFormatter = new TextFormatter<>(filter);
+    TextFormatter<String> textFormatterri = new TextFormatter<>(filter);
 
 
     @Override
@@ -187,8 +187,7 @@ public class UusiPalveluController implements Initializable {
         // napin disablen vaikka sen pitäisi perustua siihen onko *jokaisessa* tekstikentässä ainakin jotain... (siis tämä on kehno ratkaisu)
         ToggleDisableTextField(palveluNimiTextField);
         // Pakottaa kentän numeeriseksi. ks. https://stackoverflow.com/a/36436243
-        palveluHintaTextField.setTextFormatter(textFormatter);
-
+        palveluHintaTextField.setTextFormatter(textFormatterri);
     }
 
     private void ToggleDisableTextField(TextField palveluNimiTextField) {
@@ -196,12 +195,12 @@ public class UusiPalveluController implements Initializable {
             if (newValue.equals("")) {
                 lisaaUusiPalveluButton.setDisable(true);
                 plisaaUusiPalveluButton.setDisable(true);
-                palveluNimiTextField.getStyleClass().add("Stylesheets/testi.css");
+                palveluNimiTextField.setStyle("-fx-border-color: #cf1b1b; -fx-background-color: #FFF0F0; -fx-border-width: 2");
                 errorLabel.setText("Nimi ei voi olla tyhjä.");
             } else {
                 lisaaUusiPalveluButton.setDisable(false);
                 plisaaUusiPalveluButton.setDisable(false);
-                palveluNimiTextField.getStylesheets().remove("Stylesheets/testi.css");
+                palveluNimiTextField.setStyle("");
                 errorLabel.setText("");
             }
         });

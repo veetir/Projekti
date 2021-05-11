@@ -13,6 +13,7 @@ import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
 
 
 public class UusiMokkiController implements Initializable {
@@ -36,13 +37,9 @@ public class UusiMokkiController implements Initializable {
     int mokkiId, mokkiTalueId;
 
     public ChoiceBox mokkiAlueBox;
-    // Täytetään valintaboxi. Credit: Lassi (VarausController)
-
 
     // Tätä kutsutaan, kun mökkiä halutaan muokata. Käytetään siis alustamaan muokkauskortti muokattavalla datalla
     public void initData(Mokki mokki) {
-
-
         mokkiIdLabel.setText(String.valueOf(mokki.get_mokki_id()));
         mokkiNimiTextField.setText(mokki.get_mokkinimi());
         mokkiOsoiteTextField.setText(mokki.get_katuosoite());
@@ -183,6 +180,19 @@ public class UusiMokkiController implements Initializable {
         poistaVarmaButton.setVisible(false);
     }
 
+    //https://stackoverflow.com/a/36436243
+    UnaryOperator<TextFormatter.Change> filter = change -> {
+        String text = change.getText();
+        if (text.matches("[0-9]*")) {
+            return change;
+        }
+        return null;
+    };
+    // Näitä formattereja käyttävät tekstikentät eivät ota vastaan muita kuin numeroita
+    TextFormatter<String> textFormatter = new TextFormatter<>(filter);
+    TextFormatter<String> textFormatter1 = new TextFormatter<>(filter);
+    TextFormatter<String> textFormatter2 = new TextFormatter<>(filter);
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<String> toimintaAlueet = FXCollections.observableArrayList();
@@ -197,5 +207,17 @@ public class UusiMokkiController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        mokkiHintaTextField.setTextFormatter(textFormatter);
+        mokkiZipTextField.setTextFormatter(textFormatter1);
+        mokkiHloMaaraTextField.setTextFormatter(textFormatter2);
+        mokkiZipTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.length() != 5) {
+                errorLabel.setText("Tarkista postinumero!");
+                mokkiZipTextField.setStyle("-fx-border-color: #cf1b1b; -fx-background-color: #FFF0F0; -fx-border-width: 2");
+            } else if (newValue.length() == 5) {
+                errorLabel.setText("");
+                mokkiZipTextField.setStyle("");
+            }
+        });
     }
 }

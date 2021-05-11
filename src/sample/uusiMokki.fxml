@@ -140,9 +140,9 @@
                   <Font size="18.0" />
               </font>
           </Label>
-          <Label fx:id="errorLabel" layoutX="23.0" layoutY="528.0" prefHeight="48.0" prefWidth="245.0">
+          <Label fx:id="errorLabel" layoutX="23.0" layoutY="528.0" prefHeight="48.0" prefWidth="245.0" textFill="RED">
               <font>
-                  <Font size="18.0" />
+                  <Font name="System Bold" size="18.0" />
               </font>
           </Label>
           <Label layoutX="193.0" layoutY="440.0" prefHeight="52.0" prefWidth="60.0" text="Hinta">

@@ -2,13 +2,9 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -45,49 +41,41 @@
         </HBox>
     </top>
     <left>
-        <VBox prefHeight="762.0" prefWidth="130.0" spacing="10.0" BorderPane.alignment="CENTER">
-            <children>
-                <DatePicker prefHeight="45.0" prefWidth="120.0" promptText="alkupäivä" />
-                <DatePicker prefHeight="45.0" prefWidth="120.0" promptText="loppupäivä" />
-            </children>
+        <VBox prefHeight="710.0" prefWidth="49.0" spacing="10.0" BorderPane.alignment="CENTER">
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding>
         </VBox>
     </left>
    <center>
-      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
-        <tabs>
-          <Tab text="Varaukset">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TableView layoutX="6.0" layoutY="14.0" onSort="#raportitButtonOnAction" prefHeight="683.0" prefWidth="771.0">
-                          <columns>
-                            <TableColumn prefWidth="165.0" text="Päivämäärä" />
-                            <TableColumn prefWidth="477.0" text="Tapahtuma" />
-                              <TableColumn prefWidth="128.0" text="Summa" />
-                          </columns>
-                        </TableView>
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-          <Tab text="Palvelut">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                         <TableView layoutX="6.0" layoutY="14.0" onSort="#raportitButtonOnAction" prefHeight="683.0" prefWidth="771.0">
-                             <columns>
-                                 <TableColumn prefWidth="165.0" text="Päivämäärä" />
-                                 <TableColumn prefWidth="477.0" text="Tapahtuma" />
-                                 <TableColumn prefWidth="128.0" text="Summa" />
-                             </columns>
-                         </TableView>
-                     </children></AnchorPane>
-            </content>
-          </Tab>
-        </tabs>
-      </TabPane>
+      <Pane prefHeight="710.0" prefWidth="793.0" BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="tableVaraukset" layoutX="14.0" layoutY="51.0" prefHeight="646.0" prefWidth="484.0">
+              <columns>
+                <TableColumn fx:id="columnVarausnumero" prefWidth="98.0" text="varausnumero" />
+                <TableColumn fx:id="columnAsiakasnumero" prefWidth="101.0" text="asiakasnumero" />
+                  <TableColumn fx:id="columnMokki" prefWidth="190.0" text="mokki" />
+                  <TableColumn fx:id="columnVarauspaiva" prefWidth="94.0" text="varauspäivä" />
+              </columns>
+            </TableView>
+            <Label layoutX="14.0" layoutY="22.0" text="Varaukset">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <TableView fx:id="tableVaraukset1" layoutX="533.0" layoutY="51.0" prefHeight="646.0" prefWidth="428.0">
+               <columns>
+                  <TableColumn fx:id="columnPalvelunumero" prefWidth="155.0" text="palvelunumero" />
+                  <TableColumn fx:id="columnVarausnumeroP" prefWidth="179.0" text="varausnumero" />
+                  <TableColumn fx:id="columnLukumaara" prefWidth="93.0" text="lukumäärä" />
+               </columns>
+            </TableView>
+            <Label layoutX="533.0" layoutY="22.0" text="Palvelut">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
    </center>
 </BorderPane>

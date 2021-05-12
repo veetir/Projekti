@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.uusiAsiakasController">
+    <children>
+        <HBox layoutX="135.0" layoutY="15.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="447.0">
+            <children>
+                <Label layoutX="46.0" layoutY="10.0" prefHeight="50.0" prefWidth="160.0" text="Etunimi">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+                <Pane prefHeight="50.0" prefWidth="218.0">
+                    <children>
+                        <TextField fx:id="etunimiTextField" layoutY="13.0" prefHeight="25.0" prefWidth="205.0" promptText="Nimi" />
+                    </children>
+                </Pane>
+            </children>
+        </HBox>
+        <HBox layoutX="135.0" layoutY="57.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="568.0">
+            <children>
+                <Label prefHeight="50.0" prefWidth="142.0" text="Sukunimi">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+                <Pane prefHeight="50.0" prefWidth="304.0">
+                    <children>
+                        <TextField fx:id="sukunimiTextField" layoutX="18.0" layoutY="13.0" prefHeight="25.0" prefWidth="205.0" promptText="Sukunimi" />
+                    </children>
+                </Pane>
+                <Pane />
+            </children>
+        </HBox>
+        <HBox layoutX="6.0" layoutY="107.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="48.0" prefWidth="704.0">
+            <children>
+            <Pane prefHeight="48.0" prefWidth="128.0" />
+                <Label prefHeight="48.0" prefWidth="125.0" text="Osoite">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+                <Pane>
+               <children>
+                    <TextField fx:id="lahiosoiteTextField" layoutX="37.0" layoutY="13.0" prefHeight="25.0" prefWidth="205.0" promptText="Lähiosoite" />
+               </children>
+                </Pane>
+                <Pane>
+                    <children>
+                        <Label fx:id="mokkiAlueNimiLabel" layoutX="35.0" layoutY="1.0" prefHeight="47.0" prefWidth="134.0">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </Pane>
+            </children>
+        </HBox>
+        <HBox layoutX="-27.0" layoutY="155.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="48.0" prefWidth="738.0">
+            <children>
+                <Pane prefHeight="48.0" prefWidth="160.0" />
+                <Label prefHeight="48.0" prefWidth="148.0" text="Postinro">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+                <Pane prefHeight="48.0" prefWidth="134.0">
+                    <children>
+                        <TextField fx:id="postinroTextField" layoutX="14.0" layoutY="12.0" prefHeight="25.0" prefWidth="205.0" promptText="Postinumero" />
+                    </children>
+                </Pane>
+            </children>
+        </HBox>
+        <HBox layoutX="-27.0" layoutY="203.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="734.0">
+            <children>
+                <Pane prefHeight="50.0" prefWidth="297.0">
+                    <children>
+                        <Label layoutX="153.0" prefHeight="50.0" prefWidth="169.0" text="Puhelinnro">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </Pane>
+                <Pane>
+                    <children>
+                        <TextField fx:id="puhelinnroTextField" layoutX="23.0" layoutY="13.0" prefHeight="25.0" prefWidth="205.0" promptText="Puhelinnro" />
+                    </children>
+                </Pane>
+            </children>
+        </HBox>
+        <HBox layoutX="68.0" layoutY="253.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="96.0" prefWidth="638.0">
+            <children>
+                <Pane prefHeight="96.0" prefWidth="680.0">
+                    <children>
+                        <Label layoutX="63.0" layoutY="18.0" prefHeight="50.0" prefWidth="154.0" text="Sähköposti">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                  <TextField fx:id="emailTextField" layoutX="223.0" layoutY="31.0" prefHeight="25.0" prefWidth="205.0" promptText="Sähköposti" />
+                    </children>
+                </Pane>
+                <Pane prefHeight="100.0" prefWidth="263.0" />
+            </children>
+        </HBox>
+        <Pane layoutX="285.0" layoutY="502.0" prefHeight="99.0" prefWidth="424.0">
+            <children>
+                <Button fx:id="muokkaaAsiakasButton" defaultButton="true" layoutX="-22.0" layoutY="58.0" mnemonicParsing="false" onAction="#muokkaaAsiakasButtonOnAction" prefHeight="35.0" prefWidth="72.0" text="Muokkaa" />
+                <Button fx:id="poistaButton" disable="true" layoutX="143.0" layoutY="63.0" mnemonicParsing="false" onAction="#poistaButtonOnAction" opacity="0.1" text="Poista" />
+                <Button fx:id="poistaVarmaButton" disable="true" layoutX="325.0" mnemonicParsing="false" onAction="#poistaVarmaButtonOnAction" prefHeight="47.0" prefWidth="72.0" style="-fx-background-color: #ff5e5e;" text="Poista" visible="false" />
+            </children>
+        </Pane>
+        <Label layoutX="7.0" layoutY="6.0" prefHeight="67.0" prefWidth="72.0" text="ID">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Label>
+        <Label fx:id="asiakasIDLabel" layoutX="31.0" layoutY="15.0" prefHeight="50.0" prefWidth="48.0">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <Label fx:id="errorLabel" layoutX="23.0" layoutY="528.0" prefHeight="48.0" prefWidth="245.0" textFill="RED">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+    </children>
+    <opaqueInsets>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+    </opaqueInsets>
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+</Pane>

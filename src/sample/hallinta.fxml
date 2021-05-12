@@ -1,24 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane fx:id="varausNaytto" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.HallintaController">
+<BorderPane fx:id="varausNaytto" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.HallintaController">
     <top>
         <HBox prefHeight="53.0" prefWidth="1024.0" spacing="10.0" BorderPane.alignment="CENTER">
             <padding>
@@ -113,27 +101,60 @@
                      </children></AnchorPane>
             </content>
           </Tab>
-          <Tab text="Asiakkaat">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            <Tab fx:id="asiakkaatTab" onSelectionChanged="#asiakkaatTabSelected" text="Asiakkaat">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="681.0" prefWidth="261.0">
                      <children>
                         <BorderPane prefHeight="683.0" prefWidth="1024.0">
-                           <bottom>
-                              <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="100.0" BorderPane.alignment="CENTER">
+                           <left>
+                              <VBox prefHeight="633.0" prefWidth="176.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Button fx:id="lisaaAsiakasButton" mnemonicParsing="false" onAction="#lisaaAsiakasButtonOnAction" text="Lisää" />
-                                    <Button fx:id="muokkaaAsiakastaButton" mnemonicParsing="false" onAction="#muokkaaAsiakastaButtonOnAction" text="Muokkaa" />
-                                    <Button fx:id="poistaAsiakasButton" mnemonicParsing="false" onAction="#poistaAsiakasButtonOnAction" text="Poista" />
+                                    <Pane>
+                                       <children>
+                                          <Label layoutX="78.0" prefHeight="28.0" prefWidth="92.0" text="Rajaa">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <Label text="Puhelinnumero" />
+                                    <Pane>
+                                       <children>
+                                          <TextField fx:id="puhnroRajausTextField" onKeyTyped="#suodataAsiakas" prefHeight="25.0" prefWidth="175.0" />
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </VBox>
+                           </left>
+                           <bottom>
+                              <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="80.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Button fx:id="lopetaAsiakasButton" disable="true" mnemonicParsing="false" onAction="#lopetaAsiakasButton" prefHeight="25.0" prefWidth="100.0" text="Takaisin/päivitä" />
+                                    <Button fx:id="muokkaaAsiakasButton" defaultButton="true" mnemonicParsing="false" onAction="#muokkaaAsiakasButtonOnAction" prefHeight="41.0" prefWidth="219.0" text="Muokkaa asiakasta">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Button>
                                  </children>
                               </HBox>
                            </bottom>
                            <center>
-                              <ListView fx:id="asiakasLista" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                              <ScrollPane prefHeight="200.0" prefWidth="754.0" BorderPane.alignment="CENTER">
+                                 <content>
+                                    <VBox fx:id="asiakasVBox" prefHeight="633.0" prefWidth="766.0" spacing="12.0">
+                                       <padding>
+                                          <Insets bottom="10.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                    </VBox>
+                                 </content>
+                              </ScrollPane>
                            </center>
                         </BorderPane>
-                     </children></AnchorPane>
-            </content>
-          </Tab>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
             <Tab text="Varaukset">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">

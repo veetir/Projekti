@@ -12,6 +12,7 @@ public class uusiAsiakasController {
     Alert alert = new Alert(Alert.AlertType.INFORMATION);
     boolean varma = false;
     long id = -1;
+
     public void initData(Asiakas asiakas) {
         etunimiTextField.setText(asiakas.getEtunimi());
         sukunimiTextField.setText(asiakas.getSukunimi());
@@ -30,28 +31,20 @@ public class uusiAsiakasController {
     private TextField sukunimiTextField;
     @FXML
     private TextField lahiosoiteTextField;
-
     @FXML
     private TextField postinroTextField;
-
     @FXML
     private TextField puhelinnroTextField;
-
     @FXML
     private TextField emailTextField;
-
     @FXML
     private Button muokkaaAsiakasButton;
-
     @FXML
     private Button poistaButton;
-
     @FXML
     private Button poistaVarmaButton;
-
     @FXML
     private Label asiakasIDLabel;
-
     @FXML
     private Label errorLabel;
 
@@ -64,19 +57,19 @@ public class uusiAsiakasController {
         String postinro = postinroTextField.getText();
         String puhelinnro = puhelinnroTextField.getText();
         String email = emailTextField.getText();
-
-        SQL_yhteys.muokkaaAsiakas(String.valueOf(id), etunimi, sukunimi,osoite,postinro,puhelinnro,email, true, false, 0);
+        if (!SQL_yhteys.hasPostinro(postinro)) {
+            SQL_yhteys.insertPostinro(postinro, osoite); // TODO: korjaa osoite postitoimipaikaksi
+        }
+        SQL_yhteys.muokkaaAsiakas(String.valueOf(id), etunimi, sukunimi, osoite, postinro, puhelinnro, email, true, false, 0);
         errorLabel.setText("Asiakas päivitetty. Päivitä.");
         alert.setTitle("Asiakkaan päivitys");
         alert.setHeaderText(null);
-        alert.setContentText("Asiakkaan  '" + etunimi +" "+ sukunimi +"'  tiedot päivitettiin tietokannassa.");
+        alert.setContentText("Asiakkaan  '" + etunimi + " " + sukunimi + "'  tiedot päivitettiin tietokannassa.");
         alert.showAndWait();
     }
 
-
-
     @FXML
-    void poistaButtonOnAction(ActionEvent event) throws SQLException{
+    void poistaButtonOnAction(ActionEvent event) throws SQLException {
         errorLabel.setText("");
         if (!varma) {
             etunimiTextField.setVisible(false);
@@ -113,7 +106,7 @@ public class uusiAsiakasController {
 
     @FXML
     void poistaVarmaButtonOnAction(ActionEvent event) throws SQLException {
-        SQL_yhteys.muokkaaAsiakas(String.valueOf(id), null, null,null,null,null,null, false, true, 0);
+        SQL_yhteys.muokkaaAsiakas(String.valueOf(id), null, null, null, null, null, null, false, true, 0);
         errorLabel.setText("Asiakas poistettu. Päivitä.");
         poistaButton.setVisible(false);
         poistaVarmaButton.setVisible(false);

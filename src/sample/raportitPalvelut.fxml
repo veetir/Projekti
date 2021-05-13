@@ -58,14 +58,17 @@
     <center>
         <Pane prefHeight="710.0" prefWidth="793.0" BorderPane.alignment="CENTER">
             <children>
-                <TableView fx:id="tablePalvelut" layoutX="34.0" layoutY="51.0" prefHeight="646.0" prefWidth="768.0">
+                <TableView fx:id="tablePalvelut" layoutX="34.0" layoutY="51.0" prefHeight="646.0" prefWidth="795.0">
                     <columns>
-                        <TableColumn fx:id="columnPalvelunumero" prefWidth="277.0" text="palvelunumero" />
-                        <TableColumn fx:id="columnVarausnumeroP" prefWidth="284.0" text="varausnumero" />
-                        <TableColumn fx:id="columnLukumaara" prefWidth="206.0" text="lukumäärä" />
+                  <TableColumn fx:id="columnNimi" prefWidth="194.0" text="Palvelun nimi" />
+                        <TableColumn fx:id="columnPalvelunumero" prefWidth="112.0" text="Palvelunumero" />
+                        <TableColumn fx:id="columnVarausnumeroP" prefWidth="135.0" text="Varausnumero" />
+                        <TableColumn fx:id="columnLukumaara" prefWidth="109.0" text="Lukumäärä" />
+                  <TableColumn fx:id="columnHinta" prefWidth="126.0" text="Hinta" />
+                  <TableColumn fx:id="columnToimintaAlue" prefWidth="118.0" text="Toiminta-Alue" />
                     </columns>
                 </TableView>
-                <Label layoutX="35.0" layoutY="23.0" text="Varaukset">
+                <Label layoutX="35.0" layoutY="23.0" text="Palvelut">
                     <font>
                         <Font size="15.0" />
                     </font>

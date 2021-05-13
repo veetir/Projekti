@@ -129,6 +129,36 @@ public class SQL_yhteys {
         }
         return varaukset;
     }
+    public static ArrayList<Varaus> getVarauksetNoOrder() throws SQLException {
+        String sql = "SELECT * " +
+                "FROM varaus";
+        ArrayList<Varaus> varaukset = new ArrayList<Varaus>();
+
+        try (Connection conn = SQL_yhteys.getYhteys();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            Varaus varaus = null;
+
+            // loop through the result set
+            while (rs.next()) {
+                int varausId = rs.getInt("varaus_id");
+                int asiakasId = rs.getInt("asiakas_id");
+                int mokkiId = rs.getInt("mokki_mokki_id");
+                Date varattuPvm = rs.getDate("varattu_pvm");
+                Date varattuAlkupvm = rs.getDate("varattu_alkupvm");
+                Date varattuLoppupvm = rs.getDate("varattu_loppupvm");
+
+                varaus = new Varaus(varausId, asiakasId, null, null, mokkiId,
+                        null, null, null, varattuPvm, varattuAlkupvm, varattuLoppupvm);
+                varaukset.add(varaus);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return varaukset;
+    }
 
     public static ArrayList<Varaus> getVaraukset(String haku) throws SQLException {
         haku = "%" + haku + "%";
@@ -440,6 +470,39 @@ public class SQL_yhteys {
         return mokit;
     }
 
+    public static void insertLasku(Varaus varaus, Double hinta) throws SQLException {
+        String varaus_id, summa = String.valueOf(hinta);
+        varaus_id = String.valueOf(varaus.getVarausId());
+
+        String kysely = "INSERT INTO lasku (varaus_id, summa) \n" +
+                "VALUES (?, ?);";
+
+        try {
+            Connection conn = SQL_yhteys.getYhteys();
+            PreparedStatement pstmt = conn.prepareStatement(kysely,
+                    Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, varaus_id);
+            pstmt.setString(2, summa);
+
+            int rowAffected = pstmt.executeUpdate();
+            if (rowAffected == 1) {
+                // process further here
+            }
+
+            // get candidate id
+            int candidateId = 0;
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next())
+                candidateId = rs.getInt(1);
+
+
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        }
+    }
+
     public static void setMokit(Mokki uusimokki, boolean paivita, boolean poista, String poistoId) throws SQLException {
         String mokkiId = "", alueid = "", zip = "", nimi = "", osoite = "", kuvaus = "", hlolkm = "", varustelu = "", hinta = "", kysely = "";
         if (!poista) {
@@ -572,7 +635,6 @@ public class SQL_yhteys {
     }
 
     public static void setAsiakkaat(String kysely, String zip, String etunimi, String sukunimi, String osoite, String email, String puhnro) throws SQLException {
-
         try {
             Connection conn = SQL_yhteys.getYhteys();
             PreparedStatement pstmt = conn.prepareStatement(kysely,
@@ -825,7 +887,6 @@ public class SQL_yhteys {
             System.out.println(ex.getMessage());
         }
         return alueet;
-
     }
 
     // Metodi poistaa mökin tietokannasta, voidaan käyttää mökin hallinnassa liitettynä nappiin.

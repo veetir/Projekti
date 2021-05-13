@@ -38,15 +38,27 @@ public class Varaus {
         this.varattuLoppupvm = varattuLoppupvm;
     }
 
-    public static long getVarauksenMokki(int varausId) throws SQLException {
+    public static int getVarauksenMokki(int varausId) throws SQLException {
         ArrayList<Varaus> varaukset;
         varaukset = SQL_yhteys.getVaraukset();
         for (int i = 0; i < varaukset.size(); i++) {
             if (varaukset.get(i).getVarausId() == varausId) {
-                return varaukset.get(i).getMokkiMokkiId();
+                return (int)varaukset.get(i).getMokkiMokkiId();
             }
         }
         return -1; // ei löydy
+    }
+
+    public static String getVarauksenHlo(int varausId) throws SQLException {
+        ArrayList<Varaus> varaukset;
+        varaukset = SQL_yhteys.getVaraukset();
+        for (int i = 0; i < varaukset.size(); i++) {
+            if (varaukset.get(i).getVarausId() == varausId) {
+                return varaukset.get(i).getEtunimi() + " "
+                        + varaukset.get(i).getSukunimi();
+            }
+        }
+        return null; // ei löydy
     }
 
     public String getToimintaalue() {

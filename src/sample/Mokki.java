@@ -29,15 +29,25 @@ public class Mokki {
 
     }
 
-    public static int getMokinToimintaAlue(int mokkiId) throws SQLException {
+    public static Double getMokinHinta(Long mokkiId) throws SQLException {
         ArrayList<Mokki> mokki;
         mokki = SQL_yhteys.getMokit();
         for (int i = 0; i < mokki.size(); i++) {
             if (mokki.get(i).get_mokki_id() == mokkiId){
-                return mokki.get(i).get_toimintaalue_id();
+                return Double.valueOf(mokki.get(i).getHinta()); // Palautetaan kyseisen mökin hinta
             }
         }
-        return -1; // Jos ei löydy
+        return -1.0; // Virhe
+    }
+    public static String getMokinToimintaAlue(int mokkiId) throws SQLException {
+        ArrayList<Mokki> mokki;
+        mokki = SQL_yhteys.getMokit();
+        for (int i = 0; i < mokki.size(); i++) {
+            if (mokki.get(i).get_mokki_id() == mokkiId){
+                return ToimintaAlue.findNimi(mokki.get(i).get_toimintaalue_id());
+            }
+        }
+        return null; // Jos ei löydy
     }
 
     public String getToimintaalue_nimi() {

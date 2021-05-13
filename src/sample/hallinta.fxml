@@ -243,8 +243,14 @@
                                     </Pane>
                                     <Pane prefHeight="65.0" prefWidth="240.0">
                                        <children>
-                                          <Label text="Laskujen lukumäärä " />
-                                          <Label fx:id="laskujenLkmLabel" layoutX="66.0" layoutY="24.0" prefHeight="17.0" prefWidth="82.0" />
+                                          <Label text="Laskujen lukumäärä hakuehdoilla">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font></Label>
+                                          <Label fx:id="laskujenLkmLabel" layoutX="66.0" layoutY="24.0" prefHeight="17.0" prefWidth="82.0">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font></Label>
                                        </children>
                                     </Pane>
                                  </children>

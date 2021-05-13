@@ -27,9 +27,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.time.ZoneId;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class HallintaController implements Initializable {
@@ -500,7 +499,7 @@ public class HallintaController implements Initializable {
             if (tAlueMokitBox.getValue() == null) {
                 return;
             } else {
-                if (!laskutAlueBox.getValue().equals("Hae alueelta")) {
+                if (laskutAlueBox.getValue() != null & !laskutAlueBox.getValue().equals("Hae alueelta")) {
                     System.out.println(laskutAlueBox.getValue().toString());
                     try {
                         initLaskut(laskutAlueBox.getValue().toString());
@@ -524,56 +523,119 @@ public class HallintaController implements Initializable {
         muokattavaLasku = null;
         initLaskuSearch();
         initLaskut(null);
+
+        // Laskut piti tehdä kaikille varauksille, joiden loppupvm < pvm nyt, LocalDate.now()
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        LocalDate dateNow = LocalDate.now();
+        Date date = Date.from(dateNow.atStartOfDay(defaultZoneId).toInstant()); // https://beginnersbook.com/2017/10/java-convert-localdate-to-date/
+        ArrayList<Varaus> varaukset = SQL_yhteys.getVarauksetNoOrder();
+        ArrayList<Lasku> laskut = SQL_yhteys.getLaskut();
+
+        // Talletetaan seuraavaan taulukkolistaan kaikkien laskujen varausid:t,
+        // jotta voidaan vertailla niiden perusteella onko lasku jo kannassa
+        ArrayList<Long> laskujenVarausId = new ArrayList<>();
+        for (int i = 0; i < laskut.size(); i++) {
+            laskujenVarausId.add(laskut.get(i).getVarausId());
+        }
+        // Tehdään taulukko, jossa on varaus_id:t ja niitä vastaavat summat
+        // HashMap sopinee tähän: (avain, arvo) -pari, joita tehokasta lisätä ja hakea
+
+        // Tätä varten tein mökkiin metodin, joka palauttaa mokkiIdtä vastaan mökin hinnan
+        HashMap<Integer, Double> varauksenSumma = new HashMap<>();
+        for (int i = 0; i < varaukset.size(); i++) {
+            Double summa = 0.0;
+            // Lisätään summaan ensiksi mökin hinta
+            summa += Mokki.getMokinHinta(varaukset.get(i).getMokkiMokkiId());
+            // Lopuksi summaan lisätään palveluiden hinta
+            ArrayList<VarauksenPalvelu_Hallinta> varauksenpalvelut = SQL_yhteys.getVarauksenPalvelut(i);
+            try {
+                if (varauksenpalvelut.size() != 0 & varauksenpalvelut != null) {
+                    for (int j = 0; j < varauksenpalvelut.size(); j++) {
+                        summa += varauksenpalvelut.get(j).getHinta() * varauksenpalvelut.get(j).getLkm();
+                    }
+                }
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            System.out.println("varauksen " + i + " summa on " + summa);
+            varauksenSumma.put(i, summa);
+        }
+
+        // jos varauksen loppupvm < pvm nyt ja jos laskuissa ei ole jo olemassa
+        // nykyistä varaus:idtä, niin varaus voidaan laittaa tietokantaan
+        for (int i = 0; i < varaukset.size(); i++) {
+            // varaukset.get(i).getVarattuLoppupvm().before(date)
+            // yllä olevaa on vaikea testata, koska ei voida luoda varausta, jonka pvm on ennen tätä pv
+            if (!laskujenVarausId.contains(varaukset.get(i).getVarausId())) {
+                // Lähetetään varaus ja varausta vastaava summa
+                System.out.println(varaukset.get(i).getVarausId() + " id ja summa " + varauksenSumma.get(i));
+                SQL_yhteys.insertLasku(varaukset.get(i), varauksenSumma.get(i));
+            }
+        }
     }
 
     public void initLaskut(String area) throws SQLException {
         laskutVBox.getChildren().clear();
-        ArrayList<Lasku> laskut = null;
-        if (area == null) {
-            laskut = SQL_yhteys.getLaskut();
-        } else {
-            //laskut = SQL_yhteys.getAlueenMokit(area);
-        }
-
-
-        for (int i = 0; i < laskut.size(); i++) {
-            try {
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("lasku.fxml"));
-                Parent root = loader.load();
-
-                LaskuController controller = loader.getController();
-                controller.initData(laskut.get(i));
-                laskujenLkm++;
-                laskujenLkmLabel.setText(String.valueOf(laskujenLkm));
-                final Lasku k = laskut.get(i);
-                AtomicInteger z = new AtomicInteger();
-
-
-                root.setOnMousePressed(event1 -> {
-                    z.getAndIncrement();
-                    if (z.get() % 2 == 1 & muokattavaLasku == null) {
-                        avaaLaskuButton.setText("Toimenpiteet");
-                        root.setStyle("-fx-background-color: #dbd9ff; " +
-                                "-fx-border-color: #40424a; -fx-border-width: 3");
-                        valittu = true;
-                        muokattavaLasku = k;
-
-                    } else if (valittu == true & k.equals(muokattavaLasku)) {
-                        avaaLaskuButton.setText("Valitse lasku");
-                        root.setStyle("-fx-background-color: #f4f4f4; " +
-                                "-fx-border-color: #dbd9ff; -fx-border-width: 1");
-                        valittu = false;
-                        muokattavaLasku = null;
-                    } else {
-                        return;
-                    }
-                });
-                laskutVBox.getChildren().add(root);
-            } catch (IOException e) {
-                e.printStackTrace();
+        ArrayList<Lasku> laskut = SQL_yhteys.getLaskut();
+        laskujenLkm = 0;
+        laskujenLkmLabel.setText(String.valueOf(laskujenLkm));
+        // Kun haetaan laskuja alueella, pitää löytää mitä kaikkia laskuja kullakin alueella on.
+        // Taulukkolistassa laskut on nyt kaikki olemassa olevat laskut. Kun tiedämme miltä alueelta
+        // haluamme laskuja, voimme käydä kaikki laskut läpi, ja näyttää ne laskut, jotka kuuluvat valittuun alueeseen
+        if (area != null) {
+            ArrayList<Lasku> alueenLaskut = new ArrayList<>();
+            for (int i = 0; i < laskut.size(); i++) {
+                int k = (int) laskut.get(i).getVarausId(); // Muutetaan long intiksi
+                System.out.println("varauksen toim.alue " + Mokki.getMokinToimintaAlue(Varaus.getVarauksenMokki(k)) + " haun alue " + area);
+                if (Mokki.getMokinToimintaAlue(Varaus.getVarauksenMokki(k)).equalsIgnoreCase(area)) {
+                    alueenLaskut.add(laskut.get(i));
+                }
             }
+            laskut = alueenLaskut;
         }
+
+        if (laskut != null) {
+            for (int i = 0; i < laskut.size(); i++) {
+                try {
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getResource("lasku.fxml"));
+                    Parent root = loader.load();
+
+                    LaskuController controller = loader.getController();
+                    controller.initData(laskut.get(i));
+                    laskujenLkm++;
+                    final Lasku k = laskut.get(i);
+                    AtomicInteger z = new AtomicInteger();
+
+
+                    root.setOnMousePressed(event1 -> {
+                        z.getAndIncrement();
+                        if (z.get() % 2 == 1 & muokattavaLasku == null) {
+                            avaaLaskuButton.setText("Toimenpiteet");
+                            root.setStyle("-fx-background-color: #dbd9ff; " +
+                                    "-fx-border-color: #40424a; -fx-border-width: 3");
+                            valittu = true;
+                            muokattavaLasku = k;
+
+                        } else if (valittu == true & k.equals(muokattavaLasku)) {
+                            avaaLaskuButton.setText("Valitse lasku");
+                            root.setStyle("-fx-background-color: #f4f4f4; " +
+                                    "-fx-border-color: #dbd9ff; -fx-border-width: 1");
+                            valittu = false;
+                            muokattavaLasku = null;
+                        } else {
+                            return;
+                        }
+                    });
+                    laskutVBox.getChildren().add(root);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            laskujenLkmLabel.setText("0");
+        }
+        laskujenLkmLabel.setText(String.valueOf(laskujenLkm));
     }
 
         /*public void avaaLaskuButton(ActionEvent actionEvent) throws SQLException {

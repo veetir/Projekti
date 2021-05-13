@@ -1,23 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="600.0" spacing="5.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LaskuController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="145.0" prefWidth="600.0" spacing="5.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LaskuController">
    <children>
       <VBox prefHeight="100.0" prefWidth="154.0">
          <children>
             <Label prefHeight="51.0" prefWidth="154.0" text="ID:">
                <font>
                   <Font size="14.0" />
-               </font></Label>
+               </font>
+            </Label>
             <Label layoutX="10.0" layoutY="10.0" prefHeight="42.0" prefWidth="154.0" text="Varauksen ID:">
                <font>
                   <Font size="14.0" />
-               </font></Label>
+               </font>
+            </Label>
          </children>
       </VBox>
       <VBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="154.0">
@@ -25,11 +28,13 @@
             <Label fx:id="laskuIdLabel" prefHeight="51.0" prefWidth="154.0">
                <font>
                   <Font size="14.0" />
-               </font></Label>
+               </font>
+            </Label>
             <Label fx:id="laskuVarausID" layoutX="10.0" layoutY="10.0" prefHeight="42.0" prefWidth="154.0">
                <font>
                   <Font size="14.0" />
-               </font></Label>
+               </font>
+            </Label>
          </children>
       </VBox>
       <VBox layoutX="164.0" layoutY="10.0" prefHeight="100.0" prefWidth="154.0">
@@ -37,23 +42,28 @@
             <Label prefHeight="50.0" prefWidth="76.0" text="Status:">
                <font>
                   <Font size="14.0" />
-               </font></Label>
+               </font>
+            </Label>
             <Label layoutX="10.0" layoutY="10.0" prefHeight="42.0" prefWidth="154.0" text="Summa:">
                <font>
                   <Font size="14.0" />
-               </font></Label>
+               </font>
+            </Label>
          </children>
       </VBox>
       <VBox layoutX="318.0" layoutY="10.0" prefHeight="90.0" prefWidth="198.0">
          <children>
-            <Label prefHeight="49.0" prefWidth="174.0" text="Maksamaton, lähetetty" textFill="RED">
+            <Label prefHeight="49.0" prefWidth="174.0" text="Maksamaton" textFill="RED">
                <font>
                   <Font size="14.0" />
-               </font></Label>
+               </font>
+            </Label>
             <Label fx:id="laskuSummaLabel" layoutX="10.0" layoutY="10.0" prefHeight="42.0" prefWidth="154.0">
                <font>
                   <Font size="14.0" />
-               </font></Label>
+               </font>
+            </Label>
+            <Button fx:id="printLaskuButton" mnemonicParsing="false" onAction="#printLaskuButton" text="Print" visible="false" />
          </children>
       </VBox>
    </children>

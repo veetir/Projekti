@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="varausNaytto" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.RaportitController">
+<BorderPane fx:id="varausNaytto" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.RaportitPalvelutController">
     <top>
         <HBox spacing="10.0" BorderPane.alignment="CENTER">
             <padding>
@@ -48,8 +48,8 @@
             <children>
                 <Pane prefHeight="658.0" prefWidth="161.0">
                     <children>
-                        <Button fx:id="raportitButton1" layoutX="13.0" layoutY="86.0" mnemonicParsing="false" onAction="#raportitButtonOnAction" prefHeight="43.0" prefWidth="136.0" text="VARAUKSET" />
-                        <Button fx:id="palvelutButton" layoutX="13.0" layoutY="158.0" mnemonicParsing="false" onAction="#palvelutButtonOnAction" prefHeight="43.0" prefWidth="136.0" text="PALVELUT" />
+                        <Button fx:id="varauksetButton" layoutX="13.0" layoutY="86.0" mnemonicParsing="false" onAction="#varauksetButtonOnAction" prefHeight="43.0" prefWidth="136.0" text="VARAUKSET" />
+                        <Button fx:id="raportitButton11" layoutX="13.0" layoutY="158.0" mnemonicParsing="false" onAction="#raportitButtonOnAction" prefHeight="43.0" prefWidth="136.0" text="PALVELUT" />
                     </children>
                 </Pane>
             </children>
@@ -58,12 +58,11 @@
     <center>
         <Pane prefHeight="710.0" prefWidth="793.0" BorderPane.alignment="CENTER">
             <children>
-                <TableView fx:id="tableVaraukset" layoutX="34.0" layoutY="51.0" prefHeight="646.0" prefWidth="768.0">
+                <TableView fx:id="tablePalvelut" layoutX="34.0" layoutY="51.0" prefHeight="646.0" prefWidth="768.0">
                     <columns>
-                        <TableColumn fx:id="columnVarausnumero" prefWidth="161.0" text="varausnumero" />
-                        <TableColumn fx:id="columnAsiakasnumero" prefWidth="193.0" text="asiakasnumero" />
-                        <TableColumn fx:id="columnMokki" prefWidth="237.0" text="mokki" />
-                        <TableColumn fx:id="columnVarauspaiva" minWidth="0.0" prefWidth="176.0" text="varauspäivä" />
+                        <TableColumn fx:id="columnPalvelunumero" prefWidth="277.0" text="palvelunumero" />
+                        <TableColumn fx:id="columnVarausnumeroP" prefWidth="284.0" text="varausnumero" />
+                        <TableColumn fx:id="columnLukumaara" prefWidth="206.0" text="lukumäärä" />
                     </columns>
                 </TableView>
                 <Label layoutX="35.0" layoutY="23.0" text="Varaukset">

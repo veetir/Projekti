@@ -675,6 +675,137 @@ public class HallintaController implements Initializable {
     public void avaaLaskuButtonOnAction(ActionEvent actionEvent) {
     }
 
+    @FXML
+    public Label asiakasIdLabel;
+
+    @FXML
+    public Label etunimiLabel;
+
+    @FXML
+    public Label osoiteLabel;
+
+    @FXML
+    public Label sukunimiLabel;
+
+    @FXML
+    public Label postinroLabel;
+
+    @FXML
+    public Label puhnroLabel;
+
+    @FXML
+    public Label spostiLabel;
+
+    @FXML
+    public Button muokkaaAsiakasButton, lopetaAsiakasButton;
+
+    Asiakas muokattavaAsiakas;
+
+    @FXML
+    public VBox asiakasVBox;
+
+    public void asiakkaatTabSelected(Event event) throws SQLException {
+        valittu = false;
+        lisays = false;
+        muokattavaAsiakas = null;
+        muokkaaAsiakasButton.setDisable(false);
+
+        initAsiakkaat(null);
+        initSearch();
+    }
+
+    void initAsiakkaat(String puhnro) throws SQLException {
+        asiakasVBox.getChildren().clear();
+        ArrayList<Asiakas> asiakkaat = null;
+        if (puhnro == null) {
+            asiakkaat = SQL_yhteys.getAsiakkaat();
+        }// else {
+        //    asiakkaat = SQL_yhteys.getAlueenMokit(puhnro);
+        //}
+
+
+        for (int i = 0; i < asiakkaat.size(); i++) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("asiakas.fxml"));
+                Parent root = loader.load();
+
+                AsiakasController controller = loader.getController();
+                controller.initData(asiakkaat.get(i));
+                final Asiakas k = asiakkaat.get(i);
+                AtomicInteger z = new AtomicInteger();
+
+                root.setOnMousePressed(event1 -> {
+                    z.getAndIncrement();
+                    if (z.get() % 2 == 1 & muokattavaAsiakas == null) {
+                        muokkaaAsiakasButton.setText("Muokkaa");
+                        root.setStyle("-fx-background-color: #dbd9ff; " +
+                                "-fx-border-color: #40424a; -fx-border-width: 3");
+                        valittu = true;
+                        muokattavaAsiakas = k;
+
+                    } else if (valittu == true & k.equals(muokattavaAsiakas)) {
+                        muokkaaAsiakasButton.setText("Muokkaa asiakasta");
+                        root.setStyle("-fx-background-color: #f4f4f4; " +
+                                "-fx-border-color: #dbd9ff; -fx-border-width: 1");
+                        valittu = false;
+                        muokattavaAsiakas = null;
+                    } else {
+                        return;
+                    }
+                });
+                asiakasVBox.getChildren().add(root);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void muokkaaAsiakasButtonOnAction(ActionEvent actionEvent) throws SQLException {
+        if (!lisays) {
+            try {
+                muokkaaAsiakasButton.setDisable(true);
+                lopetaAsiakasButton.setDisable(false);
+                lopetaAsiakasButton.setOpacity(1);
+                lisays = true;
+                muokkaaAsiakasButton.setText("Muokkaa asiakasta");
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("uusiAsiakas.fxml"));
+                Parent root = loader.load();
+                uusiAsiakasController controller = loader.getController();
+
+                if (muokattavaAsiakas != null) {
+                    controller.initData(muokattavaAsiakas);
+                }
+
+                // Tässä käytetään add-metodia, jolla root-node saadaan laitettua tiettyyn indeksiin: tässä 0 eli alkuun
+                asiakasVBox.getChildren().clear();
+                asiakasVBox.getChildren().add(0, root);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void actionPerformedRefreshAsiakas(Event e) throws SQLException {
+        asiakkaatTabSelected(e);
+    }
+
+    public void lopetaAsiakasButton(ActionEvent actionEvent) throws SQLException {
+        asiakasVBox.getChildren().remove(muokattavaAsiakas.getAsiakasId());
+        lisays = false;
+        lopetaAsiakasButton.setDisable(true);
+        lopetaAsiakasButton.setOpacity(0.1);
+        lopetaAsiakasButton.setDisable(false);
+        actionPerformedRefreshAsiakas(e);
+        valittu = false;
+        lisays = false;
+        muokattavaAsiakas = null;
+    }
+}
+
+
         /*public void lopetaMokkiButtonOnAction(ActionEvent actionEvent) throws SQLException {
             laskutVBox.getChildren().remove(0);
             lisays = false;
@@ -687,4 +818,4 @@ public class HallintaController implements Initializable {
             muokattavaLasku = null;
             avaaLaskuButton.setText("Lisää mokki");
         }*/
-}
+

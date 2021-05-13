@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -12,12 +13,12 @@ public class SQL_yhteys {
     // Huom! Vaihda user & password, tarkista myös url !
     String url = "jdbc:mysql://localhost:3306/vn";
     String user = "root";
-    String password = "scape123";
+    String password = "allukys123";
 
     // Palauttaa SQL yhteys olion
     public static Connection getYhteys() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/vn?serverTimezone=Europe/Helsinki";
-        String user = "root", password = "scape123";
+        String user = "root", password = "allukys123";
         Connection conn = null;
 
         try {
@@ -705,6 +706,63 @@ public class SQL_yhteys {
         }
         return asiakas_id;
     }
+
+
+    public static int muokkaaAsiakas(String id, String etunimi, String sukunimi, String lahiosoite, String postinro, String puhelinnro, String email, boolean update, boolean poisto, int poistoid) throws SQLException {
+        ResultSet rs = null;
+        int asiakas_id = 0;
+        String sql;
+        if (update & !poisto) {
+            sql = "UPDATE asiakas " +
+                    "SET etunimi = ?, sukunimi = ?, lahiosoite = ?, postinro = ?, puhelinnro = ?, email = ? " +
+                    "WHERE asiakas_id = ?;";
+        } else {
+            sql = "DELETE FROM asiakas " +
+                    "WHERE asiakas_id = ?;";
+        }
+        try {
+            Connection conn = SQL_yhteys.getYhteys();
+            PreparedStatement pstmt = conn.prepareStatement(sql,
+                    Statement.RETURN_GENERATED_KEYS);
+            if (update & !poisto) {
+                pstmt.setString(1, etunimi);
+                pstmt.setString(2, sukunimi);
+                pstmt.setString(3, lahiosoite);
+                pstmt.setString(4, postinro);
+                pstmt.setString(5, puhelinnro);
+                pstmt.setString(6, email);
+                pstmt.setString(7, id);
+
+            } else {
+                pstmt.setString(1, id);
+            }
+            int rowAffected = pstmt.executeUpdate();
+            if (rowAffected == 1) {
+                // get candidate id
+                rs = pstmt.getGeneratedKeys();
+                if (rs.next())
+                    asiakas_id = rs.getInt(1);
+            }
+
+        } catch(
+        SQLException e)
+
+        {
+        System.out.println("SQLException: " + e.getMessage());
+        System.out.println("SQLState: " + e.getSQLState());
+        System.out.println("VendorError: " + e.getErrorCode());
+        } finally
+
+        {
+        try {
+            if (rs != null) rs.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+        return asiakas_id;
+    }
+
 
     //Lisää uuden toiminta-alueen tietokantaan ja palauttaa luodun ...?
     public static int insertToiminta(String nimi, String id, boolean update, boolean poisto) throws SQLException {

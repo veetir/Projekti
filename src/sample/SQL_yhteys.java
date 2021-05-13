@@ -18,7 +18,7 @@ public class SQL_yhteys {
     // Palauttaa SQL yhteys olion
     public static Connection getYhteys() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/vn?serverTimezone=Europe/Helsinki";
-        String user = "root", password = "Olavi99?";
+        String user = "root", password = "scape123";
         Connection conn = null;
 
         try {
@@ -536,6 +536,58 @@ public class SQL_yhteys {
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         }
+    }
+
+    public static void insertPostinro(String postinro, String alue) throws SQLException {
+        String zip = postinro, area = alue;
+        String kysely = "INSERT INTO posti (postinro, toimipaikka) \n" +
+                "VALUES (?, ?);";
+        try {
+            Connection conn = SQL_yhteys.getYhteys();
+            PreparedStatement pstmt = conn.prepareStatement(kysely,
+                    Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, zip);
+            pstmt.setString(2, area);
+
+            int rowAffected = pstmt.executeUpdate();
+            if (rowAffected == 1) {
+                // process further here
+            }
+
+            // get candidate id
+            int candidateId = 0;
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next())
+                candidateId = rs.getInt(1);
+
+
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        }
+    }
+    public static boolean hasPostinro(String postinro) throws SQLException {
+        String zip = postinro;
+        boolean found = false;
+        String kysely = "SELECT * FROM posti WHERE postinro = ?";
+        ResultSet rs = null;
+        try (Connection conn = SQL_yhteys.getYhteys();
+             PreparedStatement stmt = conn.prepareStatement(kysely);) {
+            
+            stmt.setString(1, zip);
+            rs = stmt.executeQuery();
+            // loop through the result set
+            while (rs.next()) {
+                found = true;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        }
+        return found;
     }
 
     public static void setMokit(Mokki uusimokki, boolean paivita, boolean poista, String poistoId) throws SQLException {

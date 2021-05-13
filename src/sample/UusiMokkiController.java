@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -71,7 +72,6 @@ public class UusiMokkiController implements Initializable {
 
     // Tätä kutsutaan kun halutaan lisätä täysin uusi mökki tai jos halutaan päivittää tiedot
     public void lisaaUusiMokkiButtonOnAction(ActionEvent actionEvent) throws SQLException {
-
         errorLabel.setText("");
         String uusiMokkiNimi = mokkiNimiTextField.getText();
         String uusiMokkiOsoite = mokkiOsoiteTextField.getText();
@@ -121,18 +121,30 @@ public class UusiMokkiController implements Initializable {
 
             // Lähetetään tiedot. Lisäksi kerrotaan SQL_yhteys-luokan metodille onko kyseessä uusi lisäys vai päivitys
             if (paivitys == null) {
-                SQL_yhteys.setMokit(uusiMokki, false, false, null);
-                errorLabel.setText("Mökki lisätty. Päivitä.");
-                alert.setTitle("Mökin lisäys");
-                alert.setHeaderText(null);
-                lisaaUusiMokkiButton.setDisable(true);
-                alert.setContentText("Mökki  '" + uusiMokki.get_mokkinimi() + "'  lisättiin tietokantaan.");
-                alert.showAndWait();
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.OK){
-
+                if (uusiMokki.get_toimintaalue_id() == -1) {
+                    errorLabel.setText("Valitse toiminta-alue.");
+                    alert.setTitle("Tietoja puuttuu");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Mökiltä puuttuu toiminta-alue.");
+                    alert.showAndWait();
+                    lisaaUusiMokkiButton.setDisable(false);
+                    return;
+                } else {
+                    if (!SQL_yhteys.hasPostinro(uusiMokki.get_postinro())) {
+                        SQL_yhteys.insertPostinro(uusiMokki.get_postinro(), ToimintaAlue.findNimi(uusiMokki.get_toimintaalue_id()));
+                    }
+                    SQL_yhteys.setMokit(uusiMokki, false, false, null);
+                    errorLabel.setText("Mökki lisätty. Päivitä.");
+                    lisaaUusiMokkiButton.setDisable(true);
+                    alert.setTitle("Mökin lisäys");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Mökki  '" + uusiMokki.get_mokkinimi() + "'  lisättiin tietokantaan.");
+                    alert.showAndWait();
                 }
             } else {
+                if (!SQL_yhteys.hasPostinro(uusiMokki.get_postinro())) {
+                    SQL_yhteys.insertPostinro(uusiMokki.get_postinro(), ToimintaAlue.findNimi(uusiMokki.get_toimintaalue_id()));
+                }
                 SQL_yhteys.setMokit(uusiMokki, true, false, null);
                 errorLabel.setText("Mökki päivitetty. Päivitä.");
                 alert.setTitle("Mökin päivitys");

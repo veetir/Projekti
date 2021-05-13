@@ -58,6 +58,6 @@ public class VarauksenPalvelu_Hallinta {
     @Override
     public String toString() {
         // TODO Auto-generated method stub
-        return this.getPalvelu()+", "+this.getLkm()+" kpl, "+this.getHinta()+"€/kpl yht. "+(this.hinta*this.lkm)+"€";
+        return this.getPalvelu()+", "+this.getLkm()+" kpl";
     }
 }

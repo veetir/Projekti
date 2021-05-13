@@ -170,6 +170,12 @@ public class HallintaController implements Initializable {
                     Alert peruutusOnnistuiAlert = new Alert(AlertType.INFORMATION);
                     peruutusOnnistuiAlert.setHeaderText("Varaus peruutettu onnistuneesti.");
                     peruutusOnnistuiAlert.showAndWait();
+                    try {
+                        naytaVaraukset();
+                    } catch (SQLException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                 } else if (result.isPresent() && result.get() == ei) {
                     System.out.println("Ei nappia painettiin");
                 }

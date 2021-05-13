@@ -196,12 +196,14 @@ public class VarausController implements Initializable {
                      TextField sukunimiTF = new TextField();
                      TextField osoiteTF = new TextField();
                      TextField postinroTF = new TextField();
+                     TextField toimiPaikkaTF = new TextField();
                      TextField puhelinTF = new TextField();
                      TextField sahkopostiTF = new TextField();
                      Label etunimiLBL = new Label("etunimi:       ", etunimiTF);
                      Label sukunimiLBL = new Label("sukunimi:     ", sukunimiTF);
                      Label osoiteLBL = new Label("osoite:          ", osoiteTF);
                      Label postinroLBL = new Label("postinro:      ", postinroTF);
+                     Label toimiPaikkaLBL = new Label("kaupunki:     ", toimiPaikkaTF);
                      Label puhelinLBL = new Label("puhelin nro: ", puhelinTF);
                      Label sahkopostiLBL = new Label("sahkoposti:  ", sahkopostiTF);
  
@@ -209,6 +211,7 @@ public class VarausController implements Initializable {
                      sukunimiLBL.setContentDisplay(ContentDisplay.RIGHT);
                      osoiteLBL.setContentDisplay(ContentDisplay.RIGHT);
                      postinroLBL.setContentDisplay(ContentDisplay.RIGHT);
+                     toimiPaikkaLBL.setContentDisplay(ContentDisplay.RIGHT);
                      puhelinLBL.setContentDisplay(ContentDisplay.RIGHT);
                      sahkopostiLBL.setContentDisplay(ContentDisplay.RIGHT);
                      HBox napit = new HBox(10);
@@ -223,7 +226,7 @@ public class VarausController implements Initializable {
 
 
                      napit.getChildren().addAll(teeVarausBtn, peruutaBtn);
-                     asiakasTiedot.getChildren().addAll(asiakasTietoLbl, etunimiLBL, sukunimiLBL, osoiteLBL, postinroLBL, puhelinLBL, sahkopostiLBL, napit);
+                     asiakasTiedot.getChildren().addAll(asiakasTietoLbl, etunimiLBL, sukunimiLBL, osoiteLBL, postinroLBL, toimiPaikkaLBL, puhelinLBL, sahkopostiLBL, napit);
                      mokkiPaneeli.getChildren().remove(varaaBtn);
                      mokkiPaneeli.getChildren().addAll(asiakasTiedot, palveluVb);
  
@@ -305,23 +308,27 @@ public class VarausController implements Initializable {
                             }
                             Alert tilausVahvistusAlert = new Alert(AlertType.CONFIRMATION);
                             tilausVahvistusAlert.setHeaderText("Tarkista varauksen tiedot");
-                            tilausVahvistusAlert.setContentText("ASIAKAS:\n  \netunimi: " + etunimi +
-                            "\nsukunimi: " + sukunimi+
-                            "\nlähiosoite: "+lahiosoite+
-                            "\npostinumero: "+postinro+
-                            "\nemail: "+email+
-                            "\npuhelin-numero: "+puhelinnro+"\n"+
+                            tilausVahvistusAlert.setContentText("ASIAKAS:\n  \netunimi:\t\t\t" + etunimi +
+                            "\nsukunimi:\t\t\t" + sukunimi+
+                            "\nlähiosoite:\t\t"+lahiosoite+
+                            "\npostinumero:\t\t"+postinro+
+                            "\nkaupunki:\t\t\t"+toimiPaikkaTF.getText()+
+                            "\nemail:\t\t\t"+email+
+                            "\npuhelin-numero:\t"+puhelinnro+"\n"+
                             "\nMÖKKI:\n"+
                             "\n"+mokkiOtsikkoLbl.getText()+
-                            "\nhinta: "+mokki.getHinta()+
-                            "\nsaapuminen: "+saapumisPaivaDp.getValue()+
-                            "\nlähtö:      "+lahtopaivaDp.getValue()+
+                            "\nhinta:\t\t\t"+mokki.getHinta()+"€/yö"+
+                            "\nsaapuminen:\t\t"+saapumisPaivaDp.getValue()+
+                            "\nlähtö:\t\t\t"+lahtopaivaDp.getValue()+
                             "\n\nPALVELUT:\n\n"+
                             vahvistusPalvelut);
                             Optional<ButtonType> result = tilausVahvistusAlert.showAndWait();
                             System.out.println(result.get());
                             if(result.isPresent() && result.get() == ButtonType.OK) {
                                 try {
+                                    if (! SQL_yhteys.hasPostinro(postinroTF.getText())) {
+                                        SQL_yhteys.insertPostinro(postinroTF.getText(), toimiPaikkaTF.getText());
+                                    }
                                     int asiakas_id = SQL_yhteys.getAsiakasId(etunimi, sukunimi, lahiosoite, email, puhelinnro, postinro);
                                     if (asiakas_id == -1) {
                                         asiakas_id = SQL_yhteys.insertAsiakas(postinro, etunimi, sukunimi, lahiosoite, email, puhelinnro);

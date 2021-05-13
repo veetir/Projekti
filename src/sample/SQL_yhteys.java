@@ -570,10 +570,13 @@ public class SQL_yhteys {
     public static boolean hasPostinro(String postinro) throws SQLException {
         String zip = postinro;
         boolean found = false;
-        String kysely = "SELECT FROM posti WHERE postinro = zip";
+        String kysely = "SELECT * FROM posti WHERE postinro = ?";
+        ResultSet rs = null;
         try (Connection conn = SQL_yhteys.getYhteys();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(kysely)) {
+             PreparedStatement stmt = conn.prepareStatement(kysely);) {
+            
+            stmt.setString(1, zip);
+            rs = stmt.executeQuery();
             // loop through the result set
             while (rs.next()) {
                 found = true;

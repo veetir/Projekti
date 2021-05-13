@@ -28,6 +28,9 @@ public class RaportitPalvelutController implements Initializable {
     private TableView<Raportit2> tablePalvelut;
 
     @FXML
+    private TableColumn<Raportit2, String> columnNimi;
+
+    @FXML
     private TableColumn<Raportit2, Integer> columnPalvelunumero;
 
     @FXML
@@ -35,6 +38,12 @@ public class RaportitPalvelutController implements Initializable {
 
     @FXML
     private TableColumn<Raportit2, Integer> columnLukumaara;
+
+    @FXML
+    private TableColumn<Raportit2, Integer> columnToimintaAlue;
+
+    @FXML
+    private TableColumn<Raportit2, Double> columnHinta;
 
     public void raportitButtonOnAction(ActionEvent event) {
 
@@ -60,18 +69,22 @@ public class RaportitPalvelutController implements Initializable {
         try {
             Connection conn = SQL_yhteys.getYhteys();
 
-            ResultSet rs = conn.createStatement().executeQuery("select * from varauksen_palvelut");
+            ResultSet rs = conn.createStatement().executeQuery("select p.nimi as nimi, vp.palvelu_id as palvelu_id, vp.varaus_id as varaus_id, vp.lkm as lkm, p.hinta as hinta, p.toimintaalue_id as toimintaalue_id " + "from varauksen_palvelut vp join palvelu p " + "on p.palvelu_id = vp.palvelu_id;");
 
             while (rs.next()) {
-                palvelulista.add(new Raportit2(rs.getInt("palvelu_id"),rs.getInt("varaus_id"),rs.getInt("lkm")));
+                palvelulista.add(new Raportit2(rs.getString("nimi"),rs.getInt("palvelu_id"),rs.getInt("varaus_id"),rs.getInt("lkm"),rs.getDouble("hinta"),rs.getInt("toimintaalue_id")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(RaportitController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        columnNimi.setCellValueFactory(new PropertyValueFactory<>("nimi"));
         columnPalvelunumero.setCellValueFactory(new PropertyValueFactory<>("palvelu_id"));
         columnVarausnumeroP.setCellValueFactory(new PropertyValueFactory<>("varaus_id"));
         columnLukumaara.setCellValueFactory(new PropertyValueFactory<>("lkm"));
+        columnHinta.setCellValueFactory(new PropertyValueFactory<>("hinta"));
+        columnToimintaAlue.setCellValueFactory(new PropertyValueFactory<>("toimintaalue_id"));
+
 
         tablePalvelut.setItems(palvelulista);
     }

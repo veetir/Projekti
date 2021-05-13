@@ -56,6 +56,12 @@ public class RaportitController implements Initializable {
     @FXML
     private TableColumn<Raportit, Date> columnVarauspaiva;
 
+    @FXML
+    private TableColumn<Raportit, String > columnEtunimi;
+
+    @FXML
+    private TableColumn<Raportit, String > columnSukunimi;
+
 
 
     public void raportitButtonOnAction(ActionEvent event) {
@@ -82,20 +88,22 @@ public class RaportitController implements Initializable {
         try {
             Connection conn = SQL_yhteys.getYhteys();
 
-            ResultSet rs = conn.createStatement().executeQuery("select * from varaus");
+            ResultSet rs = conn.createStatement().executeQuery("select v.varaus_id as varaus_id, v.asiakas_id as asiakas_id, v.mokki_mokki_id as mokki_mokki_id, v.varattu_pvm as varattu_pvm, a.etunimi as etunimi, a.sukunimi as sukunimi " + "from varaus v join asiakas a "+ "on v.asiakas_id = a.asiakas_id;");
+
 
             while (rs.next()) {
-                varauslista.add(new Raportit(rs.getInt("varaus_id"), rs.getInt("asiakas_id"), rs.getInt("mokki_mokki_id"), rs.getDate("varattu_pvm")));
+                varauslista.add(new Raportit(rs.getString("etunimi"), rs.getString("sukunimi"), rs.getInt("varaus_id"), rs.getInt("asiakas_id"), rs.getInt("mokki_mokki_id"), rs.getDate("varattu_pvm")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(RaportitController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        columnEtunimi.setCellValueFactory(new PropertyValueFactory<>("etunimi"));
+        columnSukunimi.setCellValueFactory(new PropertyValueFactory<>("sukunimi"));
         columnVarausnumero.setCellValueFactory(new PropertyValueFactory<>("varaus_id"));
         columnAsiakasnumero.setCellValueFactory(new PropertyValueFactory<>("asiakas_id"));
         columnMokki.setCellValueFactory(new PropertyValueFactory<>("mokki_mokki_id"));
         columnVarauspaiva.setCellValueFactory(new PropertyValueFactory<>("varattu_pvm"));
-
         tableVaraukset.setItems(varauslista);
     }
 

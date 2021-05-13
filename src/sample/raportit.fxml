@@ -58,12 +58,14 @@
     <center>
         <Pane prefHeight="710.0" prefWidth="793.0" BorderPane.alignment="CENTER">
             <children>
-                <TableView fx:id="tableVaraukset" layoutX="34.0" layoutY="51.0" prefHeight="646.0" prefWidth="768.0">
+                <TableView fx:id="tableVaraukset" layoutX="34.0" layoutY="51.0" prefHeight="646.0" prefWidth="795.0">
                     <columns>
-                        <TableColumn fx:id="columnVarausnumero" prefWidth="161.0" text="varausnumero" />
-                        <TableColumn fx:id="columnAsiakasnumero" prefWidth="193.0" text="asiakasnumero" />
-                        <TableColumn fx:id="columnMokki" prefWidth="237.0" text="mokki" />
-                        <TableColumn fx:id="columnVarauspaiva" minWidth="0.0" prefWidth="176.0" text="varauspäivä" />
+                  <TableColumn fx:id="columnEtunimi" prefWidth="133.0" text="Etunimi" />
+                  <TableColumn fx:id="columnSukunimi" prefWidth="148.0" text="Sukunimi" />
+                        <TableColumn fx:id="columnVarausnumero" prefWidth="130.0" text="Varausnumero" />
+                        <TableColumn fx:id="columnAsiakasnumero" minWidth="0.0" prefWidth="124.0" text="Asiakasnumero" />
+                        <TableColumn fx:id="columnMokki" prefWidth="108.0" text="Mökkinumero" />
+                        <TableColumn fx:id="columnVarauspaiva" minWidth="0.0" prefWidth="151.0" text="Varauspäivä" />
                     </columns>
                 </TableView>
                 <Label layoutX="35.0" layoutY="23.0" text="Varaukset">

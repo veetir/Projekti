@@ -195,7 +195,7 @@ public class HallintaController implements Initializable {
         varausBox.getChildren().addAll(varauksenTiedotVb, pane, avaaButton);
         varausBox.setHgrow(pane, Priority.ALWAYS);
         varausBox.setAlignment(Pos.BOTTOM_LEFT);
-        varausBox.setStyle("-fx-border-color: aquamarine");
+        varausBox.setStyle("-fx-border-color: #dbd9ff");
         return varausBox;
     }
 

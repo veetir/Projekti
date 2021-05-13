@@ -167,7 +167,7 @@ public class VarausController implements Initializable {
                  HBox mokkiPaneeli = new HBox(10);
                  mokkiPaneeli.setAlignment(Pos.BOTTOM_LEFT);
                  mokkiPaneeli.setPadding(new Insets(10, 10, 10, 10));
-                 mokkiPaneeli.setStyle("-fx-border-color: aquamarine");
+                 mokkiPaneeli.setStyle("-fx-border-color: #dbd9ff");
                  VBox mokinTiedotVb = new VBox(5);
                  Label mokkiOtsikkoLbl = new Label(mokki.get_mokkinimi()+", "+mokki.get_katuosoite()+", "+mokki.get_postinro()+", "+mokki.getToimintaalue_nimi());
                  Label mokinTiedotLbl = new Label("Henkilömäärä: "+mokki.get_henkilomaara()+

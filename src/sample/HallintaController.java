@@ -639,6 +639,12 @@ public class HallintaController implements Initializable {
         ArrayList<Varaus> varaukset = SQL_yhteys.getVarauksetNoOrder();
         ArrayList<Lasku> laskut = SQL_yhteys.getLaskut();
 
+        /**
+         * Alla oleva koodi varsin tehotonta, jossa paljon turhaa vertailua sun muuta.
+         * Voisi mieluummin korvata joillakin SQL_yhteydeyn metodeilla
+         * kuten hasPostinro postinumeron tapauksessa
+         */
+
         // Talletetaan seuraavaan taulukkolistaan kaikkien laskujen varausid:t,
         // jotta voidaan vertailla niiden perusteella onko lasku jo kannassa
         ArrayList<Long> laskujenVarausId = new ArrayList<>();
@@ -665,7 +671,7 @@ public class HallintaController implements Initializable {
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
-            System.out.println("varauksen " + i + " summa on " + summa);
+            //System.out.println("varauksen " + i + " summa on " + summa);
             varauksenSumma.put(i, summa);
         }
 
@@ -678,6 +684,7 @@ public class HallintaController implements Initializable {
                 // Lähetetään varaus ja varausta vastaava summa
                 System.out.println(varaukset.get(i).getVarausId() + " id ja summa " + varauksenSumma.get(i));
                 SQL_yhteys.insertLasku(varaukset.get(i), varauksenSumma.get(i));
+                System.out.println("Lisättiin uusi lasku");
             }
         }
     }
@@ -694,7 +701,9 @@ public class HallintaController implements Initializable {
             ArrayList<Lasku> alueenLaskut = new ArrayList<>();
             for (int i = 0; i < laskut.size(); i++) {
                 int k = (int) laskut.get(i).getVarausId(); // Muutetaan long intiksi
-                System.out.println("varauksen toim.alue " + Mokki.getMokinToimintaAlue(Varaus.getVarauksenMokki(k)) + " haun alue " + area);
+                System.out.println("varauksen toim.alue "
+                        + Mokki.getMokinToimintaAlue(Varaus.getVarauksenMokki(k)) + " haun alue " + area);
+                // TODO: korjaa tämä! Alueita ei voi suodattaa enää laskuissa
                 if (Mokki.getMokinToimintaAlue(Varaus.getVarauksenMokki(k)).equalsIgnoreCase(area)) {
                     alueenLaskut.add(laskut.get(i));
                 }

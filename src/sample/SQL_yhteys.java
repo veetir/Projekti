@@ -13,12 +13,12 @@ public class SQL_yhteys {
     // Huom! Vaihda user & password, tarkista myös url !
     String url = "jdbc:mysql://localhost:3306/vn";
     String user = "root";
-    String password = "Umberto05!";
+    String password = "scape123";
 
     // Palauttaa SQL yhteys olion
     public static Connection getYhteys() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/vn?serverTimezone=Europe/Helsinki";
-        String user = "root", password = "Umberto05!";
+        String user = "root", password = "scape123";
         Connection conn = null;
 
         try {
@@ -657,6 +657,37 @@ public class SQL_yhteys {
             System.out.println("VendorError: " + e.getErrorCode());
         }
         return found;
+    }
+    public static Asiakas findAsiakas(String asiakasId) throws SQLException {
+        String id = asiakasId;
+        String kysely = "SELECT * FROM asiakas WHERE asiakas_id = ?";
+        ResultSet rs = null;
+        Asiakas asiakas = null;
+        try (Connection conn = SQL_yhteys.getYhteys();
+             PreparedStatement stmt = conn.prepareStatement(kysely);) {
+
+            stmt.setString(1, id);
+            rs = stmt.executeQuery();
+            // loop through the result set
+            while (rs.next()) {
+                String asiakas_id = rs.getString("asiakas_id");
+                String postinro = rs.getString("postinro");
+                String etunimi = rs.getString("etunimi");
+                String sukunimi = rs.getString("sukunimi");
+                String lahiosoite = rs.getString("lahiosoite");
+                String email = rs.getString("email");
+                String puhelinnro = rs.getString("puhelinnro");
+
+                asiakas = new Asiakas(Long.valueOf(asiakas_id), postinro, etunimi,
+                        sukunimi, lahiosoite, email, puhelinnro);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        }
+        return asiakas;
     }
 
     public static void setMokit(Mokki uusimokki, boolean paivita, boolean poista, String poistoId) throws SQLException {

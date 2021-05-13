@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.printLaskuController">
+   <children>
+      <VBox layoutX="191.0" layoutY="31.0" prefWidth="180.0">
+         <children>
+            <Label prefHeight="30.0" prefWidth="300.0" text="VILLAGE NEWBIES Oy">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="300.0" text="Ohjelmistokatu 42">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="95.0" prefHeight="30.0" prefWidth="300.0" text="70100 Kuopio">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutX="498.0" layoutY="31.0" prefWidth="180.0" />
+      <VBox layoutX="463.0" layoutY="32.0">
+         <children>
+            <Label prefHeight="30.0" prefWidth="300.0" text="LASKU">
+               <font>
+                  <Font name="Tahoma Bold" size="14.0" />
+               </font>
+            </Label>
+            <Line endX="200.0" startX="-100.0" />
+            <VBox prefHeight="200.0" prefWidth="201.0" spacing="15.0">
+               <children>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="82.0" text="Lasku_id:" />
+                        <Label fx:id="laskuIdLabel" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="204.0" text="Lasku_id:" />
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="82.0" text="Varaus_id:" />
+                        <Label fx:id="varausIdLabel" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="217.0" text="-1" />
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="82.0" text="Summa:" />
+                        <Label fx:id="varausSummaLabel" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="202.0" text="€" />
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="82.0" text="Eräpäivä:" />
+                        <Label fx:id="erapaivaLabel" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="168.0" text="???" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+      <Line endX="576.5" layoutX="214.0" layoutY="397.0" startX="-204.5" />
+      <VBox layoutX="14.0" layoutY="398.0" prefHeight="231.0" prefWidth="775.0">
+         <children>
+            <HBox>
+               <children>
+                  <Label prefHeight="30.0" prefWidth="353.0" text="Kuvaus">
+                     <font>
+                        <Font name="Tahoma Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="202.0" text="Lkm">
+                     <font>
+                        <Font name="Tahoma Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="310.0" layoutY="10.0" prefHeight="30.0" prefWidth="275.0" text="Hinta">
+                     <font>
+                        <Font name="Tahoma Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="526.0" layoutY="10.0" prefHeight="30.0" prefWidth="300.0" text="ALV%">
+                     <font>
+                        <Font name="Tahoma Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="592.0" layoutY="10.0" prefHeight="30.0" prefWidth="300.0" text="Yhteensä €">
+                     <font>
+                        <Font name="Tahoma Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <VBox fx:id="ostetutVBox" prefHeight="200.0" prefWidth="201.0" spacing="15.0" style="-fx-background-color: #dbd9ff;" />
+         </children>
+      </VBox>
+      <Line endX="576.5" layoutX="216.0" layoutY="644.0" startX="-204.5" />
+      <VBox layoutX="15.0" layoutY="661.0" prefHeight="231.0" prefWidth="775.0">
+         <children>
+            <HBox>
+               <children>
+                  <Label prefHeight="197.0" prefWidth="256.0" text="Saajan tilinumero">
+                     <font>
+                        <Font name="Tahoma Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="202.0" text="Pankki ">
+                     <font>
+                        <Font name="Tahoma" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="310.0" layoutY="10.0" prefHeight="30.0" prefWidth="275.0" text="FI12 3333 2222 1111 11">
+                     <font>
+                        <Font name="Tahoma" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="10.0">
+               <children>
+                  <Label prefHeight="197.0" prefWidth="256.0" text="Saaja">
+                     <font>
+                        <Font name="Tahoma Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <VBox prefWidth="180.0">
+                     <children>
+                        <Label prefHeight="30.0" prefWidth="300.0" text="VILLAGE NEWBIES Oy">
+                           <font>
+                              <Font name="Tahoma" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="300.0" text="Ohjelmistokatu 42">
+                           <font>
+                              <Font name="Tahoma" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="95.0" prefHeight="30.0" prefWidth="300.0" text="70100 Kuopio">
+                           <font>
+                              <Font name="Tahoma" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox layoutX="22.0" layoutY="147.0" prefWidth="180.0">
+         <children>
+            <Label fx:id="saajanNimiLabel" prefHeight="30.0" prefWidth="300.0" text="saajan etunimi, snimi">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="saajanOsoiteLabel" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="300.0" text="saajan osoite">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="saajanPaikkakuntaLabel" layoutX="10.0" layoutY="95.0" prefHeight="30.0" prefWidth="300.0" text="saajan paikkakunta">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </children>
+</Pane>

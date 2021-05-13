@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="145.0" prefWidth="600.0" spacing="5.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LaskuController">
+<HBox fx:id="laskuHBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="145.0" prefWidth="600.0" spacing="5.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LaskuController">
    <children>
       <VBox prefHeight="100.0" prefWidth="154.0">
          <children>
@@ -63,7 +63,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button fx:id="printLaskuButton" mnemonicParsing="false" onAction="#printLaskuButton" text="Print" visible="false" />
+            <Button fx:id="printLaskuButton" mnemonicParsing="false" onAction="#printLaskuButton" text="Print" />
          </children>
       </VBox>
    </children>

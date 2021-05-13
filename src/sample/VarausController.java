@@ -245,7 +245,9 @@ public class VarausController implements Initializable {
                         palveluTf.setPromptText("lkm");
                         palveluTf.setPrefColumnCount(3);
                         Button lisaaBtn = new Button("lisää");
-                        palveluHb.getChildren().addAll(palveluCb,palveluTf, lisaaBtn);
+                        Button peruutaButton = new Button("peruuta");
+                        peruutaButton.setOnAction(peruPalvelu -> palveluVb.getChildren().remove(palveluHb));
+                        palveluHb.getChildren().addAll(palveluCb,palveluTf, lisaaBtn, peruutaButton);
                         ObservableList<String> palveluLista = FXCollections.observableArrayList();
                         System.out.println("palvelulistan pituus: "+ mokinPalvelut.size());
                         for (Palvelu p : mokinPalvelut) {

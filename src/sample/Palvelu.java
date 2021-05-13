@@ -72,4 +72,10 @@ public class Palvelu {
         this.hinta = hinta;
     }
 
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        return this.nimi + ", "+this.hinta+"€/kpl";
+    }
+
 }

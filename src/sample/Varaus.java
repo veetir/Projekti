@@ -15,6 +15,7 @@ public class Varaus {
     private String mokkinimi;
     private String katuosoite;
     private String toimintaalue;
+    private int toimintaalueId;
     private Date varattuPvm;
     private Date vahvistusPvm;
     private Date varattuAlkupvm;
@@ -33,6 +34,28 @@ public class Varaus {
         this.mokkinimi = mokkinimi;
         this.katuosoite = katuosoite;
         this.toimintaalue = toimintaalue;
+        this.varattuPvm = varattuPvm;
+        this.varattuAlkupvm = varattuAlkupvm;
+        this.varattuLoppupvm = varattuLoppupvm;
+    }
+    public int getToimintaalueId() {
+        return toimintaalueId;
+    }
+    public void setToimintaalueId(int toimintaalueId) {
+        this.toimintaalueId = toimintaalueId;
+    }
+    public Varaus(long varausId, long asiakasId, String etunimi, String sukunimi, long mokkiMokkiId, String mokkinimi,
+                  String katuosoite, String toimintaalue,int toimintaalueId, Date varattuPvm, Date varattuAlkupvm,
+                  Date varattuLoppupvm) {
+        this.varausId = varausId;
+        this.asiakasId = asiakasId;
+        this.etunimi = etunimi;
+        this.sukunimi = sukunimi;
+        this.mokkiMokkiId = mokkiMokkiId;
+        this.mokkinimi = mokkinimi;
+        this.katuosoite = katuosoite;
+        this.toimintaalue = toimintaalue;
+        this.setToimintaalueId(toimintaalueId);
         this.varattuPvm = varattuPvm;
         this.varattuAlkupvm = varattuAlkupvm;
         this.varattuLoppupvm = varattuLoppupvm;

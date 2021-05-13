@@ -14,17 +14,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLClientInfoException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -133,7 +130,17 @@ public class HallintaController implements Initializable {
         asiakasTiedot.setFont(Font.font(null, FontWeight.SEMI_BOLD, 16));
 
         Button avaaButton = new Button("avaa");
+
         avaaButton.setOnAction(avaaVaraus -> {
+            
+            boolean peruutettavissa = true, muokattavissa = true;
+
+            if (v.getVarattuAlkupvm().toLocalDate().compareTo(LocalDate.now()) < 6) {
+                peruutettavissa = false;
+            }
+            if(v.getVarattuLoppupvm().toLocalDate().compareTo(LocalDate.now()) <= 0) {
+                muokattavissa = false;
+            }
             ArrayList<VarauksenPalvelu_Hallinta> varauksenPalvelut = SQL_yhteys.getVarauksenPalvelut((int) v.getVarausId());
             HBox mokkiHBox = new HBox();
             HBox palveluHBox = new HBox();
@@ -149,15 +156,113 @@ public class HallintaController implements Initializable {
             Label palveluOtsikko = new Label("PALVELUT:\t ");
             palveluOtsikko.setFont(Font.font(null, FontWeight.SEMI_BOLD, 16));
             VBox palveluVbox = new VBox(2);
+            if (muokattavissa) {
+                Button lisaaPalvelButton = new Button("+");
+                Label lisaaPalveluLbl = new Label("Lisää palvelu: ", lisaaPalvelButton);
+                lisaaPalveluLbl.setContentDisplay(ContentDisplay.RIGHT);
+                lisaaPalveluLbl.setFont(Font.font(null, FontWeight.SEMI_BOLD, 16));
+                palveluVbox.getChildren().add(lisaaPalveluLbl);
+                lisaaPalvelButton.setOnAction(lisääPalvelu -> {
+                    HBox palveluHb = new HBox(5);
+                    ComboBox<String> palveluCb = new ComboBox<>();
+                    TextField palveluTf = new TextField();
+                    palveluTf.setPromptText("lkm");
+                    palveluTf.setPrefColumnCount(3);
+                    Button lisaaBtn = new Button("lisää");
+                    Button peruBtn = new Button("peruuta");
+                    palveluHb.getChildren().addAll(palveluCb,palveluTf, lisaaBtn, peruBtn);
+                    palveluVbox.getChildren().addAll(palveluHb);
+                    ObservableList<String> palveluLista = FXCollections.observableArrayList();
+                    try {
+                        ArrayList<Palvelu> palvelut = SQL_yhteys.getAlueenPalvelut(v.getToimintaalueId());
+                        for (Palvelu p : palvelut) {
+                            palveluLista.add(p.toString());
+                        }
+                        palveluCb.setItems(palveluLista);
+                        peruBtn.setOnAction(peruLisäys -> palveluVbox.getChildren().remove(palveluHb));
+                        lisaaBtn.setOnAction(vahvistaLisäys -> {
+                            boolean olemassa = false;
+                            Palvelu p = palvelut.get(palveluCb.getSelectionModel().getSelectedIndex());
+                            ArrayList<VarauksenPalvelu_Hallinta> paivitetytPalvelut = SQL_yhteys.getVarauksenPalvelut((int)v.getVarausId());
+                            for (VarauksenPalvelu_Hallinta x : paivitetytPalvelut) {
+                                if(x.getPalvelu_id() == p.getPalveluId()) {
+                                    olemassa = true;
+                                    int lkm = x.getLkm()+Integer.parseInt(palveluTf.getText());
+                                    SQL_yhteys.updateVarauksenPalvelu((int)v.getVarausId(), x.getPalvelu_id(), lkm);
+                                    paivitetytPalvelut = SQL_yhteys.getVarauksenPalvelut((int)v.getVarausId());
+                                    palveluVbox.getChildren().clear();
+                                    palveluVbox.getChildren().addAll(lisaaPalveluLbl);
+                                    for (VarauksenPalvelu_Hallinta vp : paivitetytPalvelut) {
+                                        Label lbl = new Label(vp.toString());
+                                        lbl.setFont(Font.font(null, FontWeight.SEMI_BOLD, 16));
+                                        palveluVbox.getChildren().add(lbl);
+                                        if(v.getVarattuAlkupvm().toLocalDate().compareTo(LocalDate.now()) > 6) {
+                                            Button poistaVarauksenPalvelButton = new Button("Poista");
+                                            lbl.setGraphic(poistaVarauksenPalvelButton);
+                                            poistaVarauksenPalvelButton.setOnAction(poistaPalvelu -> {
+                                                SQL_yhteys.poistaVarauksenPalvelu((int) v.getVarausId(), vp.getPalvelu_id());
+                                                palveluVbox.getChildren().remove(lbl);
+                                            });
+                                        }
+                                    }
+
+
+                                    break;
+                                }
+                            }
+                            if(! olemassa) {
+                                VarauksenPalvelu uusiPalvelu = new VarauksenPalvelu(p, Integer.parseInt(palveluTf.getText()));
+                                ArrayList<VarauksenPalvelu> uusipalveluLista = new ArrayList<>();
+                                uusipalveluLista.add(uusiPalvelu);
+                                SQL_yhteys.insertVarauksenPalvelut(uusipalveluLista, (int) v.getVarausId());
+                                paivitetytPalvelut = SQL_yhteys.getVarauksenPalvelut((int)v.getVarausId());
+                                palveluVbox.getChildren().clear();
+                                palveluVbox.getChildren().addAll(lisaaPalveluLbl);
+                                for (VarauksenPalvelu_Hallinta vp : paivitetytPalvelut) {
+                                    Label lbl = new Label(vp.toString());
+                                    lbl.setFont(Font.font(null, FontWeight.SEMI_BOLD, 16));
+                                    palveluVbox.getChildren().add(lbl);
+                                    if(v.getVarattuAlkupvm().toLocalDate().compareTo(LocalDate.now()) > 6) {
+                                        Button poistaVarauksenPalvelButton = new Button("Poista");
+                                        lbl.setGraphic(poistaVarauksenPalvelButton);
+                                        poistaVarauksenPalvelButton.setOnAction(poistaPalvelu -> {
+                                            SQL_yhteys.poistaVarauksenPalvelu((int) v.getVarausId(), vp.getPalvelu_id());
+                                            palveluVbox.getChildren().remove(lbl);
+                                            // = SQL_yhteys.getVarauksenPalvelut((int)v.getVarausId());
+                                        });
+                                    }
+                                }
+                            }
+                            
+                        });
+                    } catch (SQLException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+
+                });
+
+            }
             for (VarauksenPalvelu_Hallinta vp : varauksenPalvelut) {
                 Label lbl = new Label(vp.toString());
                 lbl.setFont(Font.font(null, FontWeight.SEMI_BOLD, 16));
                 palveluVbox.getChildren().add(lbl);
+                if(peruutettavissa) {
+                    Button poistaVarauksenPalvelButton = new Button("Poista");
+                    lbl.setGraphic(poistaVarauksenPalvelButton);
+                    poistaVarauksenPalvelButton.setOnAction(poistaPalvelu -> {
+                        SQL_yhteys.poistaVarauksenPalvelu((int) v.getVarausId(), vp.getPalvelu_id());
+                        palveluVbox.getChildren().remove(lbl);
+                    });
+                }
             }
 
             palveluHBox.getChildren().addAll(palveluOtsikko, palveluVbox);
             mokkiHBox.getChildren().addAll(mokkiOtsikko, mokinTiedot);
             Button peruutaVarausButton = new Button("peruuta");
+            if (! peruutettavissa) {
+                peruutaVarausButton.setDisable(true);
+            }
             peruutaVarausButton.setOnAction(peruutaVaraus -> {
                 Alert peruutusAlert = new Alert(AlertType.NONE);
                 peruutusAlert.setHeaderText("Haluatko varmasti peruuttaa varauksen ?");
@@ -188,9 +293,6 @@ public class HallintaController implements Initializable {
                 varauksenTiedotVb.getChildren().remove(palveluHBox);
                 varausBox.getChildren().add(avaaButton);
             });
-            if (v.getVarattuAlkupvm().toLocalDate().compareTo(LocalDate.now()) < 6) {
-                peruutaVarausButton.setDisable(true);
-            }
 
             varausBox.getChildren().addAll(peruutaVarausButton, suljeButton);
             varauksenTiedotVb.getChildren().addAll(mokkiHBox, palveluHBox);

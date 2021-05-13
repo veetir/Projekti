@@ -703,6 +703,8 @@ public class HallintaController implements Initializable {
 
     @FXML
     public VBox asiakasVBox;
+    @FXML
+    private TextField puhnroRajausTextField;
 
     public void asiakkaatTabSelected(Event event) throws SQLException {
         valittu = false;
@@ -717,11 +719,11 @@ public class HallintaController implements Initializable {
     void initAsiakkaat(String puhnro) throws SQLException {
         asiakasVBox.getChildren().clear();
         ArrayList<Asiakas> asiakkaat = null;
-        if (puhnro == null) {
+        if (puhnroRajausTextField.getText() == null || puhnroRajausTextField.getText().trim().isEmpty() || ! VarausController.onNumero(puhnroRajausTextField.getText())) {
             asiakkaat = SQL_yhteys.getAsiakkaat();
-        }// else {
-        //    asiakkaat = SQL_yhteys.getAlueenMokit(puhnro);
-        //}
+        } else {
+            asiakkaat = SQL_yhteys.getAsiakkaat(puhnroRajausTextField.getText());
+        }
 
 
         for (int i = 0; i < asiakkaat.size(); i++) {
@@ -805,6 +807,12 @@ public class HallintaController implements Initializable {
     }
 
     public void suodataAsiakas(KeyEvent keyEvent) {
+        try {
+            initAsiakkaat(null);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
 

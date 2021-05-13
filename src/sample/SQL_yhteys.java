@@ -63,6 +63,40 @@ public class SQL_yhteys {
         return asiakkaat;
     }
 
+    public static ArrayList<Asiakas> getAsiakkaat(String puh) throws SQLException {
+        puh = puh + "%";
+        String sql = "SELECT * " +
+                "FROM asiakas "+
+                "WHERE puhelinnro like ?;";
+        ArrayList<Asiakas> asiakkaat = new ArrayList<Asiakas>();
+        ResultSet rs = null;
+        try (Connection conn = SQL_yhteys.getYhteys();
+             PreparedStatement stmt = conn.prepareStatement(sql);) {
+            
+            stmt.setString(1, puh);
+            rs = stmt.executeQuery();
+            Asiakas asiakas = null;
+
+            // loop through the result set
+            while (rs.next()) {
+                String asiakasEtuNimi = rs.getString("etunimi");
+                String asiakasSukuNimi = rs.getString("sukunimi");
+                String asiakasOsoite = rs.getString("lahiosoite");
+                int asiakas_id = rs.getInt("asiakas_id");
+                String asiakasEmail = rs.getString("email");
+                String asiakasPuhNro = rs.getString("puhelinnro");
+                String asiakasPostinro = rs.getString("postinro");
+
+                asiakas = new Asiakas(asiakas_id, asiakasPostinro, asiakasEtuNimi, asiakasSukuNimi, asiakasOsoite, asiakasEmail, asiakasPuhNro);
+                asiakkaat.add(asiakas);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return asiakkaat;
+    }
+
     // hakee asiakas_id:n tietokannasta argumenttien perusteella ja palauttaa sen. Palauttaa -1 jos asiakasta ei löydy.
     public static int getAsiakasId(String etunimi, String sukunimi, String lahiosoite, String email, String puhelinnro, String postinro) throws SQLException {
         int asiakas_id = -1;

@@ -104,7 +104,6 @@ public class RaportitController implements Initializable {
         columnAsiakasnumero.setCellValueFactory(new PropertyValueFactory<>("asiakas_id"));
         columnMokki.setCellValueFactory(new PropertyValueFactory<>("mokki_mokki_id"));
         columnVarauspaiva.setCellValueFactory(new PropertyValueFactory<>("varattu_pvm"));
-
         tableVaraukset.setItems(varauslista);
     }
 

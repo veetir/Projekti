@@ -128,10 +128,6 @@ public class UusiMokkiController implements Initializable {
                 alert.setHeaderText(null);
                 alert.setContentText("Mökki  '" + uusiMokki.get_mokkinimi() + "'  lisättiin tietokantaan.");
                 alert.showAndWait();
-                /*Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.OK){
-                }
-                */
 
             } else {
                 if(!SQL_yhteys.hasPostinro(uusiMokki.get_postinro())){

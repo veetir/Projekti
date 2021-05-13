@@ -99,7 +99,7 @@ public class RaportitController implements Initializable {
         }
 
         columnEtunimi.setCellValueFactory(new PropertyValueFactory<>("etunimi"));
-        columnSukunimi.setCellValueFactory(new PropertyValueFactory<>("etunimi"));
+        columnSukunimi.setCellValueFactory(new PropertyValueFactory<>("sukunimi"));
         columnVarausnumero.setCellValueFactory(new PropertyValueFactory<>("varaus_id"));
         columnAsiakasnumero.setCellValueFactory(new PropertyValueFactory<>("asiakas_id"));
         columnMokki.setCellValueFactory(new PropertyValueFactory<>("mokki_mokki_id"));

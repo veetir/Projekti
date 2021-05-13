@@ -803,6 +803,9 @@ public class HallintaController implements Initializable {
         lisays = false;
         muokattavaAsiakas = null;
     }
+
+    public void suodataAsiakas(KeyEvent keyEvent) {
+    }
 }
 
 

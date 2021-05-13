@@ -32,9 +32,6 @@ public class LaskuController {
         laskuVarausID.setText(String.valueOf(lasku.getVarausId()) + " [ "
                 + Varaus.getVarauksenHlo((int) lasku.getVarausId()) + " ]");
         laskuSummaLabel.setText(String.valueOf(lasku.getSumma()) + "€");
-
-
-
     }
 
 

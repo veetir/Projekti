@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <HBox fx:id="laskuHBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="145.0" prefWidth="600.0" spacing="5.0" style="-fx-border-color: #dbd9ff; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LaskuController">
    <children>
       <VBox prefHeight="100.0" prefWidth="154.0">
@@ -54,7 +53,7 @@
       </VBox>
       <VBox layoutX="318.0" layoutY="10.0" prefHeight="90.0" prefWidth="198.0">
          <children>
-            <Label prefHeight="49.0" prefWidth="174.0" text="Maksamaton" textFill="RED">
+            <Label fx:id="laskuStatusLabel" prefHeight="49.0" prefWidth="174.0" text="Maksamaton" textFill="RED">
                <font>
                   <Font size="14.0" />
                </font>
@@ -64,7 +63,8 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button fx:id="printLaskuButton" mnemonicParsing="false" onAction="#printLaskuButton" text="Print" />
+            <Button fx:id="maksettuButton" mnemonicParsing="false" onAction="#maksettuButtonOnAction" text="Maksettu" />
+            <Button fx:id="printLaskuButton" mnemonicParsing="false" onAction="#printLaskuButton" text="Tulosta" />
          </children>
       </VBox>
    </children>

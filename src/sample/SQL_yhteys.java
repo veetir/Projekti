@@ -524,9 +524,10 @@ public class SQL_yhteys {
                 Long laskuId = rs.getLong("lasku_id");
                 Long varausId = rs.getLong("varaus_id");
                 Double summa = rs.getDouble("summa");
+                boolean maksettu = rs.getBoolean("maksettu");
 
 
-                lasku = new Lasku(laskuId, varausId, summa);
+                lasku = new Lasku(laskuId, varausId, summa, maksettu);
                 laskut.add(lasku);
             }
 
@@ -657,6 +658,35 @@ public class SQL_yhteys {
             System.out.println("VendorError: " + e.getErrorCode());
         }
         return found;
+    }
+
+    public static void laskuMaksettu(String lasku_id) throws SQLException {
+        String id = lasku_id;
+        boolean found = false;
+        String kysely = "UPDATE lasku SET maksettu = true WHERE lasku_id  = ?;";
+        try {
+            Connection conn = SQL_yhteys.getYhteys();
+            PreparedStatement pstmt = conn.prepareStatement(kysely,
+                    Statement.RETURN_GENERATED_KEYS);
+                pstmt.setString(1, lasku_id);
+
+            int rowAffected = pstmt.executeUpdate();
+            if (rowAffected == 1) {
+                // process further here
+            }
+
+            // get candidate id
+            int candidateId = 0;
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next())
+                candidateId = rs.getInt(1);
+
+
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        }
     }
     public static boolean toimHasMokki(String toimAlueId) throws SQLException {
         String toimintaalue_id = toimAlueId;

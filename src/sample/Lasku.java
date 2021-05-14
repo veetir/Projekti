@@ -7,12 +7,22 @@ public class Lasku {
   private long varausId;
   private double summa;
   private double alv;
+  private boolean maksettu;
 
   // alvi nähtiin turhaksi, joten jätin sen tästä
-  public Lasku(long laskuId, long varausId, double summa) {
+  public Lasku(long laskuId, long varausId, double summa, boolean maksettu) {
     this.laskuId = laskuId;
     this.varausId = varausId;
     this.summa = summa;
+    this.maksettu = maksettu;
+  }
+
+  public boolean isMaksettu() {
+    return maksettu;
+  }
+
+  public void setMaksettu(boolean maksettu) {
+    this.maksettu = maksettu;
   }
 
   public long getLaskuId() {

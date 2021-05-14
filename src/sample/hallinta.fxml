@@ -264,7 +264,7 @@
                                     <Label text="Toiminta-alue" />
                                     <Pane>
                                        <children>
-                                          <ChoiceBox fx:id="laskutAlueBox" layoutX="45.0" prefWidth="150.0" />
+                                          <ChoiceBox fx:id="laskutAlueBox" disable="true" layoutX="45.0" prefWidth="150.0" />
                                        </children>
                                     </Pane>
                                     <Label layoutX="10.0" layoutY="38.0" text="Aikaväli" visible="false" />
@@ -292,8 +292,8 @@
                            <bottom>
                               <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="100.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Button fx:id="lopetaLaskuButton" disable="true" mnemonicParsing="false" onAction="#lopetaLaskuButtonOnAction" text="Takaisin/päivitä" />
-                                    <Button fx:id="avaaLaskuButton" defaultButton="true" mnemonicParsing="false" onAction="#avaaLaskuButtonOnAction" prefHeight="41.0" prefWidth="131.0" text="Avaa lasku">
+                                    <Button fx:id="lopetaLaskuButton" disable="true" mnemonicParsing="false" onAction="#lopetaLaskuButtonOnAction" text="Takaisin/päivitä" visible="false" />
+                                    <Button fx:id="avaaLaskuButton" defaultButton="true" mnemonicParsing="false" onAction="#avaaLaskuButtonOnAction" prefHeight="41.0" prefWidth="199.0" text="Avaa lasku" visible="false">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>

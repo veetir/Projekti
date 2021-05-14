@@ -23,7 +23,9 @@ public class LaskuController {
     @FXML
     public Label laskuSummaLabel;
     @FXML
-    public Button printLaskuButton;
+    public Button printLaskuButton, maksettuButton;
+    @FXML
+    public Label laskuStatusLabel;
 
     public Lasku printLasku = null;
 
@@ -32,6 +34,13 @@ public class LaskuController {
         // voisi olla esimerkiksi joku merkkijono joka perustuu laskunsaajan nimeen, mökin/palvelun nimeen
         // ja toim.alueen nimeen
         laskuIdLabel.setText(String.valueOf(lasku.getLaskuId()));
+        if (!lasku.isMaksettu()){
+            laskuStatusLabel.setText("Maksamaton");
+        } else{
+            laskuStatusLabel.setText("Maksettu");
+            laskuStatusLabel.setStyle("-fx-background-color: #03fc0b; ");
+            maksettuButton.setDisable(true);
+        }
         Asiakas asiakas = SQL_yhteys.findAsiakas(String.valueOf(lasku.getVarausId()));
         laskuVarausID.setText(lasku.getVarausId() + " [ "
                 + asiakas.getEtunimi() + " " + asiakas.getSukunimi() + " ]");
@@ -59,6 +68,13 @@ public class LaskuController {
             job.printPage(pageLayout, root);
             job.endJob();
         }
+    }
+
+    public void maksettuButtonOnAction(ActionEvent actionEvent) throws SQLException {
+        SQL_yhteys.laskuMaksettu(String.valueOf(printLasku.getLaskuId()));
+        laskuStatusLabel.setText("Maksettu");
+        laskuStatusLabel.setStyle("-fx-background-color: #03fc0b; ");
+        maksettuButton.setDisable(true);
     }
 }
 

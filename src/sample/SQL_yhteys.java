@@ -710,6 +710,31 @@ public class SQL_yhteys {
         }
         return found;
     }
+
+    public static boolean asiakasHasVaraus(String asiakas_id) throws SQLException {
+        String asiakas = asiakas_id;
+        boolean found = false;
+        String kysely = "SELECT * FROM varaus WHERE asiakas_id = ?";
+        ResultSet rs = null;
+        try (Connection conn = SQL_yhteys.getYhteys();
+             PreparedStatement stmt = conn.prepareStatement(kysely);) {
+
+            stmt.setString(1, asiakas);
+            rs = stmt.executeQuery();
+            // loop through the result set
+            while (rs.next()) {
+                found = true;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        }
+        return found;
+    }
+
+
     public static boolean toimHasPalvelu(String toimAlueId) throws SQLException {
         String toimintaalue_id = toimAlueId;
         boolean found = false;

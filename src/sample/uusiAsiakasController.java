@@ -106,14 +106,31 @@ public class uusiAsiakasController {
 
     @FXML
     void poistaVarmaButtonOnAction(ActionEvent event) throws SQLException {
-        SQL_yhteys.muokkaaAsiakas(String.valueOf(id), null, null, null, null, null, null, false, true, 0);
-        errorLabel.setText("Asiakas poistettu. Päivitä.");
-        poistaButton.setVisible(false);
-        poistaVarmaButton.setVisible(false);
-        alert.setTitle("Asiakkaan poisto");
-        alert.setHeaderText(null);
-        alert.setContentText("Asiakkaan tiedot poistettiin tietokannasta.");
-        alert.showAndWait();
+
+        if (!SQL_yhteys.asiakasHasVaraus(String.valueOf(id))){
+            SQL_yhteys.muokkaaAsiakas(String.valueOf(id), null,
+                    null, null, null,
+                    null, null,
+                    false, true, 0);
+            errorLabel.setText("Asiakas poistettu. Päivitä.");
+            poistaButton.setVisible(false);
+            poistaVarmaButton.setVisible(false);
+            alert.setTitle("Asiakkaan poisto");
+            alert.setHeaderText(null);
+            alert.setContentText("Asiakkaan tiedot poistettiin tietokannasta.");
+            alert.showAndWait();
+        } else{
+            errorLabel.setText("Asiakkaalla on varaus.");
+            poistaButton.setVisible(false);
+            poistaVarmaButton.setVisible(false);
+            alert.setTitle("Asiakasta ei voida poistaa");
+            alert.setHeaderText(null);
+            alert.setContentText("Asiakkaalla on olemassa oleva varaus, joten asiakasta ei voida poistaa. ");
+            alert.showAndWait();
+        }
+
+
+
     }
 
 }

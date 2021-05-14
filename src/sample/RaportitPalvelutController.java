@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -15,6 +16,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +28,9 @@ public class RaportitPalvelutController implements Initializable {
 
     @FXML
     private TableView<Raportit2> tablePalvelut;
+
+    @FXML
+    private ComboBox<String> toimintaAlue;
 
     @FXML
     private TableColumn<Raportit2, String> columnNimi;
@@ -65,6 +70,26 @@ public class RaportitPalvelutController implements Initializable {
 
 
     public void initialize(URL location, ResourceBundle resources) {
+
+        // TODO Auto-generated method stub
+
+        ObservableList<String> toimintaAlueet = FXCollections.observableArrayList();
+        try {
+            ArrayList<String> alueet = SQL_yhteys.getToimintaAlueet();
+            toimintaAlueet.add("KAIKKI");
+            for(String alue : alueet) {
+                toimintaAlueet.add(alue);
+            }
+            toimintaAlue.setItems(toimintaAlueet);
+            toimintaAlue.getSelectionModel().selectFirst();
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        naytaPalvelut();
+    }
+
+    public void naytaPalvelut() {
 
         try {
             Connection conn = SQL_yhteys.getYhteys();

@@ -2,6 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -50,6 +52,9 @@
                     <children>
                         <Button fx:id="raportitButton1" layoutX="13.0" layoutY="86.0" mnemonicParsing="false" onAction="#raportitButtonOnAction" prefHeight="43.0" prefWidth="136.0" text="VARAUKSET" />
                         <Button fx:id="palvelutButton" layoutX="13.0" layoutY="158.0" mnemonicParsing="false" onAction="#palvelutButtonOnAction" prefHeight="43.0" prefWidth="136.0" text="PALVELUT" />
+                  <DatePicker fx:id="alkuPvm" layoutX="6.0" layoutY="248.0" prefHeight="25.0" prefWidth="152.0" promptText="Alkupäivä" />
+                  <DatePicker fx:id="loppuPvm" layoutX="7.0" layoutY="301.0" prefHeight="25.0" prefWidth="151.0" promptText="Loppupäivä" />
+                  <ComboBox fx:id="toimintaAlue" layoutX="7.0" layoutY="357.0" prefWidth="150.0" promptText="Toiminta-alue" />
                     </children>
                 </Pane>
             </children>

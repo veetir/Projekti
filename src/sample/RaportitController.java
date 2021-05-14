@@ -24,6 +24,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import java.io.IOException;
@@ -43,6 +44,8 @@ public class RaportitController implements Initializable {
     @FXML
     private TableView<Raportit> tableVaraukset;
 
+    @FXML
+    private ComboBox<String> toimintaAlue;
 
     @FXML
     private TableColumn<Raportit, Integer> columnVarausnumero;
@@ -84,6 +87,27 @@ public class RaportitController implements Initializable {
 
 
     public void initialize(URL location, ResourceBundle resources) {
+
+        // TODO Auto-generated method stub
+
+        ObservableList<String> toimintaAlueet = FXCollections.observableArrayList();
+        try {
+            ArrayList<String> alueet = SQL_yhteys.getToimintaAlueet();
+            toimintaAlueet.add("KAIKKI");
+            for(String alue : alueet) {
+                toimintaAlueet.add(alue);
+            }
+            toimintaAlue.setItems(toimintaAlueet);
+            toimintaAlue.getSelectionModel().selectFirst();
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        naytaTulokset();
+    }
+
+    public void naytaTulokset() {
+
 
         try {
             Connection conn = SQL_yhteys.getYhteys();

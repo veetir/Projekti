@@ -26,7 +26,10 @@
             </Label>
             <Pane prefHeight="3.0" prefWidth="209.0">
                <children>
-                  <Label layoutX="58.0" layoutY="13.0" text="varaus" />
+                  <Label layoutX="58.0" layoutY="8.0" text="Varaus">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
                </children></Pane>
             <Pane prefHeight="43.0" prefWidth="427.0">
                <children>

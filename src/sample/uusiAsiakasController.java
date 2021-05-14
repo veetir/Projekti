@@ -128,9 +128,6 @@ public class uusiAsiakasController {
             alert.setContentText("Asiakkaalla on olemassa oleva varaus, joten asiakasta ei voida poistaa. ");
             alert.showAndWait();
         }
-
-
-
     }
 
 }

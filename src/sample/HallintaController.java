@@ -23,9 +23,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLClientInfoException;
 import java.sql.SQLException;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class HallintaController implements Initializable {
@@ -662,7 +666,9 @@ public class HallintaController implements Initializable {
         for (int i = 0; i < varaukset.size(); i++) {
             Double summa = 0.0;
             // Lisätään summaan ensiksi mökin hinta
-            summa += Mokki.getMokinHinta(varaukset.get(i).getMokkiMokkiId());
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            summa += getDifferenceDays(varaukset.get(i).getVarattuAlkupvm(), varaukset.get(i).getVarattuLoppupvm()) *
+                    Mokki.getMokinHinta(varaukset.get(i).getMokkiMokkiId());
             // Lopuksi summaan lisätään palveluiden hinta
             ArrayList<VarauksenPalvelu_Hallinta> varauksenpalvelut = SQL_yhteys.getVarauksenPalvelut(i);
             try {
@@ -690,6 +696,10 @@ public class HallintaController implements Initializable {
                 System.out.println("Lisättiin uusi lasku");
             }
         }
+    }
+    public static long getDifferenceDays(Date d1, Date d2) {
+        long diff = d2.getTime() - d1.getTime();
+        return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
     }
 
     public void initLaskut(String area) throws SQLException {

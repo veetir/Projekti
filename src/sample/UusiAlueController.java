@@ -182,15 +182,28 @@ public class UusiAlueController implements Initializable {
     }
 
     public void poistaVarmaButtonOnAction(ActionEvent actionEvent) throws SQLException {
-        SQL_yhteys.insertToiminta(paivitys, id, false, true);
-        errorLabel.setText("Alue poistettu. Päivitä.");
-        poistaButton.setVisible(false);
-        plisaaUusiAlueButton.setVisible(false);
-        poistaVarmaButton.setVisible(false);
-        alert.setTitle("Alueen poisto");
-        alert.setHeaderText(null);
-        alert.setContentText("Toiminta-alueen tiedot poistettiin tietokannasta.");
-        alert.showAndWait();
+        if (!SQL_yhteys.toimHasMokki(id) & !SQL_yhteys.toimHasPalvelu(id)) {
+            SQL_yhteys.insertToiminta(paivitys, id, false, true);
+            errorLabel.setText("Alue poistettu. Päivitä.");
+            poistaButton.setVisible(false);
+            plisaaUusiAlueButton.setVisible(false);
+            poistaVarmaButton.setVisible(false);
+            alert.setTitle("Alueen poisto");
+            alert.setHeaderText(null);
+            alert.setContentText("Toiminta-alueen tiedot poistettiin tietokannasta.");
+            alert.showAndWait();
+        } else {
+            errorLabel.setText("Alueella on mökkejä tai palveluita");
+            poistaButton.setVisible(false);
+            plisaaUusiAlueButton.setVisible(false);
+            poistaVarmaButton.setVisible(false);
+            alert.setTitle("Aluetta ei voida poistaa");
+            alert.setHeaderText(null);
+            alert.setContentText("Toiminta-alueella on mökkejä tai palveluita, joten sitä ei voida poistaa. ");
+            alert.showAndWait();
+        }
+
+
     }
 
     @Override

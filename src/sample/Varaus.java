@@ -63,7 +63,7 @@ public class Varaus {
 
     public static int getVarauksenMokki(int varausId) throws SQLException {
         ArrayList<Varaus> varaukset;
-        varaukset = SQL_yhteys.getVaraukset();
+        varaukset = SQL_yhteys.getVarauksetNoOrder();
         for (int i = 0; i < varaukset.size(); i++) {
             if (varaukset.get(i).getVarausId() == varausId) {
                 return (int)varaukset.get(i).getMokkiMokkiId();

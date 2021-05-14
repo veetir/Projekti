@@ -607,13 +607,16 @@ public class HallintaController implements Initializable {
             if (tAlueMokitBox.getValue() == null) {
                 return;
             } else {
-                if (laskutAlueBox.getValue() != null & !laskutAlueBox.getValue().equals("Hae alueelta")) {
-                    System.out.println(laskutAlueBox.getValue().toString());
-                    try {
-                        initLaskut(laskutAlueBox.getValue().toString());
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    }
+                if (laskutAlueBox.getValue() != null){
+                    if (!laskutAlueBox.getValue().equals("Hae alueelta")) {
+                        System.out.println(laskutAlueBox.getValue().toString());
+                        try {
+                            initLaskut(laskutAlueBox.getValue().toString());
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
+                }
+
                 } else {
                     try {
                         initLaskut(null);
@@ -704,7 +707,11 @@ public class HallintaController implements Initializable {
                 System.out.println("varauksen toim.alue "
                         + Mokki.getMokinToimintaAlue(Varaus.getVarauksenMokki(k)) + " haun alue " + area);
                 // TODO: korjaa tämä! Alueita ei voi suodattaa enää laskuissa
-                if (Mokki.getMokinToimintaAlue(Varaus.getVarauksenMokki(k)).equalsIgnoreCase(area)) {
+                System.out.println("tämä " + k);
+                System.out.println("varauksen mökki " + Varaus.getVarauksenMokki(k));
+                System.out.println("haettava " + Mokki.getMokinToimintaAlue(Varaus.getVarauksenMokki(k)).getToimintaalue_nimi());
+                if (Mokki.getMokinToimintaAlue(Varaus.getVarauksenMokki(k)).getToimintaalue_nimi().equalsIgnoreCase(area)) {
+                    System.out.println("LISÄTTIIN");
                     alueenLaskut.add(laskut.get(i));
                 }
             }

@@ -39,12 +39,12 @@ public class Mokki {
         }
         return -1.0; // Virhe
     }
-    public static String getMokinToimintaAlue(int mokkiId) throws SQLException {
+    public static Mokki getMokinToimintaAlue(int mokkiId) throws SQLException {
         ArrayList<Mokki> mokki;
         mokki = SQL_yhteys.getMokit();
         for (int i = 0; i < mokki.size(); i++) {
             if (mokki.get(i).get_mokki_id() == mokkiId){
-                return ToimintaAlue.findNimi(mokki.get(i).get_toimintaalue_id());
+                return SQL_yhteys.findMokki(String.valueOf(mokki.get(i).get_toimintaalue_id()));
             }
         }
         return null; // Jos ei löydy

@@ -658,6 +658,50 @@ public class SQL_yhteys {
         }
         return found;
     }
+    public static boolean toimHasMokki(String toimAlueId) throws SQLException {
+        String toimintaalue_id = toimAlueId;
+        boolean found = false;
+        String kysely = "SELECT * FROM mokki WHERE toimintaalue_id = ?";
+        ResultSet rs = null;
+        try (Connection conn = SQL_yhteys.getYhteys();
+             PreparedStatement stmt = conn.prepareStatement(kysely);) {
+
+            stmt.setString(1, toimintaalue_id);
+            rs = stmt.executeQuery();
+            // loop through the result set
+            while (rs.next()) {
+                found = true;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        }
+        return found;
+    }
+    public static boolean toimHasPalvelu(String toimAlueId) throws SQLException {
+        String toimintaalue_id = toimAlueId;
+        boolean found = false;
+        String kysely = "SELECT * FROM palvelu WHERE toimintaalue_id = ?";
+        ResultSet rs = null;
+        try (Connection conn = SQL_yhteys.getYhteys();
+             PreparedStatement stmt = conn.prepareStatement(kysely);) {
+
+            stmt.setString(1, toimintaalue_id);
+            rs = stmt.executeQuery();
+            // loop through the result set
+            while (rs.next()) {
+                found = true;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        }
+        return found;
+    }
     public static Asiakas findAsiakas(String asiakasId) throws SQLException {
         String id = asiakasId;
         String kysely = "SELECT * FROM asiakas WHERE asiakas_id = ?";
@@ -688,6 +732,42 @@ public class SQL_yhteys {
             System.out.println("VendorError: " + e.getErrorCode());
         }
         return asiakas;
+    }
+    public static Mokki findMokki(String mokkiId) throws SQLException {
+        String id = mokkiId;
+        String kysely = "SELECT * FROM mokki WHERE mokki_id = ?";
+        ResultSet rs = null;
+        Mokki mokki = null;
+        try (Connection conn = SQL_yhteys.getYhteys();
+             PreparedStatement stmt = conn.prepareStatement(kysely);) {
+
+            stmt.setString(1, id);
+            rs = stmt.executeQuery();
+            // loop through the result set
+            while (rs.next()) {
+                String mokki_id = rs.getString("mokki_id");
+                String toimintaalue_id = rs.getString("toimintaalue_id");
+                String postinro = rs.getString("postinro");
+                String mokkinimi = rs.getString("mokkinimi");
+                String katuosoite = rs.getString("katuosoite");
+                String kuvaus = rs.getString("kuvaus");
+                String henkilomaara = rs.getString("henkilomaara");
+                Long hinta = rs.getLong("hinta");
+                String varustelu = rs.getString("varustelu");
+
+
+                mokki = new Mokki(Integer.valueOf(mokki_id), Integer.valueOf(toimintaalue_id),
+                        ToimintaAlue.findNimi(Integer.valueOf(toimintaalue_id)),
+                        postinro, mokkinimi,
+                        katuosoite, kuvaus, Integer.valueOf(henkilomaara), varustelu, hinta);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        }
+        return mokki;
     }
 
     public static void setMokit(Mokki uusimokki, boolean paivita, boolean poista, String poistoId) throws SQLException {
@@ -1107,8 +1187,9 @@ public class SQL_yhteys {
             System.out.println(ex.getMessage());
         }
         return alueet;
-
     }
+
+
 
     // Hakee tietokannasta toiminta-alueiden nimet ja palauttaa listana, jonka alkiot ovat ToimintaAlue -tyyppisiä
     public static ArrayList<ToimintaAlue> getToimintaAlueetX() throws SQLException {
